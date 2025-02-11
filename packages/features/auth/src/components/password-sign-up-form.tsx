@@ -72,6 +72,7 @@ export function PasswordSignUpForm({
                   data-test={'email-input'}
                   required
                   type="email"
+                  autoComplete="username"
                   placeholder={t('emailPlaceholder')}
                   {...field}
                 />
@@ -96,6 +97,7 @@ export function PasswordSignUpForm({
                   required
                   data-test={'password-input'}
                   type="password"
+                  autoComplete="new-password"
                   placeholder={''}
                   {...field}
                 />
@@ -120,6 +122,7 @@ export function PasswordSignUpForm({
                   required
                   data-test={'repeat-password-input'}
                   type="password"
+                  autoComplete="new-password"
                   placeholder={''}
                   {...field}
                 />
