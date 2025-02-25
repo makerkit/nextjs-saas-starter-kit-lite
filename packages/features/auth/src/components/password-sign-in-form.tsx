@@ -60,6 +60,7 @@ export function PasswordSignInForm({
                   data-test={'email-input'}
                   required
                   type="email"
+                  autoComplete="username"
                   placeholder={t('emailPlaceholder')}
                   {...field}
                 />
@@ -84,6 +85,7 @@ export function PasswordSignInForm({
                   required
                   data-test={'password-input'}
                   type="password"
+                  autoComplete="current-password"
                   placeholder={''}
                   {...field}
                 />
