@@ -1,343 +1,343 @@
-![Makerkit - Next.js Supabase SaaS Starter Kit \[Lite version\]](apps/web/public/images/makerkit.webp)
+![Makerkit - Next.js Supabase SaaS 스타터 키트 \[Lite 버전\]](apps/web/public/images/makerkit.webp)
 
-# NEW! Next.js Supabase SaaS Starter Kit (Lite)
+# 새로운 기능! Next.js Supabase SaaS 스타터 키트 (Lite)
 
-Start building your SaaS faster with our Next.js 15 + Supabase starter kit.
+Next.js 15 + Supabase 스타터 키트로 SaaS 구축을 더 빠르게 시작하세요.
 
-👉 **Looking for a full-featured SaaS Starter Kit?** [Check out the complete version](https://makerkit.dev)
+👉 **모든 기능을 갖춘 SaaS 스타터 키트를 찾고 계신가요?** [전체 버전 확인하기](https://makerkit.dev)
 
-⭐️ **Why Developers Trust Makerkit:**
-- Production-grade architecture decisions
-- Comprehensive TypeScript setup
-- Modern stack: Next.js 15, Supabase, TailwindCSS v4
-- Quality Code tooling: ESLint v9, Prettier, strict TypeScript, etc.
-- Regular updates and active maintenance
+⭐️ **개발자들이 Makerkit을 신뢰하는 이유:**
+- 프로덕션 수준의 아키텍처 결정
+- 포괄적인 TypeScript 설정
+- 최신 스택: Next.js 15, Supabase, TailwindCSS v4
+- 고품질 코드 도구: ESLint v9, Prettier, 엄격한 TypeScript 등
+- 정기적인 업데이트 및 적극적인 유지보수
 
-PS: the documentation for this kit is still being updated, so please check back later for more details.
+추신: 이 키트의 문서는 아직 업데이트 중이므로 나중에 자세한 내용을 다시 확인해주세요.
 
-## What's Included
+## 포함된 내용
 
-### Core Architecture
-- 🏗️ Next.js 15 + Turborepo monorepo setup
-- 🎨 Shadcn UI components with TailwindCSS v4
-- 🔐 Supabase authentication & basic DB
-- 🌐 i18n translations (client + server)
-- ✨ Full TypeScript + ESLint v9 + Prettier configuration
+### 핵심 아키텍처
+- 🏗️ Next.js 15 + Turborepo 모노레포 설정
+- 🎨 TailwindCSS v4를 사용한 Shadcn UI 컴포넌트
+- 🔐 Supabase 인증 및 기본 DB
+- 🌐 i18n 번역 (클라이언트 + 서버)
+- ✨ 전체 TypeScript + ESLint v9 + Prettier 구성
 
-### Key Features
-- 👤 User authentication flow
-- ⚙️ User profile & settings
-- 📱 Responsive marketing pages
-- 🔒 Protected routes
-- 🎯 Basic test setup with Playwright
+### 주요 기능
+- 👤 사용자 인증 흐름
+- ⚙️ 사용자 프로필 및 설정
+- 📱 반응형 마케팅 페이지
+- 🔒 보호된 라우트
+- 🎯 Playwright를 사용한 기본 테스트 설정
 
-### Technologies
+### 기술
 
-This starter kit provides core foundations:
+이 스타터 키트는 핵심 기반을 제공합니다:
 
-🛠️ **Technology Stack**:
-- [Next.js 15](https://nextjs.org/): A React-based framework for server-side rendering and static site generation.
-- [Tailwind CSS](https://tailwindcss.com/): A utility-first CSS framework for rapidly building custom designs.
-- [Supabase](https://supabase.com/): A realtime database for web and mobile applications.
-- [i18next](https://www.i18next.com/): A popular internationalization framework for JavaScript.
-- [Turborepo](https://turborepo.org/): A monorepo tool for managing multiple packages and applications.
-- [Shadcn UI](https://shadcn.com/): A collection of components built using Tailwind CSS.
-- [Zod](https://github.com/colinhacks/zod): A TypeScript-first schema validation library.
-- [React Query](https://tanstack.com/query/v4): A powerful data fetching and caching library for React.
-- [Prettier](https://prettier.io/): An opinionated code formatter for JavaScript, TypeScript, and CSS.
-- [Eslint](https://eslint.org/): A powerful linting tool for JavaScript and TypeScript.
-- [Playwright](https://playwright.dev/): A framework for end-to-end testing of web applications.
+🛠️ **기술 스택**:
+- [Next.js 15](https://nextjs.org/): 서버 사이드 렌더링 및 정적 사이트 생성을 위한 React 기반 프레임워크입니다.
+- [Tailwind CSS](https://tailwindcss.com/): 사용자 정의 디자인을 빠르게 구축하기 위한 유틸리티 우선 CSS 프레임워크입니다.
+- [Supabase](https://supabase.com/): 웹 및 모바일 애플리케이션을 위한 실시간 데이터베이스입니다.
+- [i18next](https://www.i18next.com/): JavaScript를 위한 인기 있는 국제화 프레임워크입니다.
+- [Turborepo](https://turborepo.org/): 여러 패키지 및 애플리케이션을 관리하기 위한 모노레포 도구입니다.
+- [Shadcn UI](https://shadcn.com/): Tailwind CSS를 사용하여 구축된 컴포넌트 모음입니다.
+- [Zod](https://github.com/colinhacks/zod): TypeScript 우선 스키마 유효성 검사 라이브러리입니다.
+- [React Query](https://tanstack.com/query/v4): React를 위한 강력한 데이터 가져오기 및 캐싱 라이브러리입니다.
+- [Prettier](https://prettier.io/): JavaScript, TypeScript 및 CSS를 위한 독단적인 코드 포맷터입니다.
+- [Eslint](https://eslint.org/): JavaScript 및 TypeScript를 위한 강력한 린팅 도구입니다.
+- [Playwright](https://playwright.dev/): 웹 애플리케이션의 엔드 투 엔드 테스트를 위한 프레임워크입니다.
 
-This kit is a trimmed down version of the [full version of this SaaS Starter Kit](https://makerkit.dev). It is a good way to evaluate small part of the full kit, or to simply use it as a base for your own project.
+이 키트는 [이 SaaS 스타터 키트의 전체 버전](https://makerkit.dev)을 축소한 버전입니다. 전체 키트의 작은 부분을 평가하거나 자체 프로젝트의 기반으로 사용하기에 좋은 방법입니다.
 
-## Comparing Lite vs Full Version
+## Lite 버전과 전체 버전 비교
 
-The lite kit is perfect for:
-- Evaluating our code architecture and patterns
-- Building basic SaaS prototypes
-- Learning our tech stack approach
-- Building a basic SaaS tool
+Lite 키트는 다음에 적합합니다:
+- 코드 아키텍처 및 패턴 평가
+- 기본 SaaS 프로토타입 구축
+- 기술 스택 접근 방식 학습
+- 기본 SaaS 도구 구축
 
-The [full version](https://makerkit.dev) adds production features:
-- 💳 Complete billing and subscription system
-- 👥 Team accounts and management
-- 📧 Mailers and Email Templates (Nodemailer, Resend, etc.)
-- 📊 Analytics (GA, Posthog, Umami, etc.)
-- 🔦 Monitoring providers (Sentry, Baselime, etc.)
-- 🔐 Production database schema
-- ✅ Comprehensive test suite
-- 🔔 Realtime Notifications
-- 📝 Blogging system
-- 💡 Documentation system
-- ‍💻 Super Admin panel
-- 🕒 Daily updates and improvements
-- 🐛 Priority bug fixes
-- 🤝 Support
-- ⭐️ Used by 1000+ developers
-- 💪 Active community members
-- 🏢 Powers startups to enterprises
+[전체 버전](https://makerkit.dev)에는 다음과 같은 프로덕션 기능이 추가됩니다:
+- 💳 완전한 청구 및 구독 시스템
+- 👥 팀 계정 및 관리
+- 📧 메일러 및 이메일 템플릿 (Nodemailer, Resend 등)
+- 📊 분석 (GA, Posthog, Umami 등)
+- 🔦 모니터링 공급자 (Sentry, Baselime 등)
+- 🔐 프로덕션 데이터베이스 스키마
+- ✅ 포괄적인 테스트 스위트
+- 🔔 실시간 알림
+- 📝 블로깅 시스템
+- 💡 문서 시스템
+- ‍💻 슈퍼 관리자 패널
+- 🕒 매일 업데이트 및 개선
+- 🐛 우선 버그 수정
+- 🤝 지원
+- ⭐️ 1000명 이상의 개발자가 사용
+- 💪 활발한 커뮤니티 회원
+- 🏢 스타트업에서 대기업까지 지원
 
-[View complete feature comparison →](https://makerkit.dev/#pricing)
+[전체 기능 비교 보기 →](https://makerkit.dev/#pricing)
 
-## Getting Started
+## 시작하기
 
-### Prerequisites
+### 사전 요구 사항
 
-- Node.js 18.x or later (preferably the latest LTS version)
+- Node.js 18.x 이상 (최신 LTS 버전 권장)
 - Docker
 - PNPM
 
-Please make sure you have a Docker daemon running on your machine. This is required for the Supabase CLI to work.
+컴퓨터에서 Docker 데몬이 실행 중인지 확인하십시오. Supabase CLI가 작동하려면 필요합니다.
 
-### Installation
+### 설치
 
-#### 1. Clone this repository
+#### 1. 이 저장소 복제
 
 ```bash
 git clone https://github.com/makerkit/next-supabase-saas-kit-lite.git
 ```
 
-#### 2. Install dependencies
+#### 2. 종속성 설치
 
 ```bash
 pnpm install
 ```
 
-#### 3. Start Supabase
+#### 3. Supabase 시작
 
-Please make sure you have a Docker daemon running on your machine.
+컴퓨터에서 Docker 데몬이 실행 중인지 확인하십시오.
 
-Then run the following command to start Supabase:
+그런 다음 다음 명령을 실행하여 Supabase를 시작합니다:
 
 ```bash
 pnpm run supabase:web:start
 ```
 
-Once the Supabase server is running, please access the Supabase Dashboard using the port in the output of the previous command. Normally, you find it at [http://localhost:54323](http://localhost:54323).
+Supabase 서버가 실행되면 이전 명령의 출력에 있는 포트를 사용하여 Supabase 대시보드에 액세스하십시오. 일반적으로 [http://localhost:54323](http://localhost:54323)에서 찾을 수 있습니다.
 
-You will also find all the Supabase services printed in the terminal after the command is executed.
+명령이 실행된 후 터미널에 모든 Supabase 서비스가 인쇄된 것을 볼 수 있습니다.
 
-##### Stopping Supabase
+##### Supabase 중지
 
-To stop the Supabase server, run the following command:
+Supabase 서버를 중지하려면 다음 명령을 실행하십시오:
 
 ```bash
 pnpm run supabase:web:stop
 ```
 
-##### Resetting Supabase
+##### Supabase 재설정
 
-To reset the Supabase server, run the following command:
+Supabase 서버를 재설정하려면 다음 명령을 실행하십시오:
 
 ```bash
 pnpm run supabase:web:reset
 ```
 
-##### More Supabase Commands
+##### 더 많은 Supabase 명령
 
-For more Supabase commands, see the [Supabase CLI documentation](https://supabase.com/docs/guides/cli).
+더 많은 Supabase 명령은 [Supabase CLI 문서](https://supabase.com/docs/guides/cli)를 참조하십시오.
 
 ```
-# Create new migration
+# 새 마이그레이션 만들기
 pnpm --filter web supabase migration new <name>
 
-# Link to Supabase project
+# Supabase 프로젝트에 연결
 pnpm --filter web supabase db link
 
-# Push migrations
+# 마이그레이션 푸시
 pnpm --filter web supabase db push
 ```
 
-#### 4. Start the Next.js application
+#### 4. Next.js 애플리케이션 시작
 
 ```bash
 pnpm run dev
 ```
 
-The application will be available at http://localhost:3000.
+애플리케이션은 http://localhost:3000에서 사용할 수 있습니다.
 
-#### 5. Code Health (linting, formatting, etc.)
+#### 5. 코드 상태 (린팅, 포맷팅 등)
 
-To format your code, run the following command:
+코드를 포맷하려면 다음 명령을 실행하십시오:
 
 ```bash
 pnpm run format:fix
 ```
 
-To lint your code, run the following command:
+코드를 린트하려면 다음 명령을 실행하십시오:
 
 ```bash
 pnpm run lint
 ```
 
-To validate your TypeScript code, run the following command:
+TypeScript 코드를 유효성 검사하려면 다음 명령을 실행하십시오:
 
 ```bash
 pnpm run typecheck
 ```
 
-Turborepo will cache the results of these commands, so you can run them as many times as you want without any performance impact.
+Turborepo는 이러한 명령의 결과를 캐시하므로 성능에 영향을 주지 않고 원하는 만큼 여러 번 실행할 수 있습니다.
 
-## Project Structure
+## 프로젝트 구조
 
-The project is organized into the following folders:
+프로젝트는 다음 폴더로 구성됩니다:
 
 ```
 apps/
-├── web/                  # Next.js application
-│   ├── app/             # App Router pages
-│   │   ├── (marketing)/ # Public marketing pages
-│   │   ├── auth/        # Authentication pages
-│   │   └── home/        # Protected app pages
-│   ├── supabase/        # Database & migrations
-│   └── config/          # App configuration
+├── web/                  # Next.js 애플리케이션
+│   ├── app/             # App Router 페이지
+│   │   ├── (marketing)/ # 공개 마케팅 페이지
+│   │   ├── auth/        # 인증 페이지
+│   │   └── home/        # 보호된 앱 페이지
+│   ├── supabase/        # 데이터베이스 및 마이그레이션
+│   └── config/          # 앱 구성
 │
 packages/
-├── ui/                  # Shared UI components
-└── features/           # Core feature packages
-    ├── auth/           # Authentication logic
+├── ui/                  # 공유 UI 컴포넌트
+└── features/           # 핵심 기능 패키지
+    ├── auth/           # 인증 로직
     └── ...
 ```
 
-For more information about this project structure, see the article [Next.js App Router: Project Structure](https://makerkit.dev/blog/tutorials/nextjs-app-router-project-structure).
+이 프로젝트 구조에 대한 자세한 내용은 [Next.js App Router: 프로젝트 구조](https://makerkit.dev/blog/tutorials/nextjs-app-router-project-structure) 문서를 참조하십시오.
 
-### Environment Variables
+### 환경 변수
 
-You can configure the application by setting environment variables in the `.env.local` file.
+`.env.local` 파일에서 환경 변수를 설정하여 애플리케이션을 구성할 수 있습니다.
 
-Here are the available variables:
+사용 가능한 변수는 다음과 같습니다:
 
-| Variable Name | Description | Default Value |
+| 변수 이름 | 설명 | 기본값 |
 | --- | --- | --- |
-| `NEXT_PUBLIC_SITE_URL` | The URL of your SaaS application | `http://localhost:3000` |
-| `NEXT_PUBLIC_PRODUCT_NAME` | The name of your SaaS product | `Makerkit` |
-| `NEXT_PUBLIC_SITE_TITLE` | The title of your SaaS product | `Makerkit - The easiest way to build and manage your SaaS` |
-| `NEXT_PUBLIC_SITE_DESCRIPTION` | The description of your SaaS product | `Makerkit is the easiest way to build and manage your SaaS. It provides you with the tools you need to build your SaaS, without the hassle of building it from scratch.` |
-| `NEXT_PUBLIC_DEFAULT_THEME_MODE` | The default theme mode of your SaaS product | `light` |
-| `NEXT_PUBLIC_THEME_COLOR` | The default theme color of your SaaS product | `#ffffff` |
-| `NEXT_PUBLIC_THEME_COLOR_DARK` | The default theme color of your SaaS product in dark mode | `#0a0a0a` |
-| `NEXT_PUBLIC_SUPABASE_URL` | The URL of your Supabase project | `http://127.0.0.1:54321` |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | The anon key of your Supabase project | ''
-| `SUPABASE_SERVICE_ROLE_KEY` | The service role key of your Supabase project | ''
+| `NEXT_PUBLIC_SITE_URL` | SaaS 애플리케이션의 URL | `http://localhost:3000` |
+| `NEXT_PUBLIC_PRODUCT_NAME` | SaaS 제품의 이름 | `Makerkit` |
+| `NEXT_PUBLIC_SITE_TITLE` | SaaS 제품의 제목 | `Makerkit - SaaS를 구축하고 관리하는 가장 쉬운 방법` |
+| `NEXT_PUBLIC_SITE_DESCRIPTION` | SaaS 제품에 대한 설명 | `Makerkit은 SaaS를 구축하고 관리하는 가장 쉬운 방법입니다. 처음부터 구축하는 번거로움 없이 SaaS를 구축하는 데 필요한 도구를 제공합니다.` |
+| `NEXT_PUBLIC_DEFAULT_THEME_MODE` | SaaS 제품의 기본 테마 모드 | `light` |
+| `NEXT_PUBLIC_THEME_COLOR` | SaaS 제품의 기본 테마 색상 | `#ffffff` |
+| `NEXT_PUBLIC_THEME_COLOR_DARK` | 다크 모드에서 SaaS 제품의 기본 테마 색상 | `#0a0a0a` |
+| `NEXT_PUBLIC_SUPABASE_URL` | Supabase 프로젝트의 URL | `http://127.0.0.1:54321` |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase 프로젝트의 익명 키 | '' |
+| `SUPABASE_SERVICE_ROLE_KEY` | Supabase 프로젝트의 서비스 역할 키 | '' |
 
-## Architecture
+## 아키텍처
 
-This starter kit uses a monorepo architecture.
+이 스타터 키트는 모노레포 아키텍처를 사용합니다.
 
-1. The `apps/web` directory is the Next.js application.
-2. The `packages` directory contains all the packages used by the application.
-3. The `packages/features` directory contains all the features of the application.
-4. The `packages/ui` directory contains all the UI components.
+1. `apps/web` 디렉터리는 Next.js 애플리케이션입니다.
+2. `packages` 디렉터리에는 애플리케이션에서 사용하는 모든 패키지가 포함되어 있습니다.
+3. `packages/features` 디렉터리에는 애플리케이션의 모든 기능이 포함되어 있습니다.
+4. `packages/ui` 디렉터리에는 모든 UI 컴포넌트가 포함되어 있습니다.
 
-For more information about the architecture, please refer to the [Makerkit blog post about Next.js Project Structure](https://makerkit.dev/blog/tutorials/nextjs-app-router-project-structure).
+아키텍처에 대한 자세한 내용은 [Makerkit 블로그 게시물 Next.js 프로젝트 구조](https://makerkit.dev/blog/tutorials/nextjs-app-router-project-structure)를 참조하십시오.
 
-### Marketing Pages
+### 마케팅 페이지
 
-Marketing pages are located in the `apps/web/app/(marketing)` directory. These pages are used to showcase the features of the SaaS and provide information about the product.
+마케팅 페이지는 `apps/web/app/(marketing)` 디렉터리에 있습니다. 이러한 페이지는 SaaS의 기능을 소개하고 제품에 대한 정보를 제공하는 데 사용됩니다.
 
-### Authentication
+### 인증
 
-Authenticated is backed by Supabase. The `apps/web/app/auth` directory contains the authentication pages, however, the logic is into its own package `@kit/auth` located in `packages/features/auth`.
+인증은 Supabase에서 지원됩니다. `apps/web/app/auth` 디렉터리에는 인증 페이지가 포함되어 있지만 로직은 `packages/features/auth`에 있는 자체 패키지 `@kit/auth`에 있습니다.
 
-This package can be used across multiple applications.
+이 패키지는 여러 애플리케이션에서 사용할 수 있습니다.
 
-### Gated Pages
+### 게이트 페이지
 
-Gated pages are located in the `apps/web/app/home` directory. Here is where you can build your SaaS pages that are gated by authentication.
+게이트 페이지는 `apps/web/app/home` 디렉터리에 있습니다. 여기에서 인증으로 보호되는 SaaS 페이지를 구축할 수 있습니다.
 
-### Database
+### 데이터베이스
 
-The Supabase database is located in the `apps/web/supabase` directory. In this directory you will find the database schema, migrations, and seed data.
+Supabase 데이터베이스는 `apps/web/supabase` 디렉터리에 있습니다. 이 디렉터리에는 데이터베이스 스키마, 마이그레이션 및 시드 데이터가 있습니다.
 
-#### Creating a new migration
-To create a new migration, run the following command:
+#### 새 마이그레이션 만들기
+새 마이그레이션을 만들려면 다음 명령을 실행하십시오:
 
 ```bash
 pnpm --filter web supabase migration new --name <migration-name>
 ```
 
-This command will create a new migration file in the `apps/web/supabase/migrations` directory. 
+이 명령은 `apps/web/supabase/migrations` 디렉터리에 새 마이그레이션 파일을 만듭니다.
 
-#### Applying a migration
+#### 마이그레이션 적용
 
-Once you have created a migration, you can apply it to the database by running the following command:
+마이그레이션을 만든 후 다음 명령을 실행하여 데이터베이스에 적용할 수 있습니다:
 
 ```bash
 pnpm run supabase:web:reset
 ```
 
-This command will apply the migration to the database and update the schema. It will also reset the database using the provided seed data.
+이 명령은 데이터베이스에 마이그레이션을 적용하고 스키마를 업데이트합니다. 또한 제공된 시드 데이터를 사용하여 데이터베이스를 재설정합니다.
 
-#### Linking the Supabase database
+#### Supabase 데이터베이스 연결
 
-Linking the local Supabase database to the Supabase project is done by running the following command:
+로컬 Supabase 데이터베이스를 Supabase 프로젝트에 연결하려면 다음 명령을 실행합니다:
 
 ```bash
 pnpm --filter web supabase db link
 ```
 
-This command will link the local Supabase database to the Supabase project.
+이 명령은 로컬 Supabase 데이터베이스를 Supabase 프로젝트에 연결합니다.
 
-#### Pushing the migration to the Supabase project
+#### Supabase 프로젝트에 마이그레이션 푸시
 
-After you have made changes to the migration, you can push the migration to the Supabase project by running the following command:
-
-```bash
-pnpm --filter web supabase db push
-```
-
-This command will push the migration to the Supabase project. You can now apply the migration to the Supabase database.
-
-## Going to Production
-
-#### 1. Create a Supabase project
-
-To deploy your application to production, you will need to create a Supabase project.
-
-#### 2. Push the migration to the Supabase project
-
-After you have made changes to the migration, you can push the migration to the Supabase project by running the following command:
+마이그레이션을 변경한 후 다음 명령을 실행하여 Supabase 프로젝트에 마이그레이션을 푸시할 수 있습니다:
 
 ```bash
 pnpm --filter web supabase db push
 ```
 
-This command will push the migration to the Supabase project.
+이 명령은 Supabase 프로젝트에 마이그레이션을 푸시합니다. 이제 Supabase 데이터베이스에 마이그레이션을 적용할 수 있습니다.
 
-#### 3. Set the Supabase Callback URL
+## 프로덕션으로 이동
 
-When working with a remote Supabase project, you will need to set the Supabase Callback URL.
+#### 1. Supabase 프로젝트 만들기
 
-Please set the callback URL in the Supabase project settings to the following URL:
+애플리케이션을 프로덕션에 배포하려면 Supabase 프로젝트를 만들어야 합니다.
+
+#### 2. Supabase 프로젝트에 마이그레이션 푸시
+
+마이그레이션을 변경한 후 다음 명령을 실행하여 Supabase 프로젝트에 마이그레이션을 푸시할 수 있습니다:
+
+```bash
+pnpm --filter web supabase db push
+```
+
+이 명령은 Supabase 프로젝트에 마이그레이션을 푸시합니다.
+
+#### 3. Supabase 콜백 URL 설정
+
+원격 Supabase 프로젝트로 작업할 때 Supabase 콜백 URL을 설정해야 합니다.
+
+Supabase 프로젝트 설정에서 콜백 URL을 다음 URL로 설정하십시오:
 
 `<url>/auth/callback`
 
-Where `<url>` is the URL of your application.
+여기서 `<url>`은 애플리케이션의 URL입니다.
 
-#### 4. Deploy to Vercel or any other hosting provider
+#### 4. Vercel 또는 기타 호스팅 공급자에 배포
 
-You can deploy your application to any hosting provider that supports Next.js.
+Next.js를 지원하는 모든 호스팅 공급자에 애플리케이션을 배포할 수 있습니다.
 
-#### 5. Deploy to Cloudflare
+#### 5. Cloudflare에 배포
 
-The configuration should work as is, but you need to set the runtime to `edge` in the root layout file (`apps/web/app/layout.tsx`).
+구성은 그대로 작동해야 하지만 루트 레이아웃 파일 (`apps/web/app/layout.tsx`)에서 런타임을 `edge`로 설정해야 합니다.
 
 ```tsx
 export const runtime = 'edge';
 ```
 
-Remember to enable Node.js compatibility in the Cloudflare dashboard.
+Cloudflare 대시보드에서 Node.js 호환성을 활성화하는 것을 잊지 마십시오.
 
-## Contributing
+## 기여
 
-Contributions for bug fixed are welcome! However, please open an issue first to discuss your ideas before making a pull request.
+버그 수정에 대한 기여는 환영합니다! 그러나 풀 리퀘스트를 만들기 전에 아이디어를 논의하기 위해 먼저 문제를 열어주십시오.
 
-## License
+## 라이선스
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
+이 프로젝트는 MIT 라이선스에 따라 라이선스가 부여됩니다. 자세한 내용은 [LICENSE](LICENSE) 파일을 참조하십시오.
 
-## Support
+## 지원
 
-No support is provided for this kit. Feel free to open an issue if you have any questions or need help, but there is no guaranteed response time, nor guarantee a fix.
+이 키트에는 지원이 제공되지 않습니다. 질문이 있거나 도움이 필요한 경우 언제든지 문제를 열 수 있지만 응답 시간이나 수정은 보장되지 않습니다.
 
-For dedicated support, priority fixes, and advanced features, [check out our full version](https://makerkit.dev).
+전용 지원, 우선 수정 및 고급 기능은 [전체 버전 확인하기](https://makerkit.dev)를 참조하십시오.
