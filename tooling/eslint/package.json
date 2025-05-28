@@ -13,12 +13,12 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@next/eslint-plugin-next": "15.3.0",
+    "@next/eslint-plugin-next": "15.3.2",
     "@types/eslint": "^8.56.10",
     "@typescript-eslint/eslint-plugin": "^8.20.0",
     "@typescript-eslint/parser": "^8.20.0",
-    "eslint-config-prettier": "^10.1.2",
-    "eslint-config-turbo": "^2.5.0",
+    "eslint-config-prettier": "^10.1.5",
+    "eslint-config-turbo": "^2.5.3",
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-react": "7.37.5",
     "eslint-plugin-react-hooks": "^5.2.0"

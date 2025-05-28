@@ -12,8 +12,8 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@playwright/test": "^1.51.1",
-    "@types/node": "^22.14.1",
+    "@playwright/test": "^1.52.0",
+    "@types/node": "^22.15.23",
     "node-html-parser": "^7.0.1"
   }
 }

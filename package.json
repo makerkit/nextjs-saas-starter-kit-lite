@@ -38,11 +38,11 @@
     }
   },
   "devDependencies": {
-    "@manypkg/cli": "^0.23.0",
-    "@turbo/gen": "^2.5.0",
+    "@manypkg/cli": "^0.24.0",
+    "@turbo/gen": "^2.5.3",
     "cross-env": "^7.0.3",
     "prettier": "^3.5.3",
-    "turbo": "2.5.0",
+    "turbo": "2.5.3",
     "typescript": "^5.8.3"
   }
 }
