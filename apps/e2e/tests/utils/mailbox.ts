@@ -10,23 +10,17 @@ export class Mailbox {
       deleteAfter: boolean;
     },
   ) {
-    const mailbox = email.split('@')[0];
-
     console.log(`Visiting mailbox ${email} ...`);
 
-    if (!mailbox) {
-      throw new Error('Invalid email');
-    }
+    const json = await this.getInviteEmail(email, params);
 
-    const json = await this.getInviteEmail(mailbox, params);
-
-    if (!json?.body) {
+    if (!json?.HTML) {
       throw new Error('Email body was not found');
     }
 
     console.log('Email found');
 
-    const html = (json.body as { html: string }).html;
+    const html = json.HTML;
     const el = parse(html);
 
     const linkHref = el.querySelector('a')?.getAttribute('href');
@@ -41,12 +35,12 @@ export class Mailbox {
   }
 
   async getInviteEmail(
-    mailbox: string,
+    email: string,
     params: {
       deleteAfter: boolean;
     },
   ) {
-    const url = `http://127.0.0.1:54324/api/v1/mailbox/${mailbox}`;
+    const url = `http://127.0.0.1:54324/api/v1/search?query=to:${encodeURIComponent(email)}`;
 
     const response = await fetch(url);
 
@@ -54,14 +48,14 @@ export class Mailbox {
       throw new Error(`Failed to fetch emails: ${response.statusText}`);
     }
 
-    const json = (await response.json()) as Array<{ id: string }>;
+    const json = (await response.json()) as { messages: Array<{ ID: string }> };
 
-    if (!json || !json.length) {
+    if (!json?.messages || !json.messages.length) {
       return;
     }
 
-    const messageId = json[0]?.id;
-    const messageUrl = `${url}/${messageId}`;
+    const messageId = json.messages[0]?.ID;
+    const messageUrl = `http://127.0.0.1:54324/api/v1/message/${messageId}`;
 
     const messageResponse = await fetch(messageUrl);
 
