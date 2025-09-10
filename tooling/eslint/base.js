@@ -29,6 +29,7 @@ export default tsEsLint.config(
       'import/no-unused-modules': 'off',
       'import/no-deprecated': 'off',
       'turbo/no-undeclared-env-vars': 'off',
+      '@typescript-eslint/triple-slash-reference': 'off',
       '@typescript-eslint/array-type': 'off',
       '@typescript-eslint/no-unsafe-assignment': 'off',
       '@typescript-eslint/no-unsafe-argument': 'off',
