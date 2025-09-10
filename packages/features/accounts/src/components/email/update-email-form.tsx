@@ -1,7 +1,5 @@
 'use client';
 
-import type { User } from '@supabase/supabase-js';
-
 import { zodResolver } from '@hookform/resolvers/zod';
 import { CheckIcon } from '@radix-ui/react-icons';
 import { useForm } from 'react-hook-form';
@@ -34,10 +32,10 @@ function createEmailResolver(currentEmail: string, errorMessage: string) {
 }
 
 export function UpdateEmailForm({
-  user,
+  userEmail,
   callbackPath,
 }: {
-  user: User;
+  userEmail: string;
   callbackPath: string;
 }) {
   const { t } = useTranslation('account');
@@ -61,7 +59,7 @@ export function UpdateEmailForm({
     });
   };
 
-  const currentEmail = user.email;
+  const currentEmail = userEmail;
 
   const form = useForm({
     resolver: createEmailResolver(currentEmail!, t('emailNotMatching')),

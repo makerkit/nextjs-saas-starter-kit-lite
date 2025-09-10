@@ -3,7 +3,7 @@
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
 
-import type { User } from '@supabase/supabase-js';
+import type { JwtPayload } from '@supabase/supabase-js';
 
 import { PersonalAccountDropdown } from '@kit/accounts/personal-account-dropdown';
 import { useSignOut } from '@kit/supabase/hooks/use-sign-out';
@@ -19,6 +19,9 @@ const ModeToggle = dynamic(() =>
   import('@kit/ui/mode-toggle').then((mod) => ({
     default: mod.ModeToggle,
   })),
+  {
+    ssr: false,
+  }
 );
 
 const paths = {
@@ -32,7 +35,7 @@ const features = {
 export function SiteHeaderAccountSection({
   user,
 }: React.PropsWithChildren<{
-  user: User | null;
+  user: JwtPayload | null;
 }>) {
   if (!user) {
     return <AuthButtons />;
@@ -41,7 +44,7 @@ export function SiteHeaderAccountSection({
   return <SuspendedPersonalAccountDropdown user={user} />;
 }
 
-function SuspendedPersonalAccountDropdown(props: { user: User | null }) {
+function SuspendedPersonalAccountDropdown(props: { user: JwtPayload | null }) {
   const signOut = useSignOut();
   const user = useUser(props.user);
   const userData = user.data ?? props.user ?? null;

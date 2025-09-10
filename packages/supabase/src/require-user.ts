@@ -1,4 +1,4 @@
-import type { SupabaseClient, User } from '@supabase/supabase-js';
+import type { JwtPayload, SupabaseClient } from '@supabase/supabase-js';
 
 import { checkRequiresMultiFactorAuthentication } from './check-requires-mfa';
 
@@ -13,7 +13,7 @@ const SIGN_IN_PATH = '/auth/sign-in';
 export async function requireUser(client: SupabaseClient): Promise<
   | {
       error: null;
-      data: User;
+      data: JwtPayload;
     }
   | (
       | {
@@ -28,9 +28,9 @@ export async function requireUser(client: SupabaseClient): Promise<
         }
     )
 > {
-  const { data, error } = await client.auth.getUser();
+  const { data, error } = await client.auth.getClaims();
 
-  if (!data.user || error) {
+  if (!data?.claims || error) {
     return {
       data: null,
       error: new AuthenticationError(),
@@ -52,7 +52,10 @@ export async function requireUser(client: SupabaseClient): Promise<
 
   return {
     error: null,
-    data: data.user,
+    data: {
+      ...data.claims,
+      id: data.claims.sub,
+    },
   };
 }
 

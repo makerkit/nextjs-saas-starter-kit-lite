@@ -16,5 +16,7 @@ export function UpdateEmailFormContainer(props: { callbackPath: string }) {
     return null;
   }
 
-  return <UpdateEmailForm callbackPath={props.callbackPath} user={user} />;
+  return (
+    <UpdateEmailForm callbackPath={props.callbackPath} userEmail={user.email} />
+  );
 }

@@ -1,4 +1,4 @@
-import type { User } from '@supabase/supabase-js';
+import type { JwtPayload } from '@supabase/supabase-js';
 
 import { useQuery } from '@tanstack/react-query';
 
@@ -11,19 +11,19 @@ const queryKey = ['supabase:user'];
  * @description Use Supabase to get the current user in a React component
  * @param initialData
  */
-export function useUser(initialData?: User | null) {
+export function useUser(initialData?: JwtPayload | null) {
   const client = useSupabase();
 
   const queryFn = async () => {
-    const response = await client.auth.getUser();
+    const response = await client.auth.getClaims();
 
     // this is most likely a session error or the user is not logged in
     if (response.error) {
       return undefined;
     }
 
-    if (response.data?.user) {
-      return response.data.user;
+    if (response.data?.claims) {
+      return response.data.claims;
     }
 
     return Promise.reject(new Error('Unexpected result format'));

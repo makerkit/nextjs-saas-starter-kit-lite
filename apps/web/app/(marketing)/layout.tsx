@@ -7,13 +7,11 @@ import { withI18n } from '~/lib/i18n/with-i18n';
 async function SiteLayout(props: React.PropsWithChildren) {
   const client = getSupabaseServerClient();
 
-  const {
-    data: { user },
-  } = await client.auth.getUser();
+  const { data } = await client.auth.getClaims();
 
   return (
     <div className={'flex min-h-[100vh] flex-col'}>
-      <SiteHeader user={user} />
+      <SiteHeader user={data?.claims} />
 
       {props.children}
 

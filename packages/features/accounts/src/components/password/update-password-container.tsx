@@ -22,15 +22,20 @@ export function UpdatePasswordFormContainer(
     return null;
   }
 
-  const canUpdatePassword = user.identities?.some(
-    (item) => item.provider === `email`,
+  const canUpdatePassword = user.amr?.some(
+    (item: { method: string }) => item.method === `password`,
   );
 
   if (!canUpdatePassword) {
     return <WarnCannotUpdatePasswordAlert />;
   }
 
-  return <UpdatePasswordForm callbackPath={props.callbackPath} user={user} />;
+  return (
+    <UpdatePasswordForm
+      callbackPath={props.callbackPath}
+      userEmail={user.email}
+    />
+  );
 }
 
 function WarnCannotUpdatePasswordAlert() {

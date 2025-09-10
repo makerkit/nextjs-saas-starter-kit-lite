@@ -2,7 +2,7 @@ import 'server-only';
 
 import { redirect } from 'next/navigation';
 
-import type { User } from '@supabase/supabase-js';
+import type { JwtPayload } from '@supabase/supabase-js';
 
 import { ZodType, z } from 'zod';
 
@@ -30,14 +30,14 @@ export function enhanceAction<
 >(
   fn: (
     params: Config['schema'] extends ZodType ? z.infer<Config['schema']> : Args,
-    user: Config['auth'] extends false ? undefined : User,
+    user: Config['auth'] extends false ? undefined : JwtPayload,
   ) => Response | Promise<Response>,
   config: Config,
 ) {
   return async (
     params: Config['schema'] extends ZodType ? z.infer<Config['schema']> : Args,
   ) => {
-    type UserParam = Config['auth'] extends false ? undefined : User;
+    type UserParam = Config['auth'] extends false ? undefined : JwtPayload;
 
     const requireAuth = config.auth ?? true;
     let user: UserParam = undefined as UserParam;

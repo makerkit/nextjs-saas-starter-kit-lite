@@ -1,6 +1,6 @@
 'use client';
 
-import type { User } from '@supabase/supabase-js';
+import type { JwtPayload } from '@supabase/supabase-js';
 
 import { PersonalAccountDropdown } from '@kit/accounts/personal-account-dropdown';
 import { useSignOut } from '@kit/supabase/hooks/use-sign-out';
@@ -18,7 +18,7 @@ const features = {
 };
 
 export function ProfileAccountDropdownContainer(props: {
-  user?: User;
+  user?: JwtPayload;
   showProfileName?: boolean;
 
   account?: {

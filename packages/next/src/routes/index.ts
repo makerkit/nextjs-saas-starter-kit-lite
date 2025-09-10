@@ -3,7 +3,7 @@ import 'server-only';
 import { redirect } from 'next/navigation';
 import { NextRequest, NextResponse } from 'next/server';
 
-import { User } from '@supabase/supabase-js';
+import { JwtPayload } from '@supabase/supabase-js';
 
 import { z } from 'zod';
 
@@ -24,7 +24,7 @@ interface HandlerParams<
   RequireAuth extends boolean | undefined,
 > {
   request: NextRequest;
-  user: RequireAuth extends false ? undefined : User;
+  user: RequireAuth extends false ? undefined : JwtPayload;
   body: Schema extends z.ZodType ? z.infer<Schema> : undefined;
   params: Record<string, string>;
 }
@@ -75,7 +75,7 @@ export const enhanceRouteHandler = <
       params: Promise<Record<string, string>>;
     },
   ) {
-    type UserParam = Params['auth'] extends false ? undefined : User;
+    type UserParam = Params['auth'] extends false ? undefined : JwtPayload;
 
     let user: UserParam = undefined as UserParam;
 

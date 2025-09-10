@@ -23,13 +23,11 @@ export const generateMetadata = async () => {
 const NotFoundPage = async () => {
   const client = getSupabaseServerClient();
 
-  const {
-    data: { user },
-  } = await client.auth.getUser();
+  const { data } = await client.auth.getClaims();
 
   return (
     <div className={'flex h-screen flex-1 flex-col'}>
-      <SiteHeader user={user} />
+      <SiteHeader user={data?.claims} />
 
       <div
         className={

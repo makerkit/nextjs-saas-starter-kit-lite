@@ -1,4 +1,4 @@
-import type { User } from '@supabase/supabase-js';
+import type { JwtPayload } from '@supabase/supabase-js';
 
 import {
   Sidebar,
@@ -15,7 +15,7 @@ import { Tables } from '~/lib/database.types';
 
 export function HomeSidebar(props: {
   account?: Tables<'accounts'>;
-  user: User;
+  user: JwtPayload;
 }) {
   return (
     <Sidebar collapsible={'icon'}>

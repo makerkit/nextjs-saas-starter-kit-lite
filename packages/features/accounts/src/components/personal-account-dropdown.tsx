@@ -4,7 +4,7 @@ import { useMemo } from 'react';
 
 import Link from 'next/link';
 
-import type { User } from '@supabase/supabase-js';
+import type { JwtPayload } from '@supabase/supabase-js';
 
 import { ChevronsUpDown, Home, LogOut } from 'lucide-react';
 
@@ -32,7 +32,7 @@ export function PersonalAccountDropdown({
   features,
   account,
 }: {
-  user: User;
+  user: JwtPayload;
 
   account?: {
     id: string | null;

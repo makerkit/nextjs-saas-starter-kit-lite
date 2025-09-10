@@ -30,7 +30,8 @@ export const generateMetadata = async () => {
 };
 
 function PersonalAccountSettingsPage() {
-  const userId = use(requireUserInServerComponent()).id;
+  const user = use(requireUserInServerComponent());
+  const userId = user.id;
 
   return (
     <PageBody>

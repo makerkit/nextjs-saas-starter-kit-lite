@@ -2,8 +2,6 @@
 
 import { useState } from 'react';
 
-import type { User } from '@supabase/supabase-js';
-
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ExclamationTriangleIcon } from '@radix-ui/react-icons';
 import { Check } from 'lucide-react';
@@ -31,10 +29,10 @@ import { Trans } from '@kit/ui/trans';
 import { PasswordUpdateSchema } from '../../schema/update-password.schema';
 
 export const UpdatePasswordForm = ({
-  user,
+  userEmail,
   callbackPath,
 }: {
-  user: User;
+  userEmail: string;
   callbackPath: string;
 }) => {
   const { t } = useTranslation('account');
@@ -69,11 +67,9 @@ export const UpdatePasswordForm = ({
   }: {
     newPassword: string;
   }) => {
-    const email = user.email;
-
     // if the user does not have an email assigned, it's possible they
     // don't have an email/password factor linked, and the UI is out of sync
-    if (!email) {
+    if (!userEmail) {
       return Promise.reject(t(`cannotUpdatePassword`));
     }
 
