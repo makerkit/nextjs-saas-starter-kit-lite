@@ -74,7 +74,7 @@
     "babel-plugin-react-compiler": "19.1.0-rc.3",
     "dotenv-cli": "^10.0.0",
     "eslint": "^9.37.0",
-    "pino-pretty": "^13.0.0",
+    "pino-pretty": "13.0.0",
     "prettier": "^3.6.2",
     "supabase": "^2.48.3",
     "tailwindcss": "4.1.14",
