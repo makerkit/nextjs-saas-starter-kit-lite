@@ -20,7 +20,7 @@
     "@kit/supabase": "workspace:*",
     "@kit/tsconfig": "workspace:*",
     "@supabase/supabase-js": "2.75.0",
-    "next": "15.5.4",
+    "next": "15.5.7",
     "zod": "^3.25.32"
   },
   "typesVersions": {
