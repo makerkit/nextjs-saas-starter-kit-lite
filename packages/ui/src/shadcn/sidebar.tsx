@@ -771,250 +771,260 @@ export function SidebarNavigation({
         }
 
         if ('children' in item) {
-          const Container = (props: React.PropsWithChildren) => {
-            if (item.collapsible) {
-              return (
-                <Collapsible
-                  defaultOpen={!item.collapsed}
-                  className={'group/collapsible'}
-                >
-                  {props.children}
-                </Collapsible>
-              );
-            }
+          // The previous implementation defined `Container`, `ContentContainer`
+          // and `TriggerItem` components INSIDE this render body. Each render
+          // created new function references → React's reconciler treated them
+          // as different components at the same tree position → unmounted and
+          // remounted the entire menu subtree on every parent re-render.
+          //
+          // Because `usePathname()` re-renders this component on every
+          // navigation, the symptom was: any manually-toggled `<Collapsible>`
+          // group snaps back to its config-default `defaultOpen` on every
+          // route change.
+          //
+          // Fix: inline the wrapper logic with JSX ternaries and hoist the
+          // trigger UI to a module-scope component (`ChildItemTrigger`).
+          // Stable component identities preserve the menu subtree across
+          // navigations, matching shadcn's canonical `nav-main.tsx` pattern.
+          //
+          // References:
+          // - https://react.dev/learn/your-first-component#nesting-and-organizing-components
+          // - https://react.dev/learn/preserving-and-resetting-state
+          // - eslint rule `react/no-unstable-nested-components`
+          const childItems = item.children.map((child, childIndex) => {
+            const childIsCollapsible =
+              'collapsible' in child && child.collapsible;
 
-            return props.children;
-          };
+            const subItems = (
+              <If condition={child.children}>
+                {(children) => (
+                  <SidebarMenuSub
+                    className={cn({
+                      'mx-0 px-1.5': !open,
+                    })}
+                  >
+                    {children.map((sub) => {
+                      const isActive = isRouteActive(
+                        sub.path,
+                        currentPath,
+                        sub.end,
+                      );
 
-          const ContentContainer = (props: React.PropsWithChildren) => {
-            if (item.collapsible) {
-              return <CollapsibleContent>{props.children}</CollapsibleContent>;
-            }
-
-            return props.children;
-          };
-
-          return (
-            <Container key={`collapsible-${index}`}>
-              <SidebarGroup key={item.label}>
-                <If
-                  condition={item.collapsible}
-                  fallback={
-                    <SidebarGroupLabel className={cn({ hidden: !open })}>
-                      <Trans i18nKey={item.label} defaults={item.label} />
-                    </SidebarGroupLabel>
-                  }
-                >
-                  <SidebarGroupLabel className={cn({ hidden: !open })} asChild>
-                    <CollapsibleTrigger>
-                      <Trans i18nKey={item.label} defaults={item.label} />
-                      <ChevronDown className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180" />
-                    </CollapsibleTrigger>
-                  </SidebarGroupLabel>
-                </If>
-
-                <If condition={item.renderAction}>
-                  <SidebarGroupAction title={item.label}>
-                    {item.renderAction}
-                  </SidebarGroupAction>
-                </If>
-
-                <SidebarGroupContent>
-                  <SidebarMenu>
-                    <ContentContainer>
-                      {item.children.map((child, childIndex) => {
-                        const Container = (props: React.PropsWithChildren) => {
-                          if ('collapsible' in child && child.collapsible) {
-                            return (
-                              <Collapsible
-                                defaultOpen={!child.collapsed}
-                                className={'group/collapsible'}
-                              >
-                                {props.children}
-                              </Collapsible>
-                            );
-                          }
-
-                          return props.children;
-                        };
-
-                        const ContentContainer = (
-                          props: React.PropsWithChildren,
-                        ) => {
-                          if ('collapsible' in child && child.collapsible) {
-                            return (
-                              <CollapsibleContent>
-                                {props.children}
-                              </CollapsibleContent>
-                            );
-                          }
-
-                          return props.children;
-                        };
-
-                        const TriggerItem = () => {
-                          if ('collapsible' in child && child.collapsible) {
-                            return (
-                              <CollapsibleTrigger asChild>
-                                <SidebarMenuButton tooltip={child.label}>
-                                  <div
-                                    className={cn('flex items-center gap-2', {
-                                      'mx-auto w-full gap-0 [&>svg]:flex-1 [&>svg]:shrink-0':
-                                        !open,
-                                    })}
-                                  >
-                                    {child.Icon}
-                                    <span
-                                      className={cn(
-                                        'transition-width w-auto transition-opacity duration-500',
-                                        {
-                                          'w-0 opacity-0': !open,
-                                        },
-                                      )}
-                                    >
-                                      <Trans
-                                        i18nKey={child.label}
-                                        defaults={child.label}
-                                      />
-                                    </span>
-
-                                    <ChevronDown
-                                      className={cn(
-                                        'ml-auto size-4 transition-transform group-data-[state=open]/collapsible:rotate-180',
-                                        {
-                                          'hidden size-0': !open,
-                                        },
-                                      )}
-                                    />
-                                  </div>
-                                </SidebarMenuButton>
-                              </CollapsibleTrigger>
-                            );
-                          }
-
-                          const path = 'path' in child ? child.path : '';
-                          const end = 'end' in child ? child.end : false;
-
-                          const isActive = isRouteActive(
-                            path,
-                            currentPath,
-                            end,
-                          );
-
-                          return (
-                            <SidebarMenuButton
-                              asChild
-                              isActive={isActive}
-                              tooltip={child.label}
+                      return (
+                        <SidebarMenuSubItem key={sub.path}>
+                          <SidebarMenuSubButton isActive={isActive} asChild>
+                            <Link
+                              className={cn('flex items-center', {
+                                'mx-auto w-full gap-0! [&>svg]:flex-1': !open,
+                              })}
+                              href={sub.path}
                             >
-                              <Link
-                                className={cn('flex items-center', {
-                                  'mx-auto w-full gap-0! [&>svg]:flex-1': !open,
-                                })}
-                                href={path}
+                              {sub.Icon}
+
+                              <span
+                                className={cn(
+                                  'w-auto transition-opacity duration-300',
+                                  {
+                                    'w-0 opacity-0': !open,
+                                  },
+                                )}
                               >
-                                {child.Icon}
-                                <span
-                                  className={cn(
-                                    'w-auto transition-opacity duration-300',
-                                    {
-                                      'w-0 opacity-0': !open,
-                                    },
-                                  )}
-                                >
-                                  <Trans
-                                    i18nKey={child.label}
-                                    defaults={child.label}
-                                  />
-                                </span>
-                              </Link>
-                            </SidebarMenuButton>
-                          );
-                        };
+                                <Trans
+                                  i18nKey={sub.label}
+                                  defaults={sub.label}
+                                />
+                              </span>
+                            </Link>
+                          </SidebarMenuSubButton>
+                        </SidebarMenuSubItem>
+                      );
+                    })}
+                  </SidebarMenuSub>
+                )}
+              </If>
+            );
 
-                        return (
-                          <Container key={`group-${index}-${childIndex}`}>
-                            <SidebarMenuItem>
-                              <TriggerItem />
+            const childItemBody = (
+              <SidebarMenuItem>
+                <ChildItemTrigger
+                  child={child}
+                  open={open}
+                  currentPath={currentPath}
+                />
 
-                              <ContentContainer>
-                                <If condition={child.children}>
-                                  {(children) => (
-                                    <SidebarMenuSub
-                                      className={cn({
-                                        'mx-0 px-1.5': !open,
-                                      })}
-                                    >
-                                      {children.map((child) => {
-                                        const isActive = isRouteActive(
-                                          child.path,
-                                          currentPath,
-                                          child.end,
-                                        );
+                {childIsCollapsible ? (
+                  <CollapsibleContent>{subItems}</CollapsibleContent>
+                ) : (
+                  subItems
+                )}
 
-                                        const linkClassName = cn(
-                                          'flex items-center',
-                                          {
-                                            'mx-auto w-full gap-0! [&>svg]:flex-1':
-                                              !open,
-                                          },
-                                        );
+                <SidebarMenuAction>{child.renderAction}</SidebarMenuAction>
+              </SidebarMenuItem>
+            );
 
-                                        const spanClassName = cn(
-                                          'w-auto transition-opacity duration-300',
-                                          {
-                                            'w-0 opacity-0': !open,
-                                          },
-                                        );
+            return childIsCollapsible ? (
+              <Collapsible
+                key={`group-${index}-${childIndex}`}
+                defaultOpen={'collapsed' in child ? !child.collapsed : true}
+                className="group/collapsible"
+              >
+                {childItemBody}
+              </Collapsible>
+            ) : (
+              <React.Fragment key={`group-${index}-${childIndex}`}>
+                {childItemBody}
+              </React.Fragment>
+            );
+          });
 
-                                        return (
-                                          <SidebarMenuSubItem key={child.path}>
-                                            <SidebarMenuSubButton
-                                              isActive={isActive}
-                                              asChild
-                                            >
-                                              <Link
-                                                className={linkClassName}
-                                                href={child.path}
-                                              >
-                                                {child.Icon}
+          const groupBody = (
+            <SidebarGroup key={item.label}>
+              <If
+                condition={item.collapsible}
+                fallback={
+                  <SidebarGroupLabel className={cn({ hidden: !open })}>
+                    <Trans i18nKey={item.label} defaults={item.label} />
+                  </SidebarGroupLabel>
+                }
+              >
+                <SidebarGroupLabel className={cn({ hidden: !open })} asChild>
+                  <CollapsibleTrigger>
+                    <Trans i18nKey={item.label} defaults={item.label} />
+                    <ChevronDown className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180" />
+                  </CollapsibleTrigger>
+                </SidebarGroupLabel>
+              </If>
 
-                                                <span className={spanClassName}>
-                                                  <Trans
-                                                    i18nKey={child.label}
-                                                    defaults={child.label}
-                                                  />
-                                                </span>
-                                              </Link>
-                                            </SidebarMenuSubButton>
-                                          </SidebarMenuSubItem>
-                                        );
-                                      })}
-                                    </SidebarMenuSub>
-                                  )}
-                                </If>
-                              </ContentContainer>
+              <If condition={item.renderAction}>
+                <SidebarGroupAction title={item.label}>
+                  {item.renderAction}
+                </SidebarGroupAction>
+              </If>
 
-                              <SidebarMenuAction>
-                                {child.renderAction}
-                              </SidebarMenuAction>
-                            </SidebarMenuItem>
-                          </Container>
-                        );
-                      })}
-                    </ContentContainer>
-                  </SidebarMenu>
-                </SidebarGroupContent>
-              </SidebarGroup>
+              <SidebarGroupContent>
+                <SidebarMenu>
+                  {item.collapsible ? (
+                    <CollapsibleContent>{childItems}</CollapsibleContent>
+                  ) : (
+                    childItems
+                  )}
+                </SidebarMenu>
+              </SidebarGroupContent>
+            </SidebarGroup>
+          );
+
+          return item.collapsible ? (
+            <Collapsible
+              key={`collapsible-${index}`}
+              defaultOpen={!item.collapsed}
+              className="group/collapsible"
+            >
+              {groupBody}
 
               <If condition={!open && !isLast}>
                 <SidebarSeparator />
               </If>
-            </Container>
+            </Collapsible>
+          ) : (
+            <React.Fragment key={`collapsible-${index}`}>
+              {groupBody}
+
+              <If condition={!open && !isLast}>
+                <SidebarSeparator />
+              </If>
+            </React.Fragment>
           );
         }
       })}
     </>
+  );
+}
+
+/**
+ * Trigger button for a child menu item — either a `CollapsibleTrigger`
+ * (when the child has its own sub-menu) or a regular `Link` button.
+ *
+ * Hoisted to module scope so its function reference is stable across
+ * re-renders. Defining components inside another component's render body
+ * gives them a new reference each render, which React treats as a
+ * different component at the same tree position — it unmounts the old
+ * subtree and mounts a new one. For sidebar nav this means manually-
+ * toggled `<Collapsible>` state is destroyed on every navigation.
+ *
+ * References:
+ * - https://react.dev/learn/your-first-component#nesting-and-organizing-components
+ * - eslint rule `react/no-unstable-nested-components`
+ */
+function ChildItemTrigger({
+  child,
+  open,
+  currentPath,
+}: {
+  child: SidebarConfig['routes'][number] extends infer R
+    ? R extends { children: Array<infer C> }
+      ? C
+      : never
+    : never;
+  open: boolean;
+  currentPath: string;
+}) {
+  if ('collapsible' in child && child.collapsible) {
+    return (
+      <CollapsibleTrigger asChild>
+        <SidebarMenuButton tooltip={child.label}>
+          <div
+            className={cn('flex items-center gap-2', {
+              'mx-auto w-full gap-0 [&>svg]:flex-1 [&>svg]:shrink-0': !open,
+            })}
+          >
+            {child.Icon}
+            <span
+              className={cn(
+                'transition-width w-auto transition-opacity duration-500',
+                {
+                  'w-0 opacity-0': !open,
+                },
+              )}
+            >
+              <Trans i18nKey={child.label} defaults={child.label} />
+            </span>
+
+            <ChevronDown
+              className={cn(
+                'ml-auto size-4 transition-transform group-data-[state=open]/collapsible:rotate-180',
+                {
+                  'hidden size-0': !open,
+                },
+              )}
+            />
+          </div>
+        </SidebarMenuButton>
+      </CollapsibleTrigger>
+    );
+  }
+
+  const path = 'path' in child ? child.path : '';
+  const end = 'end' in child ? child.end : false;
+  const isActive = isRouteActive(path, currentPath, end);
+
+  return (
+    <SidebarMenuButton asChild isActive={isActive} tooltip={child.label}>
+      <Link
+        className={cn('flex items-center', {
+          'mx-auto w-full gap-0! [&>svg]:flex-1': !open,
+        })}
+        href={path}
+      >
+        {child.Icon}
+        <span
+          className={cn('w-auto transition-opacity duration-300', {
+            'w-0 opacity-0': !open,
+          })}
+        >
+          <Trans i18nKey={child.label} defaults={child.label} />
+        </span>
+      </Link>
+    </SidebarMenuButton>
   );
 }
 
