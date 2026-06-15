@@ -199,10 +199,11 @@ function artistCost(attendance: number, i: ShowInputs): number {
       return guarantee + above * artistShare(i);
     }
     case 'vs_deal': {
-      // Greater of the guarantee OR the door share — a MAX, not a SUM. The
-      // guarantee is NOT recouped before the split (split = expenses + profit).
-      const share =
-        Math.max(0, ticketRevenue - expenseFloor(i)) * artistShare(i);
+      // Greater of guarantee OR door share — a MAX, not a SUM. The share base is
+      // the FULL split point (guarantee + expenses + promoter_profit): the
+      // guarantee IS recouped before the split, per the printed Gigwell Split
+      // Point. Verified vs Providence Warped.
+      const share = Math.max(0, ticketRevenue - splitPoint(i)) * artistShare(i);
       return Math.max(guarantee, share);
     }
     case 'pure_door':
@@ -305,8 +306,9 @@ export function marginalVenueValueAtTickets(
       return R < splitPoint(i) ? price : price * vKeep;
     case 'vs_deal': {
       // Where the door share overtakes the guarantee (revenue-based, not a count).
+      // Base is the full split point now — the guarantee is recouped first.
       const aShare = artistShare(i);
-      const crossover = expenseFloor(i) + (aShare > 0 ? g / aShare : 0);
+      const crossover = splitPoint(i) + (aShare > 0 ? g / aShare : 0);
       return R < crossover ? price : price * vKeep;
     }
     case 'pure_door':
@@ -658,12 +660,15 @@ export function blendTicketPricing(
 
   const per_tier = tiers.map((t, i) => {
     const gross = t.face_price + t.fee;
-    const processor_cost = pct * gross + flat / basket;
+    // A free ticket (gross 0) triggers no payment -> no processor cost. A PAID tier
+    // with fee 0 still incurs Stripe (the venue absorbs it) — that's real, not a bug.
+    const processor_cost = gross === 0 ? 0 : pct * gross + flat / basket;
     // The fee is always the venue's. 'venue' = keep remainder after the processor.
     // 'pass_through' = the fee only offsets processing, so the venue keeps ~0.
     // The artist NEVER receives any of the fee under either option.
     let venue_net_fee = 0;
-    if (t.fee_recipient === 'venue') venue_net_fee = t.fee - processor_cost;
+    if (gross > 0 && t.fee_recipient === 'venue')
+      venue_net_fee = t.fee - processor_cost;
     else if (t.fee_recipient === 'pass_through') venue_net_fee = 0;
 
     if (t.fee_recipient === 'venue' && venue_net_fee < 0)
