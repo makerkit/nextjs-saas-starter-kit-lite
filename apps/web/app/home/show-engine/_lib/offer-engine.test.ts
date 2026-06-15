@@ -294,8 +294,11 @@ describe('A3 — gig model: threshold bonuses + itemized expenses (Fozzy)', () =
  *
  *   PLUS (backend):  split = g + E + P = 2000 + 1120 + 156 = 3276
  *                    artist = 2000 + (25425 − 3276) × 0.70 = 17504.30
- *   VS   (vs_deal):  split = E + P = 1820 + 191 = 2011  (guarantee NOT in split)
- *                    artist = MAX(8000, (25425 − 2011) × 0.70) = 16389.80
+ *   VS   (vs_deal):  split = g + E + P = 8000 + 1820 + 191 = 10011
+ *                    artist = MAX(8000, (25425 − 10011) × 0.70) = 10789.80
+ *                    (H2b: vs_deal recoups the guarantee in the split base; the
+ *                    earlier 16389.80 deducted expenses+profit only — superseded.
+ *                    Canonical vs_deal calibration is Warped, in the H2b block.)
  */
 describe('H2 — promoter_profit in split + vs_deal / pure_door', () => {
   const PRICE = 33.9;
@@ -328,9 +331,9 @@ describe('H2 — promoter_profit in split + vs_deal / pure_door', () => {
     expect(r.scenarios.sellout.artist_cost).toBeCloseTo(17504.3, 2);
   });
 
-  it('PENNY — VS artist_total = 16389.80 (split 2011.00, guarantee discarded)', () => {
+  it('vs_deal artist_total = 10789.80 (H2b: split 10011 = g + E + P, guarantee recouped)', () => {
     const r = analyzeShow(vs);
-    expect(r.scenarios.sellout.artist_cost).toBeCloseTo(16389.8, 2);
+    expect(r.scenarios.sellout.artist_cost).toBeCloseTo(10789.8, 2);
   });
 
   it('promoter_profit defaults to 0 — old backend deals are unchanged', () => {
@@ -341,12 +344,12 @@ describe('H2 — promoter_profit in split + vs_deal / pure_door', () => {
     expect(r.scenarios.sellout.artist_cost).toBeCloseTo(2000 + 22305 * 0.7, 2);
   });
 
-  it('vs_deal: below crossover artist = guarantee exactly; above = share, guarantee discarded', () => {
+  it('vs_deal: below crossover artist = guarantee exactly; above = share', () => {
     const r = analyzeShow(vs);
-    // conservative R = 33.9 × 300 = 10170 < crossover 13439.57 -> guarantee wins
+    // conservative R = 33.9 × 300 = 10170 < crossover 21439.57 -> guarantee wins
     expect(r.scenarios.conservative.artist_cost).toBe(8000);
-    // sellout R = 25425 > crossover -> share wins, guarantee gone
-    expect(r.scenarios.sellout.artist_cost).toBeCloseTo(16389.8, 2);
+    // sellout R = 25425 > crossover -> share wins
+    expect(r.scenarios.sellout.artist_cost).toBeCloseTo(10789.8, 2);
   });
 
   it('pure_door with g=0 reduces to share-only (no guarantee floor)', () => {
@@ -367,9 +370,9 @@ describe('H2 — promoter_profit in split + vs_deal / pure_door', () => {
     // backend (PLUS): split 3276, vKeep 0.30
     expect(marginalVenueValueAtTickets(10, plus)).toBeCloseTo(PRICE, 10); // R 339 < 3276
     expect(marginalVenueValueAtTickets(200, plus)).toBeCloseTo(PRICE * 0.3, 10); // R 6780 > 3276
-    // vs_deal: crossover (revenue) = 2011 + 8000/0.7 = 13439.57
+    // vs_deal: crossover (revenue) = splitPoint 10011 + 8000/0.7 = 21439.57 (~633 tix)
     expect(marginalVenueValueAtTickets(300, vs)).toBeCloseTo(PRICE, 10); // R 10170 < crossover
-    expect(marginalVenueValueAtTickets(500, vs)).toBeCloseTo(PRICE * 0.3, 10); // R 16950 > crossover
+    expect(marginalVenueValueAtTickets(700, vs)).toBeCloseTo(PRICE * 0.3, 10); // R 23730 > crossover
     // pure_door: split = E + P = 2011
     const pure: ShowInputs = {
       ...vs,
@@ -488,5 +491,103 @@ describe('sumTicketsIssued — sums all event rows, never one slice', () => {
       sumTicketsIssued([{ total_issued: 0 }, { total_issued: 0 }]),
     ).toBeNull();
     expect(sumTicketsIssued([{ total_issued: null }])).toBeNull();
+  });
+});
+
+/*
+ * H2b — vs_deal must recoup the guarantee in the split base (verified vs the real
+ * Providence Warped 6/19/26 Gigwell sheet). Full gross potential $23,595 at
+ * avg face $24.20 × 975 sellout. Printed Split Point = g + E + P = 2000 + 1860 +
+ * 193 = 4053. Artist = 0.60 × (23595 − 4053) = 11725.20 (NOT 12925.20, which
+ * deducts expenses+profit only). Venue keep = 0.40.
+ */
+describe('H2b — vs_deal recoups the guarantee (Providence Warped)', () => {
+  const warped: ShowInputs = {
+    venue_capacity: 1000,
+    avg_ticket_price: 24.2,
+    offer_structure: 'vs_deal',
+    guarantee: 2000,
+    promoter_profit: 193, // P
+    backend_artist_share: 0.6, // venue keep 0.40
+    fixed_show_expenses: 1860, // E
+    conservative_attendance: 150, // R 3630 < split 4053 -> guarantee floor
+    target_attendance: 600,
+    sellout_attendance: 975, // 24.20 × 975 = 23595 gross potential
+    days_remaining: 30,
+  };
+
+  it('PENNY — Warped sellout artist_total = 11725.20 (split 4053 = g + E + P)', () => {
+    const r = analyzeShow(warped);
+    expect(r.scenarios.sellout.artist_cost).toBeCloseTo(11725.2, 2);
+  });
+
+  it('below split (150 tix, R 3630 < 4053) -> guarantee floor 2000 holds', () => {
+    const r = analyzeShow(warped);
+    expect(r.scenarios.conservative.artist_cost).toBe(2000);
+  });
+
+  it('marginal crossover = splitPoint + g/aShare = 7386.33 (~305 tickets)', () => {
+    // just below: R 7260 < 7386.33 -> full price; just above: R 7502 > -> price × vKeep
+    expect(marginalVenueValueAtTickets(300, warped)).toBeCloseTo(24.2, 10);
+    expect(marginalVenueValueAtTickets(310, warped)).toBeCloseTo(
+      24.2 * 0.4,
+      10,
+    );
+  });
+
+  it('regression: pure_door still deducts expenseFloor only (no guarantee recoup)', () => {
+    // same inputs as vs_deal but pure_door: split = E + P = 2053, guarantee ignored.
+    // (23595 − 2053) × 0.60 = 12925.20 — unchanged by H2b. This is exactly the
+    // amount vs_deal used to (wrongly) pay before the guarantee was recouped.
+    const pure = analyzeShow({ ...warped, offer_structure: 'pure_door' });
+    expect(pure.scenarios.sellout.artist_cost).toBeCloseTo(12925.2, 2);
+  });
+});
+
+/*
+ * H2b Part 2 — a free ticket triggers no payment, so it carries zero processor
+ * cost. A PAID tier with a $0 fee still has the venue absorb Stripe (real cost,
+ * intended — that's the ~−$1.00/head on Warped), which must NOT change.
+ */
+describe('H2b Part 2 — free tickets carry zero processor cost', () => {
+  const globals = {
+    processor_pct: 0.029,
+    processor_flat: 0.3,
+    avg_tickets_per_order: 1,
+  };
+
+  it('a free tier (face 0, fee 0, venue) -> net_fee_per_head 0 and no warnings', () => {
+    const b = blendTicketPricing(
+      [
+        {
+          name: 'Free RSVP',
+          face_price: 0,
+          fee: 0,
+          fee_recipient: 'venue' as const,
+          capacity: 100,
+        },
+      ],
+      globals,
+    );
+    expect(b.net_fee_per_head).toBe(0);
+    expect(b.warnings).toHaveLength(0);
+  });
+
+  it('regression: a PAID venue tier with $0 fee still absorbs Stripe (~ −1.00/head)', () => {
+    // Warped GA face $24.20: processor = 0.029×24.20 + 0.30 = 1.0018 -> net −1.0018.
+    const b = blendTicketPricing(
+      [
+        {
+          name: 'GA',
+          face_price: 24.2,
+          fee: 0,
+          fee_recipient: 'venue' as const,
+          capacity: 975,
+        },
+      ],
+      globals,
+    );
+    expect(b.net_fee_per_head).toBeCloseTo(-1.0018, 4);
+    expect(b.warnings.length).toBeGreaterThan(0); // negative net fee still warns
   });
 });
