@@ -591,3 +591,108 @@ describe('H2b Part 2 — free tickets carry zero processor cost', () => {
     expect(b.warnings.length).toBeGreaterThan(0); // negative net fee still warns
   });
 });
+
+/*
+ * breakeven_full — cumulative and split-aware. The replaced bug divided the fixed
+ * floor by the MARGINAL (door-split-discounted, band-dependent) tmav, overstating
+ * the floor and making it move with the target. Below the split the venue keeps
+ * 100% of face; above it pays the artist's share. Cost floor = openCost + guarantee
+ * + gig expenses (promoter_profit is venue target profit, NOT a cash cost, so it is
+ * out of the floor — though it IS in splitPoint).
+ */
+describe('breakeven_full — cumulative, split-aware, target-independent', () => {
+  // Buckcherry / Black Stone Cherry (8/19): backend, breakeven below the split.
+  const buckcherry: ShowInputs = {
+    venue_capacity: 1000,
+    avg_ticket_price: 40.65,
+    offer_structure: 'backend',
+    guarantee: 22500,
+    promoter_profit: 1000,
+    backend_artist_share: 0.7,
+    fixed_show_expenses: 2615, // gig expenses
+    opening_cost: 1806,
+    conservative_attendance: 600,
+    target_attendance: 900,
+    sellout_attendance: 1000,
+    days_remaining: 30,
+    f_and_b_contribution_per_head: 17.75,
+  };
+
+  it('Buckcherry below-split floor = 461 (not the inflated marginal ~828)', () => {
+    // costFloor 26921 / belowPerHead 58.40 = 460.97 -> 461; 461 <= splitTickets ~642.
+    expect(analyzeShow(buckcherry).breakeven_full).toBe(461);
+  });
+
+  it('is target-independent (the real bug): same floor at target 700 and 1000', () => {
+    const at700 = analyzeShow({ ...buckcherry, target_attendance: 700 });
+    const at1000 = analyzeShow({ ...buckcherry, target_attendance: 1000 });
+    expect(at700.breakeven_full).toBe(461);
+    expect(at1000.breakeven_full).toBe(461);
+    expect(at700.breakeven_full).toBe(at1000.breakeven_full);
+  });
+
+  it('straight_guarantee unaffected: ceil(costFloor / (face + fb + netFee))', () => {
+    const sg: ShowInputs = {
+      venue_capacity: 1000,
+      avg_ticket_price: 25,
+      offer_structure: 'straight_guarantee',
+      guarantee: 5000,
+      fixed_show_expenses: 1000,
+      opening_cost: 1806,
+      conservative_attendance: 400,
+      target_attendance: 700,
+      sellout_attendance: 1000,
+      days_remaining: 45,
+      f_and_b_contribution_per_head: 17.75,
+    };
+    // costFloor 7806 / 42.75 = 182.6 -> 183 (identical to before the fix)
+    expect(analyzeShow(sg).breakeven_full).toBe(183);
+  });
+
+  it('above-split case exercises segment two (result > splitTickets)', () => {
+    // tiny face + large open cost -> the below-split solve exceeds splitTickets.
+    const aboveSplit: ShowInputs = {
+      venue_capacity: 100000,
+      avg_ticket_price: 5,
+      offer_structure: 'backend',
+      guarantee: 100,
+      backend_artist_share: 0.7,
+      fixed_show_expenses: 0,
+      opening_cost: 5000,
+      conservative_attendance: 10,
+      target_attendance: 50,
+      sellout_attendance: 100000,
+      days_remaining: 30,
+    };
+    // splitTickets 20; below solve 5100/5 = 1020 > 20 -> segment two.
+    // covered@split 20×5=100; remaining 5000; abovePerHead 5×0.30=1.5; 20 + 5000/1.5 -> 3354.
+    const r = analyzeShow(aboveSplit).breakeven_full;
+    expect(r).toBe(3354);
+    expect(r!).toBeGreaterThan(20); // landed above the split point
+  });
+
+  it('degenerate guards: face 0 -> null; zero cost floor -> 0; no throws', () => {
+    const zeroFace: ShowInputs = {
+      venue_capacity: 1000,
+      avg_ticket_price: 0,
+      offer_structure: 'straight_guarantee',
+      guarantee: 5000,
+      fixed_show_expenses: 1000,
+      opening_cost: 1806,
+      conservative_attendance: 400,
+      target_attendance: 700,
+      sellout_attendance: 1000,
+      days_remaining: 45,
+    };
+    expect(analyzeShow(zeroFace).breakeven_full).toBeNull();
+
+    const zeroFloor: ShowInputs = {
+      ...zeroFace,
+      avg_ticket_price: 25,
+      guarantee: 0,
+      fixed_show_expenses: 0,
+      opening_cost: 0,
+    };
+    expect(analyzeShow(zeroFloor).breakeven_full).toBe(0);
+  });
+});

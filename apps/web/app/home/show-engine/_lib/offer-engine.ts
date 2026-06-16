@@ -491,6 +491,47 @@ function buildExecutiveRecommendation(
   }
 }
 
+/**
+ * Full-show breakeven (pre-ads), cumulative and split-aware. The bug it replaces
+ * divided fixed cost by the MARGINAL (door-split-discounted, band-dependent) tmav,
+ * which overstated the floor and made it move with the target. Breakeven is a fixed
+ * property of the cost structure — it must not depend on conservative/target.
+ *
+ * Segments:
+ *   below split: venue keeps 100% of face -> perHead = face + fb + netFee
+ *   above split: venue pays artistShare of face -> perHead = face*promoterShare + fb + netFee
+ *
+ * Cost floor = openCost + guarantee + gig fixed expenses. NOTE: promoter_profit is
+ * intentionally NOT in the cost floor (it is venue target profit, not a cash cost) but
+ * IS in splitPoint() (it is part of the artist's recoup). Do not "unify" these — they
+ * are different quantities on purpose.
+ */
+function breakevenFull(i: ShowInputs, fb: number): number | null {
+  const face = i.avg_ticket_price ?? 0;
+  if (face <= 0) return null;
+  const netFee = netFeePerHead(i);
+  const openCost = i.opening_cost ?? 0;
+  const costFloor = openCost + (i.guarantee ?? 0) + gigFixedExpenses(i);
+  if (costFloor <= 0) return 0;
+
+  const belowPerHead = face + fb + netFee; // 100% face kept below split
+  const splitTickets = splitPoint(i) / face; // where the backend kicks in
+
+  // Try to clear the floor entirely below the split.
+  if (belowPerHead > 0) {
+    const nBelow = costFloor / belowPerHead;
+    if (nBelow <= splitTickets) return Math.ceil(nBelow);
+  }
+
+  // Breakeven lands above the split: switch to the discounted per-head rate.
+  const abovePerHead = face * (1 - artistShare(i)) + fb + netFee; // promoterShare * face + fb + netFee
+  if (abovePerHead <= 0) return null; // never breaks even above split
+  const coveredAtSplit = splitTickets * belowPerHead; // surplus accrued up to the split
+  const remaining = costFloor - coveredAtSplit;
+  const nAbove = splitTickets + remaining / abovePerHead;
+  return Math.ceil(nAbove);
+}
+
 export function analyzeShow(inputs: ShowInputs): AnalysisResult {
   // A5: F&B basis comes from tenant config (passed in). Absent => exclude + flag.
   const fbProvided = inputs.f_and_b_contribution_per_head != null;
@@ -503,17 +544,14 @@ export function analyzeShow(inputs: ShowInputs): AnalysisResult {
   // in scope — no new economic assumptions. Round UP: a partial person doesn't
   // cover cost. Does NOT touch tmav/guardrails/mrmc/tiers below.
   const openCost = inputs.opening_cost ?? 0;
-  const gigFixed = (inputs.guarantee ?? 0) + gigFixedExpenses(inputs);
 
   // #1 — F&B margin alone covers the cost of opening the doors (Bart's ~101).
   const breakeven_fb_only = fb > 0 ? Math.ceil(openCost / fb) : null;
 
-  // #2 — full show breakeven before ad spend: per-head total contribution (TMAV =
-  // ticket + F&B + net fee) covers the open + the artist/production fixed costs.
-  // No double-count: tmv already reflects the offer structure (door-split share is
-  // in tmv; the guarantee is the fixed floor here, not in tmv).
-  const breakeven_full =
-    tmav > 0 ? Math.ceil((openCost + gigFixed) / tmav) : null;
+  // #2 — full show breakeven before ad spend: cumulative and split-aware (full face
+  // below the split, the artist's-share-discounted rate above). A fixed property of
+  // the cost structure — does NOT depend on the target. See breakevenFull().
+  const breakeven_full = breakevenFull(inputs, fb);
 
   const conservative = modelScenario(inputs.conservative_attendance, inputs, 0);
   const target = modelScenario(inputs.target_attendance, inputs, 0);
