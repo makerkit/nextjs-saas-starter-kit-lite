@@ -54,6 +54,9 @@ const config = {
   },
   experimental: {
     mdxRs: true,
+    /** TypeScript 7 does not expose the compiler API Next.js uses, so drive it
+     * through the TS CLI instead. */
+    useTypeScriptCli: true,
     optimizePackageImports: [
       'recharts',
       'lucide-react',
