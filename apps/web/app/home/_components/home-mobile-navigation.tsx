@@ -96,7 +96,7 @@ function SignOutDropdownItem(
       <LogOut className={'h-6'} />
 
       <span>
-        <Trans i18nKey={'common:signOut'} defaults={'Sign out'} />
+        <Trans i18nKey={'common.signOut'} defaults={'Sign out'} />
       </span>
     </DropdownMenuItem>
   );

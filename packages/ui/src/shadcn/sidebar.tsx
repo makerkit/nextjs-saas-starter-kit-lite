@@ -8,7 +8,7 @@ import { usePathname } from 'next/navigation';
 import { Slot } from '@radix-ui/react-slot';
 import { VariantProps, cva } from 'class-variance-authority';
 import { ChevronDown, PanelLeft } from 'lucide-react';
-import { useTranslation } from 'react-i18next';
+import { useTranslations } from 'next-intl';
 
 import { useIsMobile } from '../hooks/use-mobile';
 import { cn, isRouteActive } from '../lib/utils';
@@ -579,7 +579,7 @@ const SidebarMenuButton: React.FC<
 }) => {
   const Comp = asChild ? Slot : 'button';
   const { isMobile, open } = useSidebar();
-  const { t } = useTranslation();
+  const t = useTranslations();
 
   const button = (
     <Comp
@@ -596,10 +596,9 @@ const SidebarMenuButton: React.FC<
   }
 
   if (typeof tooltip === 'string') {
+    // the tooltip doubles as its own fallback when it is not a translation key
     tooltip = {
-      children: t(tooltip, {
-        defaultValue: tooltip,
-      }),
+      children: t.has(tooltip) ? t(tooltip) : tooltip,
     };
   }
 

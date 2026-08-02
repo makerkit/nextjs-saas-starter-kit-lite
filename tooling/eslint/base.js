@@ -42,18 +42,6 @@ export default tsEsLint.config(
         'error',
         { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
       ],
-      'no-restricted-imports': [
-        'error',
-        {
-          paths: [
-            {
-              name: 'react-i18next',
-              importNames: ['Trans'],
-              message: 'Please use `@kit/ui/trans` instead',
-            },
-          ],
-        },
-      ],
     },
   },
   {

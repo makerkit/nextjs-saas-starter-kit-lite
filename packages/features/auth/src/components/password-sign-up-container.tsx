@@ -97,11 +97,11 @@ function SuccessAlert() {
       <CheckCircledIcon className={'w-4'} />
 
       <AlertTitle>
-        <Trans i18nKey={'auth:emailConfirmationAlertHeading'} />
+        <Trans i18nKey={'auth.emailConfirmationAlertHeading'} />
       </AlertTitle>
 
       <AlertDescription data-test={'email-confirmation-alert'}>
-        <Trans i18nKey={'auth:emailConfirmationAlertBody'} />
+        <Trans i18nKey={'auth.emailConfirmationAlertBody'} />
       </AlertDescription>
     </Alert>
   );

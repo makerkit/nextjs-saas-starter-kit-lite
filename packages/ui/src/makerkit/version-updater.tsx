@@ -53,12 +53,12 @@ export function VersionUpdater(props: { intervalTimeInSecond?: number }) {
           <AlertDialogTitle className={'flex items-center gap-x-2'}>
             <RocketIcon className={'h-4'} />
             <span>
-              <Trans i18nKey="common:newVersionAvailable" />
+              <Trans i18nKey="common.newVersionAvailable" />
             </span>
           </AlertDialogTitle>
 
           <AlertDialogDescription>
-            <Trans i18nKey="common:newVersionAvailableDescription" />
+            <Trans i18nKey="common.newVersionAvailableDescription" />
           </AlertDialogDescription>
         </AlertDialogHeader>
 
@@ -70,11 +70,11 @@ export function VersionUpdater(props: { intervalTimeInSecond?: number }) {
               setDismissed(true);
             }}
           >
-            <Trans i18nKey="common:back" />
+            <Trans i18nKey="common.back" />
           </Button>
 
           <Button onClick={() => window.location.reload()}>
-            <Trans i18nKey="common:newVersionSubmitButton" />
+            <Trans i18nKey="common.newVersionSubmitButton" />
           </Button>
         </AlertDialogFooter>
       </AlertDialogContent>

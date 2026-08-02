@@ -2,8 +2,8 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ArrowRight } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { useForm } from 'react-hook-form';
-import { useTranslation } from 'react-i18next';
 
 import { Button } from '@kit/ui/button';
 import {
@@ -41,7 +41,7 @@ export function PasswordSignUpForm({
   }) => unknown;
   loading: boolean;
 }) {
-  const { t } = useTranslation();
+  const t = useTranslations();
 
   const form = useForm({
     resolver: zodResolver(PasswordSignUpSchema),
@@ -64,7 +64,7 @@ export function PasswordSignUpForm({
           render={({ field }) => (
             <FormItem>
               <FormLabel>
-                <Trans i18nKey={'common:emailAddress'} />
+                <Trans i18nKey={'common.emailAddress'} />
               </FormLabel>
 
               <FormControl>
@@ -72,7 +72,7 @@ export function PasswordSignUpForm({
                   data-test={'email-input'}
                   required
                   type="email"
-                  placeholder={t('emailPlaceholder')}
+                  placeholder={t('auth.emailPlaceholder')}
                   {...field}
                 />
               </FormControl>
@@ -88,7 +88,7 @@ export function PasswordSignUpForm({
           render={({ field }) => (
             <FormItem>
               <FormLabel>
-                <Trans i18nKey={'common:password'} />
+                <Trans i18nKey={'common.password'} />
               </FormLabel>
 
               <FormControl>
@@ -112,7 +112,7 @@ export function PasswordSignUpForm({
           render={({ field }) => (
             <FormItem>
               <FormLabel>
-                <Trans i18nKey={'auth:repeatPassword'} />
+                <Trans i18nKey={'auth.repeatPassword'} />
               </FormLabel>
 
               <FormControl>
@@ -128,7 +128,7 @@ export function PasswordSignUpForm({
               <FormMessage />
 
               <FormDescription className={'pb-2 text-xs'}>
-                <Trans i18nKey={'auth:repeatPasswordHint'} />
+                <Trans i18nKey={'auth.repeatPasswordHint'} />
               </FormDescription>
             </FormItem>
           )}
@@ -148,7 +148,7 @@ export function PasswordSignUpForm({
             condition={loading}
             fallback={
               <>
-                <Trans i18nKey={'auth:signUpWithEmail'} />
+                <Trans i18nKey={'auth.signUpWithEmail'} />
 
                 <ArrowRight
                   className={
@@ -158,7 +158,7 @@ export function PasswordSignUpForm({
               </>
             }
           >
-            <Trans i18nKey={'auth:signingUp'} />
+            <Trans i18nKey={'auth.signingUp'} />
           </If>
         </Button>
       </form>

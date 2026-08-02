@@ -69,14 +69,14 @@ function AuthButtons() {
 
         <Button asChild variant={'ghost'}>
           <Link href={pathsConfig.auth.signIn}>
-            <Trans i18nKey={'auth:signIn'} />
+            <Trans i18nKey={'auth.signIn'} />
           </Link>
         </Button>
       </div>
 
       <Button asChild className="group" variant={'default'}>
         <Link href={pathsConfig.auth.signUp}>
-          <Trans i18nKey={'auth:signUp'} />
+          <Trans i18nKey={'auth.signUp'} />
         </Link>
       </Button>
     </div>

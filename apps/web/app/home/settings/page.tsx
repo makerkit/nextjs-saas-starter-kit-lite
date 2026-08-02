@@ -1,15 +1,14 @@
 import { Suspense } from 'react';
 
+import { getTranslations } from 'next-intl/server';
+
 import { PersonalAccountSettingsContainer } from '@kit/accounts/personal-account-settings';
 import { PageBody } from '@kit/ui/page';
-
 import { Skeleton } from '@kit/ui/skeleton';
 
 import { Delayed } from '~/components/skeletons/page-skeletons';
 import authConfig from '~/config/auth.config';
 import pathsConfig from '~/config/paths.config';
-import { createI18nServerInstance } from '~/lib/i18n/i18n.server';
-import { withI18n } from '~/lib/i18n/with-i18n';
 import { requireUserInServerComponent } from '~/lib/server/require-user-in-server-component';
 
 const callbackPath = pathsConfig.auth.callback;
@@ -24,8 +23,8 @@ const paths = {
 };
 
 export const generateMetadata = async () => {
-  const i18n = await createI18nServerInstance();
-  const title = i18n.t('account:settingsTab');
+  const t = await getTranslations();
+  const title = t('account.settingsTab');
 
   return {
     title,
@@ -66,4 +65,4 @@ function SettingsSkeleton() {
   );
 }
 
-export default withI18n(PersonalAccountSettingsPage);
+export default PersonalAccountSettingsPage;

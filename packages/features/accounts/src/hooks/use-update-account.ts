@@ -8,7 +8,7 @@ type UpdateData = Database['public']['Tables']['accounts']['Update'];
 export function useUpdateAccountData(accountId: string) {
   const client = useSupabase();
 
-  const mutationKey = ['account:data', accountId];
+  const mutationKey = ['account.data', accountId];
 
   const mutationFn = async (data: UpdateData) => {
     const response = await client.from('accounts').update(data).match({

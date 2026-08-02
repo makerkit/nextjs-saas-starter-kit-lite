@@ -27,11 +27,11 @@ export function AccountDangerZone() {
     <div className={'flex flex-col space-y-4'}>
       <div className={'flex flex-col space-y-1'}>
         <span className={'text-sm font-medium'}>
-          <Trans i18nKey={'account:deleteAccount'} />
+          <Trans i18nKey={'account.deleteAccount'} />
         </span>
 
         <p className={'text-muted-foreground text-sm'}>
-          <Trans i18nKey={'account:deleteAccountDescription'} />
+          <Trans i18nKey={'account.deleteAccountDescription'} />
         </p>
       </div>
 
@@ -47,14 +47,14 @@ function DeleteAccountModal() {
     <AlertDialog>
       <AlertDialogTrigger asChild>
         <Button data-test={'delete-account-button'} variant={'destructive'}>
-          <Trans i18nKey={'account:deleteAccount'} />
+          <Trans i18nKey={'account.deleteAccount'} />
         </Button>
       </AlertDialogTrigger>
 
       <AlertDialogContent onEscapeKeyDown={(e) => e.preventDefault()}>
         <AlertDialogHeader>
           <AlertDialogTitle>
-            <Trans i18nKey={'account:deleteAccount'} />
+            <Trans i18nKey={'account.deleteAccount'} />
           </AlertDialogTitle>
         </AlertDialogHeader>
 
@@ -85,18 +85,18 @@ function DeleteAccountForm() {
           >
             <div className={'flex flex-col space-y-2'}>
               <div>
-                <Trans i18nKey={'account:deleteAccountDescription'} />
+                <Trans i18nKey={'account.deleteAccountDescription'} />
               </div>
 
               <div>
-                <Trans i18nKey={'common:modalConfirmationQuestion'} />
+                <Trans i18nKey={'common.modalConfirmationQuestion'} />
               </div>
             </div>
           </div>
 
           <FormItem>
             <FormLabel>
-              <Trans i18nKey={'account:deleteProfileConfirmationInputLabel'} />
+              <Trans i18nKey={'account.deleteProfileConfirmationInputLabel'} />
             </FormLabel>
 
             <FormControl>
@@ -116,7 +116,7 @@ function DeleteAccountForm() {
 
         <AlertDialogFooter>
           <AlertDialogCancel>
-            <Trans i18nKey={'common:cancel'} />
+            <Trans i18nKey={'common.cancel'} />
           </AlertDialogCancel>
 
           <DeleteAccountSubmitButton />
@@ -138,9 +138,9 @@ function DeleteAccountSubmitButton() {
       variant={'destructive'}
     >
       {pending ? (
-        <Trans i18nKey={'account:deletingAccount'} />
+        <Trans i18nKey={'account.deletingAccount'} />
       ) : (
-        <Trans i18nKey={'account:deleteAccount'} />
+        <Trans i18nKey={'account.deleteAccount'} />
       )}
     </Button>
   );

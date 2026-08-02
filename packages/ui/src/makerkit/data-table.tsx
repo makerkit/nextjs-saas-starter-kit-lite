@@ -184,7 +184,7 @@ export function DataTable<T extends object>({
           ) : (
             <TableRow>
               <TableCell colSpan={columns.length} className="h-24 text-center">
-                <Trans i18nKey={'common:noData'} />
+                <Trans i18nKey={'common.noData'} />
               </TableCell>
             </TableRow>
           )}
@@ -211,7 +211,7 @@ function Pagination<T>({
     <div className="flex items-center gap-x-4">
       <span className="text-muted-foreground flex items-center text-sm">
         <Trans
-          i18nKey={'common:pageOfPages'}
+          i18nKey={'common.pageOfPages'}
           values={{
             page: table.getState().pagination.pageIndex + 1,
             total: table.getPageCount(),

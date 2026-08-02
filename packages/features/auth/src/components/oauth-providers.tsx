@@ -101,7 +101,7 @@ export function OauthProviders(props: {
                 }}
               >
                 <Trans
-                  i18nKey={'auth:signInWithProvider'}
+                  i18nKey={'auth.signInWithProvider'}
                   values={{
                     provider: getProviderName(provider),
                   }}

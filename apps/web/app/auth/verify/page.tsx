@@ -1,6 +1,9 @@
 import { Suspense } from 'react';
 
 import { redirect } from 'next/navigation';
+import { connection } from 'next/server';
+
+import { getTranslations } from 'next-intl/server';
 
 import { MultiFactorChallengeContainer } from '@kit/auth/mfa';
 import { checkRequiresMultiFactorAuthentication } from '@kit/supabase/check-requires-mfa';
@@ -8,8 +11,6 @@ import { getSupabaseServerClient } from '@kit/supabase/server-client';
 
 import { AuthFormSkeleton } from '~/components/skeletons/page-skeletons';
 import pathsConfig from '~/config/paths.config';
-import { createI18nServerInstance } from '~/lib/i18n/i18n.server';
-import { withI18n } from '~/lib/i18n/with-i18n';
 
 interface Props {
   searchParams: Promise<{
@@ -18,10 +19,10 @@ interface Props {
 }
 
 export const generateMetadata = async () => {
-  const i18n = await createI18nServerInstance();
+  const t = await getTranslations();
 
   return {
-    title: i18n.t('auth:signIn'),
+    title: t('auth.signIn'),
   };
 };
 
@@ -38,6 +39,10 @@ function VerifyPage(props: Props) {
 }
 
 async function VerifyChallenge(props: Props) {
+  // per-request: the Supabase server client seeds a value with Math.random(),
+  // which <Suspense> does not fix the way it fixes uncached data
+  await connection();
+
   const client = getSupabaseServerClient();
 
   const { data } = await client.auth.getClaims();
@@ -65,4 +70,4 @@ async function VerifyChallenge(props: Props) {
   );
 }
 
-export default withI18n(VerifyPage);
+export default VerifyPage;

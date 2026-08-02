@@ -13,7 +13,7 @@ export function usePersonalAccountData(
   },
 ) {
   const client = useSupabase();
-  const queryKey = ['account:data', userId];
+  const queryKey = ['account.data', userId];
 
   const queryFn = async () => {
     if (!userId) {
@@ -61,7 +61,7 @@ export function useRevalidatePersonalAccountDataQuery() {
   return useCallback(
     (userId: string) =>
       queryClient.invalidateQueries({
-        queryKey: ['account:data', userId],
+        queryKey: ['account.data', userId],
       }),
     [queryClient],
   );

@@ -34,6 +34,7 @@
     "cmdk": "1.1.1",
     "input-otp": "1.4.2",
     "lucide-react": "^0.545.0",
+    "next-intl": "^4.13.4",
     "react-top-loading-bar": "3.0.2",
     "recharts": "2.15.3",
     "tailwind-merge": "^3.3.1"
@@ -56,7 +57,6 @@
     "prettier": "^3.6.2",
     "react-day-picker": "^9.11.1",
     "react-hook-form": "^7.65.0",
-    "react-i18next": "^16.0.0",
     "sonner": "^2.0.7",
     "tailwindcss": "4.1.14",
     "tailwindcss-animate": "^1.0.7",
@@ -104,6 +104,7 @@
     "./utils": "./src/lib/utils/index.ts",
     "./if": "./src/makerkit/if.tsx",
     "./trans": "./src/makerkit/trans.tsx",
+    "./error-boundary": "./src/makerkit/error-boundary.tsx",
     "./sidebar": "./src/makerkit/sidebar.tsx",
     "./navigation-schema": "./src/makerkit/navigation-config.schema.ts",
     "./bordered-navigation-menu": "./src/makerkit/bordered-navigation-menu.tsx",

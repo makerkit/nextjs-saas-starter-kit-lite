@@ -10,7 +10,7 @@ export const DashboardDemo = dynamic(() => import('./dashboard-demo-charts'), {
   loading: () => (
     <LoadingOverlay>
       <span className={'text-muted-foreground'}>
-        <Trans i18nKey={'common:loading'} />
+        <Trans i18nKey={'common.loading'} />
       </span>
     </LoadingOverlay>
   ),

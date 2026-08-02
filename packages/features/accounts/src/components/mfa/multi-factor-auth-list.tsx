@@ -7,7 +7,7 @@ import type { Factor } from '@supabase/supabase-js';
 import { ExclamationTriangleIcon } from '@radix-ui/react-icons';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { ShieldCheck, X } from 'lucide-react';
-import { useTranslation } from 'react-i18next';
+import { useTranslations } from 'next-intl';
 import { toast } from 'sonner';
 
 import { useFetchAuthFactors } from '@kit/supabase/hooks/use-fetch-mfa-factors';
@@ -71,7 +71,7 @@ function FactorsTableContainer(props: { userId: string }) {
         <Spinner />
 
         <div>
-          <Trans i18nKey={'account:loadingFactors'} />
+          <Trans i18nKey={'account.loadingFactors'} />
         </div>
       </div>
     );
@@ -84,11 +84,11 @@ function FactorsTableContainer(props: { userId: string }) {
           <ExclamationTriangleIcon className={'h-4'} />
 
           <AlertTitle>
-            <Trans i18nKey={'account:factorsListError'} />
+            <Trans i18nKey={'account.factorsListError'} />
           </AlertTitle>
 
           <AlertDescription>
-            <Trans i18nKey={'account:factorsListErrorDescription'} />
+            <Trans i18nKey={'account.factorsListErrorDescription'} />
           </AlertDescription>
         </Alert>
       </div>
@@ -104,11 +104,11 @@ function FactorsTableContainer(props: { userId: string }) {
           <ShieldCheck className={'h-4'} />
 
           <AlertTitle>
-            <Trans i18nKey={'account:multiFactorAuthHeading'} />
+            <Trans i18nKey={'account.multiFactorAuthHeading'} />
           </AlertTitle>
 
           <AlertDescription>
-            <Trans i18nKey={'account:multiFactorAuthDescription'} />
+            <Trans i18nKey={'account.multiFactorAuthDescription'} />
           </AlertDescription>
         </Alert>
       </div>
@@ -125,7 +125,7 @@ function ConfirmUnenrollFactorModal(
     setIsModalOpen: (isOpen: boolean) => void;
   }>,
 ) {
-  const { t } = useTranslation();
+  const t = useTranslations();
   const unEnroll = useUnenrollFactor(props.userId);
 
   const onUnenrollRequested = useCallback(
@@ -137,16 +137,17 @@ function ConfirmUnenrollFactorModal(
 
         if (!response.success) {
           const errorCode = response.data;
+          const errorKey = `auth.errors.${errorCode}`;
 
-          throw t(`auth:errors.${errorCode}`, {
-            defaultValue: t(`account:unenrollFactorError`),
-          });
+          throw t.has(errorKey)
+            ? t(errorKey)
+            : t(`account.unenrollFactorError`);
         }
       });
 
       toast.promise(promise, {
-        loading: t(`account:unenrollingFactor`),
-        success: t(`account:unenrollFactorSuccess`),
+        loading: t(`account.unenrollingFactor`),
+        success: t(`account.unenrollFactorSuccess`),
         error: (error: string) => {
           return error;
         },
@@ -160,17 +161,17 @@ function ConfirmUnenrollFactorModal(
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>
-            <Trans i18nKey={'account:unenrollFactorModalHeading'} />
+            <Trans i18nKey={'account.unenrollFactorModalHeading'} />
           </AlertDialogTitle>
 
           <AlertDialogDescription>
-            <Trans i18nKey={'account:unenrollFactorModalDescription'} />
+            <Trans i18nKey={'account.unenrollFactorModalDescription'} />
           </AlertDialogDescription>
         </AlertDialogHeader>
 
         <AlertDialogFooter>
           <AlertDialogCancel>
-            <Trans i18nKey={'common:cancel'} />
+            <Trans i18nKey={'common.cancel'} />
           </AlertDialogCancel>
 
           <AlertDialogAction
@@ -178,7 +179,7 @@ function ConfirmUnenrollFactorModal(
             disabled={unEnroll.isPending}
             onClick={() => onUnenrollRequested(props.factorId)}
           >
-            <Trans i18nKey={'account:unenrollFactorModalButtonLabel'} />
+            <Trans i18nKey={'account.unenrollFactorModalButtonLabel'} />
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
@@ -201,13 +202,13 @@ function FactorsTable({
         <TableHeader>
           <TableRow>
             <TableHead>
-              <Trans i18nKey={'account:factorName'} />
+              <Trans i18nKey={'account.factorName'} />
             </TableHead>
             <TableHead>
-              <Trans i18nKey={'account:factorType'} />
+              <Trans i18nKey={'account.factorType'} />
             </TableHead>
             <TableHead>
-              <Trans i18nKey={'account:factorStatus'} />
+              <Trans i18nKey={'account.factorStatus'} />
             </TableHead>
 
             <TableHead />
@@ -250,7 +251,7 @@ function FactorsTable({
                     </TooltipTrigger>
 
                     <TooltipContent>
-                      <Trans i18nKey={'account:unenrollTooltip'} />
+                      <Trans i18nKey={'account.unenrollTooltip'} />
                     </TooltipContent>
                   </Tooltip>
                 </TooltipProvider>

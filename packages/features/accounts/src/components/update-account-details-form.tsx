@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useTranslations } from 'next-intl';
 import { useForm } from 'react-hook-form';
-import { useTranslation } from 'react-i18next';
 import { toast } from 'sonner';
 
 import { Database } from '@kit/supabase/database';
@@ -31,7 +31,7 @@ export function UpdateAccountDetailsForm({
   onUpdate: (user: Partial<UpdateUserDataParams>) => void;
 }) {
   const updateAccountMutation = useUpdateAccountData(userId);
-  const { t } = useTranslation('account');
+  const t = useTranslations('account');
 
   const form = useForm({
     resolver: zodResolver(AccountDetailsSchema),
@@ -67,7 +67,7 @@ export function UpdateAccountDetailsForm({
             render={({ field }) => (
               <FormItem>
                 <FormLabel>
-                  <Trans i18nKey={'account:name'} />
+                  <Trans i18nKey={'account.name'} />
                 </FormLabel>
 
                 <FormControl>
@@ -87,7 +87,7 @@ export function UpdateAccountDetailsForm({
 
           <div>
             <Button disabled={updateAccountMutation.isPending}>
-              <Trans i18nKey={'account:updateProfileSubmitLabel'} />
+              <Trans i18nKey={'account.updateProfileSubmitLabel'} />
             </Button>
           </div>
         </form>

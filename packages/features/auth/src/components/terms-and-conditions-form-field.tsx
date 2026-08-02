@@ -21,7 +21,7 @@ export function TermsAndConditionsFormField(
 
                 <div className={'text-xs'}>
                   <Trans
-                    i18nKey={'auth:acceptTermsAndConditions'}
+                    i18nKey={'auth.acceptTermsAndConditions'}
                     components={{
                       TermsOfServiceLink: (
                         <Link
@@ -29,7 +29,7 @@ export function TermsAndConditionsFormField(
                           className={'underline'}
                           href={'/terms-of-service'}
                         >
-                          <Trans i18nKey={'auth:termsOfService'} />
+                          <Trans i18nKey={'auth.termsOfService'} />
                         </Link>
                       ),
                       PrivacyPolicyLink: (
@@ -38,7 +38,7 @@ export function TermsAndConditionsFormField(
                           className={'underline'}
                           href={'/privacy-policy'}
                         >
-                          <Trans i18nKey={'auth:privacyPolicy'} />
+                          <Trans i18nKey={'auth.privacyPolicy'} />
                         </Link>
                       ),
                     }}

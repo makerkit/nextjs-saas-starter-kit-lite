@@ -44,7 +44,7 @@ function MobileNavigationDropdown({
   );
 
   const currentPathName = useMemo(() => {
-    return Object.values(links).find((link) => link.path === path)?.label;
+    return Object.values(links).find((link) => link.path === path)?.label ?? '';
   }, [links, path]);
 
   return (

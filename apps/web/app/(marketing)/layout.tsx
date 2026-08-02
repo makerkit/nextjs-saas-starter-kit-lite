@@ -1,6 +1,5 @@
 import { SiteFooter } from '~/(marketing)/_components/site-footer';
 import { SiteHeader } from '~/(marketing)/_components/site-header';
-import { withI18n } from '~/lib/i18n/with-i18n';
 
 /**
  * Synchronous on purpose. This layout used to await the session so the header
@@ -20,4 +19,4 @@ function SiteLayout(props: React.PropsWithChildren) {
   );
 }
 
-export default withI18n(SiteLayout);
+export default SiteLayout;

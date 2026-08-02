@@ -2,8 +2,8 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { CheckIcon, ExclamationTriangleIcon } from '@radix-ui/react-icons';
+import { useTranslations } from 'next-intl';
 import { useForm } from 'react-hook-form';
-import { useTranslation } from 'react-i18next';
 import { toast } from 'sonner';
 import { z } from 'zod';
 
@@ -40,7 +40,7 @@ export function MagicLinkAuthContainer({
   };
 }) {
   const { captchaToken, resetCaptchaToken } = useCaptchaToken();
-  const { t } = useTranslation();
+  const t = useTranslations();
   const signInWithOtpMutation = useSignInWithOtp();
 
   const form = useForm({
@@ -70,9 +70,9 @@ export function MagicLinkAuthContainer({
     };
 
     toast.promise(promise, {
-      loading: t('auth:sendingEmailLink'),
-      success: t(`auth:sendLinkSuccessToast`),
-      error: t(`auth:errors.link`),
+      loading: t('auth.sendingEmailLink'),
+      success: t(`auth.sendLinkSuccessToast`),
+      error: t(`auth.errors.link`),
     });
 
     resetCaptchaToken();
@@ -94,7 +94,7 @@ export function MagicLinkAuthContainer({
             render={({ field }) => (
               <FormItem>
                 <FormLabel>
-                  <Trans i18nKey={'common:emailAddress'} />
+                  <Trans i18nKey={'common.emailAddress'} />
                 </FormLabel>
 
                 <FormControl>
@@ -102,7 +102,7 @@ export function MagicLinkAuthContainer({
                     data-test={'email-input'}
                     required
                     type="email"
-                    placeholder={t('auth:emailPlaceholder')}
+                    placeholder={t('auth.emailPlaceholder')}
                     {...field}
                   />
                 </FormControl>
@@ -120,9 +120,9 @@ export function MagicLinkAuthContainer({
           <Button disabled={signInWithOtpMutation.isPending}>
             <If
               condition={signInWithOtpMutation.isPending}
-              fallback={<Trans i18nKey={'auth:sendEmailLink'} />}
+              fallback={<Trans i18nKey={'auth.sendEmailLink'} />}
             >
-              <Trans i18nKey={'auth:sendingEmailLink'} />
+              <Trans i18nKey={'auth.sendingEmailLink'} />
             </If>
           </Button>
         </div>
@@ -137,11 +137,11 @@ function SuccessAlert() {
       <CheckIcon className={'h-4'} />
 
       <AlertTitle>
-        <Trans i18nKey={'auth:sendLinkSuccess'} />
+        <Trans i18nKey={'auth.sendLinkSuccess'} />
       </AlertTitle>
 
       <AlertDescription>
-        <Trans i18nKey={'auth:sendLinkSuccessDescription'} />
+        <Trans i18nKey={'auth.sendLinkSuccessDescription'} />
       </AlertDescription>
     </Alert>
   );
@@ -153,11 +153,11 @@ function ErrorAlert() {
       <ExclamationTriangleIcon className={'h-4'} />
 
       <AlertTitle>
-        <Trans i18nKey={'auth:errors.generic'} />
+        <Trans i18nKey={'auth.errors.generic'} />
       </AlertTitle>
 
       <AlertDescription>
-        <Trans i18nKey={'auth:errors.link'} />
+        <Trans i18nKey={'auth.errors.link'} />
       </AlertDescription>
     </Alert>
   );

@@ -1,23 +1,23 @@
+import { getTranslations } from 'next-intl/server';
+
 import { SitePageHeader } from '~/(marketing)/_components/site-page-header';
-import { createI18nServerInstance } from '~/lib/i18n/i18n.server';
-import { withI18n } from '~/lib/i18n/with-i18n';
 
 export async function generateMetadata() {
-  const { t } = await createI18nServerInstance();
+  const t = await getTranslations();
 
   return {
-    title: t('marketing:cookiePolicy'),
+    title: t('marketing.cookiePolicy'),
   };
 }
 
 async function CookiePolicyPage() {
-  const { t } = await createI18nServerInstance();
+  const t = await getTranslations();
 
   return (
     <div>
       <SitePageHeader
-        title={t(`marketing:cookiePolicy`)}
-        subtitle={t(`marketing:cookiePolicyDescription`)}
+        title={t(`marketing.cookiePolicy`)}
+        subtitle={t(`marketing.cookiePolicyDescription`)}
       />
 
       <div className={'container mx-auto py-8'}>
@@ -27,4 +27,4 @@ async function CookiePolicyPage() {
   );
 }
 
-export default withI18n(CookiePolicyPage);
+export default CookiePolicyPage;

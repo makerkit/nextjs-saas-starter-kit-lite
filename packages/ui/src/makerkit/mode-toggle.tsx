@@ -42,7 +42,7 @@ export function ModeToggle(props: { className?: string }) {
           <Icon theme={mode} />
 
           <span>
-            <Trans i18nKey={`common:${mode}Theme`} />
+            <Trans i18nKey={`common.${mode}Theme`} />
           </span>
         </DropdownMenuItem>
       );
@@ -86,7 +86,7 @@ export function SubMenuModeToggle() {
             <Icon theme={mode} />
 
             <span>
-              <Trans i18nKey={`common:${mode}Theme`} />
+              <Trans i18nKey={`common.${mode}Theme`} />
             </span>
           </DropdownMenuItem>
         );
@@ -106,7 +106,7 @@ export function SubMenuModeToggle() {
             <Icon theme={resolvedTheme} />
 
             <span>
-              <Trans i18nKey={'common:theme'} />
+              <Trans i18nKey={'common.theme'} />
             </span>
           </span>
         </DropdownMenuSubTrigger>
@@ -116,7 +116,7 @@ export function SubMenuModeToggle() {
 
       <div className={'lg:hidden'}>
         <DropdownMenuLabel>
-          <Trans i18nKey={'common:theme'} />
+          <Trans i18nKey={'common.theme'} />
         </DropdownMenuLabel>
 
         {MenuItems}

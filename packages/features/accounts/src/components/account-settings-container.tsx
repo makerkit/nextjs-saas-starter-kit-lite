@@ -1,7 +1,6 @@
 'use client';
 
-import { useTranslation } from 'react-i18next';
-
+import { routing } from '@kit/i18n/routing';
 import {
   Card,
   CardContent,
@@ -22,6 +21,12 @@ import { UpdatePasswordFormContainer } from './password/update-password-containe
 import { UpdateAccountDetailsFormContainer } from './update-account-details-form-container';
 import { UpdateAccountImageContainer } from './update-account-image-container';
 
+/**
+ * The kit ships a single locale, so the language card is hidden until more are
+ * added in `packages/i18n/src/locales.ts`.
+ */
+const supportsLanguageSelection = routing.locales.length > 1;
+
 export function PersonalAccountSettingsContainer(
   props: React.PropsWithChildren<{
     userId: string;
@@ -36,7 +41,6 @@ export function PersonalAccountSettingsContainer(
     };
   }>,
 ) {
-  const supportsLanguageSelection = useSupportMultiLanguage();
   const user = usePersonalAccountData(props.userId);
 
   if (!user.data || user.isPending) {
@@ -48,11 +52,11 @@ export function PersonalAccountSettingsContainer(
       <Card>
         <CardHeader>
           <CardTitle>
-            <Trans i18nKey={'account:accountImage'} />
+            <Trans i18nKey={'account.accountImage'} />
           </CardTitle>
 
           <CardDescription>
-            <Trans i18nKey={'account:accountImageDescription'} />
+            <Trans i18nKey={'account.accountImageDescription'} />
           </CardDescription>
         </CardHeader>
 
@@ -69,11 +73,11 @@ export function PersonalAccountSettingsContainer(
       <Card>
         <CardHeader>
           <CardTitle>
-            <Trans i18nKey={'account:name'} />
+            <Trans i18nKey={'account.name'} />
           </CardTitle>
 
           <CardDescription>
-            <Trans i18nKey={'account:nameDescription'} />
+            <Trans i18nKey={'account.nameDescription'} />
           </CardDescription>
         </CardHeader>
 
@@ -86,16 +90,16 @@ export function PersonalAccountSettingsContainer(
         <Card>
           <CardHeader>
             <CardTitle>
-              <Trans i18nKey={'account:language'} />
+              <Trans i18nKey={'account.language'} />
             </CardTitle>
 
             <CardDescription>
-              <Trans i18nKey={'account:languageDescription'} />
+              <Trans i18nKey={'account.languageDescription'} />
             </CardDescription>
           </CardHeader>
 
           <CardContent>
-            <LanguageSelector />
+            <LanguageSelector locales={routing.locales} />
           </CardContent>
         </Card>
       </If>
@@ -103,11 +107,11 @@ export function PersonalAccountSettingsContainer(
       <Card>
         <CardHeader>
           <CardTitle>
-            <Trans i18nKey={'account:updateEmailCardTitle'} />
+            <Trans i18nKey={'account.updateEmailCardTitle'} />
           </CardTitle>
 
           <CardDescription>
-            <Trans i18nKey={'account:updateEmailCardDescription'} />
+            <Trans i18nKey={'account.updateEmailCardDescription'} />
           </CardDescription>
         </CardHeader>
 
@@ -120,11 +124,11 @@ export function PersonalAccountSettingsContainer(
         <Card>
           <CardHeader>
             <CardTitle>
-              <Trans i18nKey={'account:updatePasswordCardTitle'} />
+              <Trans i18nKey={'account.updatePasswordCardTitle'} />
             </CardTitle>
 
             <CardDescription>
-              <Trans i18nKey={'account:updatePasswordCardDescription'} />
+              <Trans i18nKey={'account.updatePasswordCardDescription'} />
             </CardDescription>
           </CardHeader>
 
@@ -137,11 +141,11 @@ export function PersonalAccountSettingsContainer(
       <Card>
         <CardHeader>
           <CardTitle>
-            <Trans i18nKey={'account:multiFactorAuth'} />
+            <Trans i18nKey={'account.multiFactorAuth'} />
           </CardTitle>
 
           <CardDescription>
-            <Trans i18nKey={'account:multiFactorAuthDescription'} />
+            <Trans i18nKey={'account.multiFactorAuthDescription'} />
           </CardDescription>
         </CardHeader>
 
@@ -154,11 +158,11 @@ export function PersonalAccountSettingsContainer(
         <Card className={'border-destructive'}>
           <CardHeader>
             <CardTitle>
-              <Trans i18nKey={'account:dangerZone'} />
+              <Trans i18nKey={'account.dangerZone'} />
             </CardTitle>
 
             <CardDescription>
-              <Trans i18nKey={'account:dangerZoneDescription'} />
+              <Trans i18nKey={'account.dangerZoneDescription'} />
             </CardDescription>
           </CardHeader>
 
@@ -169,13 +173,4 @@ export function PersonalAccountSettingsContainer(
       </If>
     </div>
   );
-}
-
-function useSupportMultiLanguage() {
-  const { i18n } = useTranslation();
-  const langs = (i18n?.options?.supportedLngs as string[]) ?? [];
-
-  const supportedLangs = langs.filter((lang) => lang !== 'cimode');
-
-  return supportedLangs.length > 1;
 }

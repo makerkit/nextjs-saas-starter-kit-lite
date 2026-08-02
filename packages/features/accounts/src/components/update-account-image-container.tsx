@@ -4,7 +4,7 @@ import { useCallback } from 'react';
 
 import type { SupabaseClient } from '@supabase/supabase-js';
 
-import { useTranslation } from 'react-i18next';
+import { useTranslations } from 'next-intl';
 import { toast } from 'sonner';
 
 import { Database } from '@kit/supabase/database';
@@ -41,7 +41,7 @@ function UploadProfileAvatarForm(props: {
   onAvatarUpdated: () => void;
 }) {
   const client = useSupabase();
-  const { t } = useTranslation('account');
+  const t = useTranslations('account');
 
   const createToaster = useCallback(
     (promise: () => Promise<unknown>) => {
@@ -111,11 +111,11 @@ function UploadProfileAvatarForm(props: {
     <ImageUploader value={props.pictureUrl} onValueChange={onValueChange}>
       <div className={'flex flex-col space-y-1'}>
         <span className={'text-sm'}>
-          <Trans i18nKey={'account:profilePictureHeading'} />
+          <Trans i18nKey={'account.profilePictureHeading'} />
         </span>
 
         <span className={'text-xs'}>
-          <Trans i18nKey={'account:profilePictureSubheading'} />
+          <Trans i18nKey={'account.profilePictureSubheading'} />
         </span>
       </div>
     </ImageUploader>

@@ -9,10 +9,10 @@ const iconClasses = 'w-4';
 
 const routes = [
   {
-    label: 'common:routes.application',
+    label: 'common.routes.application',
     children: [
       {
-        label: 'common:routes.home',
+        label: 'common.routes.home',
         path: pathsConfig.app.home,
         Icon: <Home className={iconClasses} />,
         end: true,
@@ -20,10 +20,10 @@ const routes = [
     ],
   },
   {
-    label: 'common:routes.settings',
+    label: 'common.routes.settings',
     children: [
       {
-        label: 'common:routes.profile',
+        label: 'common.routes.profile',
         path: pathsConfig.app.profileSettings,
         Icon: <User className={iconClasses} />,
       },

@@ -35,5 +35,5 @@
   "contactSuccessDescription": "We have received your message and will get back to you as soon as possible",
   "contactErrorDescription": "An error occurred while sending your message. Please try again later",
   "footerDescription": "Here you can add a description about your company or product",
-  "copyright": "© Copyright {{year}} {{product}}. All Rights Reserved."
+  "copyright": "© Copyright {year} {product}. All Rights Reserved."
 }

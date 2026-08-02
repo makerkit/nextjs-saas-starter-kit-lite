@@ -47,7 +47,7 @@ export function AppBreadcrumbs(props: {
               values[path]
             ) : (
               <Trans
-                i18nKey={`common:routes.${unslugify(path)}`}
+                i18nKey={`common.routes.${unslugify(path)}`}
                 defaults={unslugify(path)}
               />
             );

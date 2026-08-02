@@ -4,8 +4,8 @@ import Link from 'next/link';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ArrowRight } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { useForm } from 'react-hook-form';
-import { useTranslation } from 'react-i18next';
 import type { z } from 'zod';
 
 import { Button } from '@kit/ui/button';
@@ -30,7 +30,7 @@ export function PasswordSignInForm({
   onSubmit: (params: z.infer<typeof PasswordSignInSchema>) => unknown;
   loading: boolean;
 }) {
-  const { t } = useTranslation('auth');
+  const t = useTranslations('auth');
 
   const form = useForm<z.infer<typeof PasswordSignInSchema>>({
     resolver: zodResolver(PasswordSignInSchema),
@@ -52,7 +52,7 @@ export function PasswordSignInForm({
           render={({ field }) => (
             <FormItem>
               <FormLabel>
-                <Trans i18nKey={'common:emailAddress'} />
+                <Trans i18nKey={'common.emailAddress'} />
               </FormLabel>
 
               <FormControl>
@@ -76,7 +76,7 @@ export function PasswordSignInForm({
           render={({ field }) => (
             <FormItem>
               <FormLabel>
-                <Trans i18nKey={'common:password'} />
+                <Trans i18nKey={'common.password'} />
               </FormLabel>
 
               <FormControl>
@@ -100,7 +100,7 @@ export function PasswordSignInForm({
                   className={'text-xs'}
                 >
                   <Link href={'/auth/password-reset'}>
-                    <Trans i18nKey={'auth:passwordForgottenQuestion'} />
+                    <Trans i18nKey={'auth.passwordForgottenQuestion'} />
                   </Link>
                 </Button>
               </div>
@@ -118,7 +118,7 @@ export function PasswordSignInForm({
             condition={loading}
             fallback={
               <>
-                <Trans i18nKey={'auth:signInWithEmail'} />
+                <Trans i18nKey={'auth.signInWithEmail'} />
 
                 <ArrowRight
                   className={
@@ -128,7 +128,7 @@ export function PasswordSignInForm({
               </>
             }
           >
-            <Trans i18nKey={'auth:signingIn'} />
+            <Trans i18nKey={'auth.signingIn'} />
           </If>
         </Button>
       </form>

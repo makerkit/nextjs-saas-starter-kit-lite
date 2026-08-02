@@ -88,7 +88,7 @@ export function MultiFactorChallengeContainer({
       >
         <div className={'flex flex-col space-y-4'}>
           <span className={'text-muted-foreground text-sm'}>
-            <Trans i18nKey={'account:verifyActivationCodeDescription'} />
+            <Trans i18nKey={'account.verifyActivationCodeDescription'} />
           </span>
 
           <div className={'flex w-full flex-col space-y-2.5'}>
@@ -98,12 +98,12 @@ export function MultiFactorChallengeContainer({
                   <ExclamationTriangleIcon className={'h-5'} />
 
                   <AlertTitle>
-                    <Trans i18nKey={'account:invalidVerificationCodeHeading'} />
+                    <Trans i18nKey={'account.invalidVerificationCodeHeading'} />
                   </AlertTitle>
 
                   <AlertDescription>
                     <Trans
-                      i18nKey={'account:invalidVerificationCodeDescription'}
+                      i18nKey={'account.invalidVerificationCodeDescription'}
                     />
                   </AlertDescription>
                 </Alert>
@@ -136,7 +136,7 @@ export function MultiFactorChallengeContainer({
 
                       <FormDescription>
                         <Trans
-                          i18nKey={'account:verifyActivationCodeDescription'}
+                          i18nKey={'account.verifyActivationCodeDescription'}
                         />
                       </FormDescription>
 
@@ -155,9 +155,9 @@ export function MultiFactorChallengeContainer({
             }
           >
             {verifyMFAChallenge.isPending ? (
-              <Trans i18nKey={'account:verifyingCode'} />
+              <Trans i18nKey={'account.verifyingCode'} />
             ) : (
-              <Trans i18nKey={'account:submitVerificationCode'} />
+              <Trans i18nKey={'account.submitVerificationCode'} />
             )}
           </Button>
         </div>
@@ -227,7 +227,7 @@ function FactorsListContainer({
         <Spinner />
 
         <div>
-          <Trans i18nKey={'account:loadingFactors'} />
+          <Trans i18nKey={'account.loadingFactors'} />
         </div>
       </div>
     );
@@ -240,11 +240,11 @@ function FactorsListContainer({
           <ExclamationTriangleIcon className={'h-4'} />
 
           <AlertTitle>
-            <Trans i18nKey={'account:factorsListError'} />
+            <Trans i18nKey={'account.factorsListError'} />
           </AlertTitle>
 
           <AlertDescription>
-            <Trans i18nKey={'account:factorsListErrorDescription'} />
+            <Trans i18nKey={'account.factorsListErrorDescription'} />
           </AlertDescription>
         </Alert>
       </div>
@@ -257,7 +257,7 @@ function FactorsListContainer({
     <div className={'flex flex-col space-y-4'}>
       <div>
         <span className={'font-medium'}>
-          <Trans i18nKey={'account:selectFactor'} />
+          <Trans i18nKey={'account.selectFactor'} />
         </span>
       </div>
 

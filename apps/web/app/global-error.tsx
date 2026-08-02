@@ -33,7 +33,7 @@ const GlobalErrorPage = ({
             <div className={'flex flex-col items-center space-y-8'}>
               <div>
                 <h1 className={'font-heading text-9xl font-semibold'}>
-                  <Trans i18nKey={'common:errorPageHeading'} />
+                  <Trans i18nKey={'common.errorPageHeading'} />
                 </h1>
               </div>
 
@@ -45,12 +45,12 @@ const GlobalErrorPage = ({
                 >
                   <div>
                     <Heading level={2}>
-                      <Trans i18nKey={'common:genericError'} />
+                      <Trans i18nKey={'common.genericError'} />
                     </Heading>
                   </div>
 
                   <p className={'text-muted-foreground text-lg'}>
-                    <Trans i18nKey={'common:genericErrorSubHeading'} />
+                    <Trans i18nKey={'common.genericErrorSubHeading'} />
                   </p>
                 </div>
 
@@ -62,14 +62,14 @@ const GlobalErrorPage = ({
                   >
                     <ArrowLeft className={'mr-2 h-4'} />
 
-                    <Trans i18nKey={'common:goBack'} />
+                    <Trans i18nKey={'common.goBack'} />
                   </Button>
 
                   <Button className={'w-full'} variant={'outline'} asChild>
                     <Link href={'/contact'}>
                       <MessageCircle className={'mr-2 h-4'} />
 
-                      <Trans i18nKey={'common:contactUs'} />
+                      <Trans i18nKey={'common.contactUs'} />
                     </Link>
                   </Button>
                 </div>

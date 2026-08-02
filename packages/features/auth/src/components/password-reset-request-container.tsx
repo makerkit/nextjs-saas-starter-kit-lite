@@ -1,8 +1,8 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useTranslations } from 'next-intl';
 import { useForm } from 'react-hook-form';
-import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 
 import { useRequestResetPassword } from '@kit/supabase/hooks/use-request-reset-password';
@@ -30,7 +30,7 @@ const PasswordResetSchema = z.object({
 export function PasswordResetRequestContainer(params: {
   redirectPath: string;
 }) {
-  const { t } = useTranslation('auth');
+  const t = useTranslations('auth');
   const resetPasswordMutation = useRequestResetPassword();
   const { captchaToken, resetCaptchaToken } = useCaptchaToken();
 
@@ -49,7 +49,7 @@ export function PasswordResetRequestContainer(params: {
       <If condition={success}>
         <Alert variant={'success'}>
           <AlertDescription>
-            <Trans i18nKey={'auth:passwordResetSuccessMessage'} />
+            <Trans i18nKey={'auth.passwordResetSuccessMessage'} />
           </AlertDescription>
         </Alert>
       </If>
@@ -78,7 +78,7 @@ export function PasswordResetRequestContainer(params: {
             <div className={'flex flex-col space-y-4'}>
               <div>
                 <p className={'text-muted-foreground text-sm'}>
-                  <Trans i18nKey={'auth:passwordResetSubheading'} />
+                  <Trans i18nKey={'auth.passwordResetSubheading'} />
                 </p>
               </div>
 
@@ -89,7 +89,7 @@ export function PasswordResetRequestContainer(params: {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>
-                      <Trans i18nKey={'common:emailAddress'} />
+                      <Trans i18nKey={'common.emailAddress'} />
                     </FormLabel>
 
                     <FormControl>
@@ -107,7 +107,7 @@ export function PasswordResetRequestContainer(params: {
               />
 
               <Button disabled={resetPasswordMutation.isPending} type="submit">
-                <Trans i18nKey={'auth:passwordResetLabel'} />
+                <Trans i18nKey={'auth.passwordResetLabel'} />
               </Button>
             </div>
           </form>

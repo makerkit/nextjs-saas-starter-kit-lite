@@ -1,13 +1,12 @@
 'use client';
 
-import { useMemo } from 'react';
-
 import dynamic from 'next/dynamic';
 
+import type { AbstractIntlMessages } from 'next-intl';
 import { ThemeProvider } from 'next-themes';
 
 import { CaptchaProvider } from '@kit/auth/captcha/client';
-import { I18nProvider } from '@kit/i18n/provider';
+import { I18nClientProvider } from '@kit/i18n/provider';
 import { If } from '@kit/ui/if';
 import { VersionUpdater } from '@kit/ui/version-updater';
 
@@ -15,8 +14,6 @@ import { AuthProvider } from '~/components/auth-provider';
 import appConfig from '~/config/app.config';
 import authConfig from '~/config/auth.config';
 import featuresFlagConfig from '~/config/feature-flags.config';
-import { i18nResolver } from '~/lib/i18n/i18n.resolver';
-import { getI18nSettings } from '~/lib/i18n/i18n.settings';
 
 import { ReactQueryProvider } from './react-query-provider';
 
@@ -35,18 +32,20 @@ const CaptchaTokenSetter = dynamic(async () => {
 });
 
 export function RootProviders({
-  lang,
+  locale,
+  messages,
   theme = appConfig.theme,
   children,
 }: React.PropsWithChildren<{
-  lang: string;
+  // The locale to use for the app
+  locale: string;
+  // The i18n messages
+  messages: AbstractIntlMessages;
   theme?: string;
 }>) {
-  const i18nSettings = useMemo(() => getI18nSettings(lang), [lang]);
-
   return (
     <ReactQueryProvider>
-      <I18nProvider settings={i18nSettings} resolver={i18nResolver}>
+      <I18nClientProvider locale={locale} messages={messages}>
         <CaptchaProvider>
           <CaptchaTokenSetter siteKey={captchaSiteKey} />
 
@@ -66,7 +65,7 @@ export function RootProviders({
         <If condition={featuresFlagConfig.enableVersionUpdater}>
           <VersionUpdater />
         </If>
-      </I18nProvider>
+      </I18nClientProvider>
     </ReactQueryProvider>
   );
 }

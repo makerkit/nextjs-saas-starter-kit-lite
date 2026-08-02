@@ -5,8 +5,8 @@ import { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ExclamationTriangleIcon } from '@radix-ui/react-icons';
 import { Check } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { useForm } from 'react-hook-form';
-import { useTranslation } from 'react-i18next';
 import { toast } from 'sonner';
 
 import { useUpdateUser } from '@kit/supabase/hooks/use-update-user-mutation';
@@ -35,7 +35,7 @@ export const UpdatePasswordForm = ({
   userEmail: string;
   callbackPath: string;
 }) => {
-  const { t } = useTranslation('account');
+  const t = useTranslations('account');
   const updateUserMutation = useUpdateUser();
   const [needsReauthentication, setNeedsReauthentication] = useState(false);
 
@@ -108,7 +108,7 @@ export const UpdatePasswordForm = ({
                 <FormItem>
                   <FormLabel>
                     <Label>
-                      <Trans i18nKey={'account:newPassword'} />
+                      <Trans i18nKey={'account.newPassword'} />
                     </Label>
                   </FormLabel>
 
@@ -134,7 +134,7 @@ export const UpdatePasswordForm = ({
                 <FormItem>
                   <FormLabel>
                     <Label>
-                      <Trans i18nKey={'account:repeatPassword'} />
+                      <Trans i18nKey={'account.repeatPassword'} />
                     </Label>
                   </FormLabel>
 
@@ -148,7 +148,7 @@ export const UpdatePasswordForm = ({
                   </FormControl>
 
                   <FormDescription>
-                    <Trans i18nKey={'account:repeatPasswordDescription'} />
+                    <Trans i18nKey={'account.repeatPasswordDescription'} />
                   </FormDescription>
 
                   <FormMessage />
@@ -159,7 +159,7 @@ export const UpdatePasswordForm = ({
 
           <div>
             <Button disabled={updateUserMutation.isPending}>
-              <Trans i18nKey={'account:updatePasswordSubmitLabel'} />
+              <Trans i18nKey={'account.updatePasswordSubmitLabel'} />
             </Button>
           </div>
         </div>
@@ -174,11 +174,11 @@ function SuccessAlert() {
       <Check className={'h-4'} />
 
       <AlertTitle>
-        <Trans i18nKey={'account:updatePasswordSuccess'} />
+        <Trans i18nKey={'account.updatePasswordSuccess'} />
       </AlertTitle>
 
       <AlertDescription>
-        <Trans i18nKey={'account:updatePasswordSuccessMessage'} />
+        <Trans i18nKey={'account.updatePasswordSuccessMessage'} />
       </AlertDescription>
     </Alert>
   );
@@ -190,11 +190,11 @@ function NeedsReauthenticationAlert() {
       <ExclamationTriangleIcon className={'h-4'} />
 
       <AlertTitle>
-        <Trans i18nKey={'account:needsReauthentication'} />
+        <Trans i18nKey={'account.needsReauthentication'} />
       </AlertTitle>
 
       <AlertDescription>
-        <Trans i18nKey={'account:needsReauthenticationDescription'} />
+        <Trans i18nKey={'account.needsReauthenticationDescription'} />
       </AlertDescription>
     </Alert>
   );

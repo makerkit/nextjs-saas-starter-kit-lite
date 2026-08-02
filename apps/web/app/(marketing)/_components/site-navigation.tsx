@@ -20,11 +20,11 @@ import { SiteNavigationItem } from './site-navigation-item';
  *
  * {
  *   FAQ: {
- *     label: 'marketing:faq',
+ *     label: 'marketing.faq',
  *     path: '/faq',
  *   },
  *   Pricing: {
- *     label: 'marketing:pricing',
+ *     label: 'marketing.pricing',
  *     path: '/pricing',
  *   },
  * }
@@ -39,7 +39,7 @@ const links: Record<
 > = {
   /*
     FAQ: {
-      label: 'marketing:faq',
+      label: 'marketing.faq',
       path: '/faq',
     },
      */

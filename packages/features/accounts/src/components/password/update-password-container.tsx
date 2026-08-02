@@ -41,7 +41,7 @@ export function UpdatePasswordFormContainer(
 function WarnCannotUpdatePasswordAlert() {
   return (
     <Alert variant={'warning'}>
-      <Trans i18nKey={'account:cannotUpdatePassword'} />
+      <Trans i18nKey={'account.cannotUpdatePassword'} />
     </Alert>
   );
 }

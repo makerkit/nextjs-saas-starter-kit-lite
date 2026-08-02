@@ -2,7 +2,7 @@
 
 import { useCallback, useMemo, useState } from 'react';
 
-import { useTranslation } from 'react-i18next';
+import { useLocale } from 'next-intl';
 
 import {
   Select,
@@ -12,41 +12,60 @@ import {
   SelectValue,
 } from '../shadcn/select';
 
+const LOCALE_COOKIE_NAME = 'lang';
+const ONE_YEAR_IN_SECONDS = 60 * 60 * 24 * 365;
+
+/**
+ * @name LanguageSelector
+ * @description Lets the user pick a locale from the supported ones.
+ *
+ * This kit has no `[locale]` route segment, so there is no route param to
+ * switch. The selection is stored in the `lang` cookie and the page is
+ * reloaded.
+ *
+ * Out of the box that reload changes nothing: `apps/web/i18n/request.ts`
+ * resolves the locale statically so that routes can prerender, and the kit ships
+ * a single locale, so this component is never rendered — the settings page gates
+ * it on there being more than one. If you add locales, decide there how you want
+ * the locale resolved, and this selector follows. Reading the cookie in
+ * `request.ts` is the smallest change, at the cost of making every route that
+ * renders a translation request-bound.
+ */
 export function LanguageSelector({
+  locales = [],
   onChange,
 }: {
+  locales?: string[];
   onChange?: (locale: string) => unknown;
 }) {
-  const { i18n } = useTranslation();
-  const { language: currentLanguage, options } = i18n;
-
-  const locales = (options.supportedLngs as string[]).filter(
-    (locale) => locale.toLowerCase() !== 'cimode',
-  );
+  const currentLocale = useLocale();
+  const [value, setValue] = useState(currentLocale);
 
   const languageNames = useMemo(() => {
-    return new Intl.DisplayNames([currentLanguage], {
+    return new Intl.DisplayNames([currentLocale], {
       type: 'language',
     });
-  }, [currentLanguage]);
-
-  const [value, setValue] = useState(i18n.language);
+  }, [currentLocale]);
 
   const languageChanged = useCallback(
-    async (locale: string) => {
+    (locale: string) => {
       setValue(locale);
 
       if (onChange) {
         onChange(locale);
       }
 
-      await i18n.changeLanguage(locale);
+      document.cookie = `${LOCALE_COOKIE_NAME}=${locale}; path=/; max-age=${ONE_YEAR_IN_SECONDS}; SameSite=Lax`;
 
-      // refresh cached translations
+      // the messages are rendered by the server, so a reload is what applies them
       window.location.reload();
     },
-    [i18n, onChange],
+    [onChange],
   );
+
+  if (locales.length <= 1) {
+    return null;
+  }
 
   return (
     <Select value={value} onValueChange={languageChanged}>

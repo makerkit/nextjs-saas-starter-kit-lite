@@ -234,16 +234,16 @@ function getAuthErrorMessage(params: { error: string; code?: string }) {
   // this error arises when the user tries to sign in with an expired email link
   if (params.code) {
     if (params.code === 'otp_expired') {
-      return 'auth:errors.otp_expired';
+      return 'auth.errors.otp_expired';
     }
   }
 
   // this error arises when the user is trying to sign in with a different
   // browser than the one they used to request the sign in link
   if (isVerifierError(params.error)) {
-    return 'auth:errors.codeVerifierMismatch';
+    return 'auth.errors.codeVerifierMismatch';
   }
 
   // fallback to the default error message
-  return `auth:authenticationErrorAlertBody`;
+  return `auth.authenticationErrorAlertBody`;
 }

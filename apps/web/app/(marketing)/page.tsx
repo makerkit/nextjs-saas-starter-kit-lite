@@ -14,8 +14,6 @@ import {
 } from '@kit/ui/marketing';
 import { Trans } from '@kit/ui/trans';
 
-import { withI18n } from '~/lib/i18n/with-i18n';
-
 function Home() {
   return (
     <div className={'mt-4 flex flex-col space-y-24 py-14'}>
@@ -112,7 +110,7 @@ function Home() {
   );
 }
 
-export default withI18n(Home);
+export default Home;
 
 function MainCallToActionButton() {
   return (
@@ -121,7 +119,7 @@ function MainCallToActionButton() {
         <Link href={'/auth/sign-up'}>
           <span className={'flex items-center space-x-0.5'}>
             <span>
-              <Trans i18nKey={'common:getStarted'} />
+              <Trans i18nKey={'common.getStarted'} />
             </span>
 
             <ArrowRightIcon
@@ -136,7 +134,7 @@ function MainCallToActionButton() {
 
       <CtaButton variant={'link'}>
         <Link href={'/contact'}>
-          <Trans i18nKey={'common:contactUs'} />
+          <Trans i18nKey={'common.contactUs'} />
         </Link>
       </CtaButton>
     </div>

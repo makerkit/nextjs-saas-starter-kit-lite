@@ -83,7 +83,7 @@ export function ImageUploader(
 
       <div>
         <Button onClick={onClear} size={'sm'} variant={'ghost'}>
-          <Trans i18nKey={'common:clear'} />
+          <Trans i18nKey={'common.clear'} />
         </Button>
       </div>
     </div>

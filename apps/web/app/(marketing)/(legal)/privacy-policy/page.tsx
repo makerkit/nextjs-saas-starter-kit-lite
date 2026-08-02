@@ -1,23 +1,23 @@
+import { getTranslations } from 'next-intl/server';
+
 import { SitePageHeader } from '~/(marketing)/_components/site-page-header';
-import { createI18nServerInstance } from '~/lib/i18n/i18n.server';
-import { withI18n } from '~/lib/i18n/with-i18n';
 
 export async function generateMetadata() {
-  const { t } = await createI18nServerInstance();
+  const t = await getTranslations();
 
   return {
-    title: t('marketing:privacyPolicy'),
+    title: t('marketing.privacyPolicy'),
   };
 }
 
 async function PrivacyPolicyPage() {
-  const { t } = await createI18nServerInstance();
+  const t = await getTranslations();
 
   return (
     <div>
       <SitePageHeader
-        title={t('marketing:privacyPolicy')}
-        subtitle={t('marketing:privacyPolicyDescription')}
+        title={t('marketing.privacyPolicy')}
+        subtitle={t('marketing.privacyPolicyDescription')}
       />
 
       <div className={'container mx-auto py-8'}>
@@ -27,4 +27,4 @@ async function PrivacyPolicyPage() {
   );
 }
 
-export default withI18n(PrivacyPolicyPage);
+export default PrivacyPolicyPage;
