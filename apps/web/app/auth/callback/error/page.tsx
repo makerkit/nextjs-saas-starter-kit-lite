@@ -1,3 +1,5 @@
+import { Suspense } from 'react';
+
 import Link from 'next/link';
 
 import type { AuthError } from '@supabase/supabase-js';
@@ -7,6 +9,7 @@ import { Alert, AlertDescription, AlertTitle } from '@kit/ui/alert';
 import { Button } from '@kit/ui/button';
 import { Trans } from '@kit/ui/trans';
 
+import { AuthFormSkeleton } from '~/components/skeletons/page-skeletons';
 import pathsConfig from '~/config/paths.config';
 import { withI18n } from '~/lib/i18n/with-i18n';
 
@@ -19,13 +22,30 @@ interface AuthCallbackErrorPageProps {
   }>;
 }
 
-async function AuthCallbackErrorPage(props: AuthCallbackErrorPageProps) {
+/**
+ * Synchronous on purpose, and the promise goes down unawaited.
+ *
+ * Awaiting searchParams here would not fail the build, and the page would load
+ * fine on a direct hit. It only surfaces as an insight on a client-side
+ * navigation, which makes this the easiest kind to miss.
+ */
+function AuthCallbackErrorPage(props: AuthCallbackErrorPageProps) {
+  return (
+    <div className={'flex flex-col space-y-4 py-4'}>
+      <Suspense fallback={<AuthFormSkeleton fields={1} />}>
+        <AuthCallbackError searchParams={props.searchParams} />
+      </Suspense>
+    </div>
+  );
+}
+
+async function AuthCallbackError(props: AuthCallbackErrorPageProps) {
   const { error, callback, code } = await props.searchParams;
   const signInPath = pathsConfig.auth.signIn;
   const redirectPath = callback ?? pathsConfig.auth.callback;
 
   return (
-    <div className={'flex flex-col space-y-4 py-4'}>
+    <>
       <Alert variant={'warning'}>
         <AlertTitle>
           <Trans i18nKey={'auth:authenticationErrorAlertHeading'} />
@@ -41,7 +61,7 @@ async function AuthCallbackErrorPage(props: AuthCallbackErrorPageProps) {
         signInPath={signInPath}
         redirectPath={redirectPath}
       />
-    </div>
+    </>
   );
 }
 

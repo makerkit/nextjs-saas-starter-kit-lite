@@ -1,8 +1,11 @@
-import { use } from 'react';
+import { Suspense } from 'react';
 
 import { PersonalAccountSettingsContainer } from '@kit/accounts/personal-account-settings';
 import { PageBody } from '@kit/ui/page';
 
+import { Skeleton } from '@kit/ui/skeleton';
+
+import { Delayed } from '~/components/skeletons/page-skeletons';
 import authConfig from '~/config/auth.config';
 import pathsConfig from '~/config/paths.config';
 import { createI18nServerInstance } from '~/lib/i18n/i18n.server';
@@ -30,19 +33,36 @@ export const generateMetadata = async () => {
 };
 
 function PersonalAccountSettingsPage() {
-  const user = use(requireUserInServerComponent());
-  const userId = user.id;
-
   return (
     <PageBody>
       <div className={'flex w-full flex-1 flex-col lg:max-w-2xl'}>
-        <PersonalAccountSettingsContainer
-          userId={userId}
-          paths={paths}
-          features={features}
-        />
+        <Suspense fallback={<SettingsSkeleton />}>
+          <AccountSettings />
+        </Suspense>
       </div>
     </PageBody>
+  );
+}
+
+async function AccountSettings() {
+  const user = await requireUserInServerComponent();
+
+  return (
+    <PersonalAccountSettingsContainer
+      userId={user.id}
+      paths={paths}
+      features={features}
+    />
+  );
+}
+
+function SettingsSkeleton() {
+  return (
+    <Delayed className={'flex flex-col gap-y-4'}>
+      <Skeleton className={'h-40 w-full rounded-lg'} />
+      <Skeleton className={'h-40 w-full rounded-lg'} />
+      <Skeleton className={'h-40 w-full rounded-lg'} />
+    </Delayed>
   );
 }
 

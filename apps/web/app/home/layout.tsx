@@ -1,29 +1,26 @@
-import { use } from 'react';
-
-import { cookies } from 'next/headers';
-
-import {
-  Page,
-  PageLayoutStyle,
-  PageMobileNavigation,
-  PageNavigation,
-} from '@kit/ui/page';
+import { Page, PageMobileNavigation, PageNavigation } from '@kit/ui/page';
 import { SidebarProvider } from '@kit/ui/shadcn-sidebar';
 
 import { AppLogo } from '~/components/app-logo';
 import { navigationConfig } from '~/config/navigation.config';
 import { withI18n } from '~/lib/i18n/with-i18n';
-import { requireUserInServerComponent } from '~/lib/server/require-user-in-server-component';
 
 // home imports
 import { HomeMenuNavigation } from './_components/home-menu-navigation';
 import { HomeMobileNavigation } from './_components/home-mobile-navigation';
 import { HomeSidebar } from './_components/home-sidebar';
 
+/**
+ * Synchronous on purpose. This layout used to await the layout-style cookie and
+ * the session before rendering anything, so no route under /home could
+ * prerender.
+ *
+ * The style now comes from navigationConfig. The cookie it read was never
+ * written anywhere in the kit, so it always fell through to this value anyway.
+ * The session moved down into HomeSidebar, behind a Suspense boundary.
+ */
 function HomeLayout({ children }: React.PropsWithChildren) {
-  const style = use(getLayoutStyle());
-
-  if (style === 'sidebar') {
+  if (navigationConfig.style === 'sidebar') {
     return <SidebarLayout>{children}</SidebarLayout>;
   }
 
@@ -33,14 +30,11 @@ function HomeLayout({ children }: React.PropsWithChildren) {
 export default withI18n(HomeLayout);
 
 function SidebarLayout({ children }: React.PropsWithChildren) {
-  const sidebarMinimized = navigationConfig.sidebarCollapsed;
-  const [user] = use(Promise.all([requireUserInServerComponent()]));
-
   return (
-    <SidebarProvider defaultOpen={sidebarMinimized}>
+    <SidebarProvider defaultOpen={navigationConfig.sidebarCollapsed}>
       <Page style={'sidebar'}>
         <PageNavigation>
-          <HomeSidebar user={user} />
+          <HomeSidebar />
         </PageNavigation>
 
         <PageMobileNavigation className={'flex items-center justify-between'}>
@@ -76,14 +70,5 @@ function MobileNavigation() {
 
       <HomeMobileNavigation />
     </>
-  );
-}
-
-async function getLayoutStyle() {
-  const cookieStore = await cookies();
-
-  return (
-    (cookieStore.get('layout-style')?.value as PageLayoutStyle) ??
-    navigationConfig.style
   );
 }

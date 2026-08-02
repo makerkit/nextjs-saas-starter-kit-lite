@@ -1,9 +1,12 @@
+import { Suspense } from 'react';
+
 import { redirect } from 'next/navigation';
 
 import { MultiFactorChallengeContainer } from '@kit/auth/mfa';
 import { checkRequiresMultiFactorAuthentication } from '@kit/supabase/check-requires-mfa';
 import { getSupabaseServerClient } from '@kit/supabase/server-client';
 
+import { AuthFormSkeleton } from '~/components/skeletons/page-skeletons';
 import pathsConfig from '~/config/paths.config';
 import { createI18nServerInstance } from '~/lib/i18n/i18n.server';
 import { withI18n } from '~/lib/i18n/with-i18n';
@@ -22,7 +25,19 @@ export const generateMetadata = async () => {
   };
 };
 
-async function VerifyPage(props: Props) {
+/**
+ * The redirects stay inside the boundary. redirect() works from a suspended
+ * child, so the guard does not have to run before anything can render.
+ */
+function VerifyPage(props: Props) {
+  return (
+    <Suspense fallback={<AuthFormSkeleton fields={1} />}>
+      <VerifyChallenge searchParams={props.searchParams} />
+    </Suspense>
+  );
+}
+
+async function VerifyChallenge(props: Props) {
   const client = getSupabaseServerClient();
 
   const { data } = await client.auth.getClaims();

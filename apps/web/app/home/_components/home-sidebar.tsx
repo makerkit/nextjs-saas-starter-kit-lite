@@ -1,4 +1,4 @@
-import type { JwtPayload } from '@supabase/supabase-js';
+import { Suspense } from 'react';
 
 import {
   Sidebar,
@@ -7,16 +7,20 @@ import {
   SidebarHeader,
   SidebarNavigation,
 } from '@kit/ui/shadcn-sidebar';
+import { Skeleton } from '@kit/ui/skeleton';
 
 import { AppLogo } from '~/components/app-logo';
 import { ProfileAccountDropdownContainer } from '~/components/personal-account-dropdown-container';
 import { navigationConfig } from '~/config/navigation.config';
-import { Tables } from '~/lib/database.types';
+import { requireUserInServerComponent } from '~/lib/server/require-user-in-server-component';
 
-export function HomeSidebar(props: {
-  account?: Tables<'accounts'>;
-  user: JwtPayload;
-}) {
+/**
+ * The logo and the navigation do not depend on the user, so they prerender.
+ * Only the account dropdown in the footer needs the session, so only that sits
+ * behind a boundary. Taking the user as a prop here would push the await up
+ * into the layout and make the whole sidebar, and everything under it, wait.
+ */
+export function HomeSidebar() {
   return (
     <Sidebar collapsible={'icon'}>
       <SidebarHeader className={'h-16 justify-center'}>
@@ -32,11 +36,25 @@ export function HomeSidebar(props: {
       </SidebarContent>
 
       <SidebarFooter>
-        <ProfileAccountDropdownContainer
-          user={props.user}
-          account={props.account}
-        />
+        <Suspense fallback={<AccountDropdownFallback />}>
+          <AccountDropdown />
+        </Suspense>
       </SidebarFooter>
     </Sidebar>
+  );
+}
+
+async function AccountDropdown() {
+  const user = await requireUserInServerComponent();
+
+  return <ProfileAccountDropdownContainer user={user} />;
+}
+
+function AccountDropdownFallback() {
+  return (
+    <div className={'flex items-center gap-x-2 p-2'}>
+      <Skeleton className={'size-8 shrink-0 rounded-full'} />
+      <Skeleton className={'h-4 w-full'} />
+    </div>
   );
 }
