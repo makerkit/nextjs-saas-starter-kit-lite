@@ -3,8 +3,6 @@
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
 
-import type { JwtPayload } from '@supabase/supabase-js';
-
 import { PersonalAccountDropdown } from '@kit/accounts/personal-account-dropdown';
 import { useSignOut } from '@kit/supabase/hooks/use-sign-out';
 import { useUser } from '@kit/supabase/hooks/use-user';
@@ -33,36 +31,32 @@ const features = {
   enableThemeToggle: featuresFlagConfig.enableThemeToggle,
 };
 
-export function SiteHeaderAccountSection({
-  user,
-}: React.PropsWithChildren<{
-  user: JwtPayload | null;
-}>) {
+/**
+ * The session is read on the client, never on the server. Reading it in the
+ * marketing layout put user data into the server HTML, which is why those pages
+ * had to be kept out of shared caches. The server response is now identical for
+ * every visitor, so marketing pages are safe on any CDN.
+ *
+ * The trade-off is that a signed-in visitor briefly sees the signed-out actions
+ * until the session resolves on the client.
+ */
+export function SiteHeaderAccountSection() {
+  const signOut = useSignOut();
+  const { data: user } = useUser();
+
   if (!user) {
     return <AuthButtons />;
   }
 
-  return <SuspendedPersonalAccountDropdown user={user} />;
-}
-
-function SuspendedPersonalAccountDropdown(props: { user: JwtPayload | null }) {
-  const signOut = useSignOut();
-  const user = useUser(props.user);
-  const userData = user.data ?? props.user ?? null;
-
-  if (userData) {
-    return (
-      <PersonalAccountDropdown
-        showProfileName={false}
-        paths={paths}
-        features={features}
-        user={userData}
-        signOutRequested={() => signOut.mutateAsync()}
-      />
-    );
-  }
-
-  return <AuthButtons />;
+  return (
+    <PersonalAccountDropdown
+      showProfileName={false}
+      paths={paths}
+      features={features}
+      user={user}
+      signOutRequested={() => signOut.mutateAsync()}
+    />
+  );
 }
 
 function AuthButtons() {

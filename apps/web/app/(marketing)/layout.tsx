@@ -1,17 +1,17 @@
-import { getSupabaseServerClient } from '@kit/supabase/server-client';
-
 import { SiteFooter } from '~/(marketing)/_components/site-footer';
 import { SiteHeader } from '~/(marketing)/_components/site-header';
 import { withI18n } from '~/lib/i18n/with-i18n';
 
-async function SiteLayout(props: React.PropsWithChildren) {
-  const client = getSupabaseServerClient();
-
-  const { data } = await client.auth.getClaims();
-
+/**
+ * Synchronous on purpose. This layout used to await the session so the header
+ * could render the signed-in state, which put user data into the server HTML of
+ * every marketing page and forced them out of shared caches. The header now
+ * reads the session on the client, so this response is identical for everyone.
+ */
+function SiteLayout(props: React.PropsWithChildren) {
   return (
     <div className={'flex min-h-[100vh] flex-col'}>
-      <SiteHeader user={data?.claims} />
+      <SiteHeader />
 
       {props.children}
 
