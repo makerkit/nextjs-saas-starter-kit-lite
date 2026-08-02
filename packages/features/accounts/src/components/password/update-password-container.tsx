@@ -18,12 +18,14 @@ export function UpdatePasswordFormContainer(
     return <LoadingOverlay fullPage={false} />;
   }
 
-  if (!user) {
+  // `email` is optional on the claims type, and the form requires one
+  if (!user?.email) {
     return null;
   }
 
-  const canUpdatePassword = user.amr?.some(
-    (item: { method: string }) => item.method === `password`,
+  // `amr` widened to `string[] | AMREntry[]`, so handle both shapes
+  const canUpdatePassword = user.amr?.some((item) =>
+    typeof item === 'string' ? item === 'password' : item.method === 'password',
   );
 
   if (!canUpdatePassword) {

@@ -12,7 +12,8 @@ export function UpdateEmailFormContainer(props: { callbackPath: string }) {
     return <LoadingOverlay fullPage={false} />;
   }
 
-  if (!user) {
+  // `email` is optional on the claims type, and the form requires one
+  if (!user?.email) {
     return null;
   }
 
