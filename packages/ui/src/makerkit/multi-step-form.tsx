@@ -13,12 +13,12 @@ import React, {
 
 import { Slot, Slottable } from '@radix-ui/react-slot';
 import { useMutation } from '@tanstack/react-query';
-import { Path, UseFormReturn } from 'react-hook-form';
+import { FieldValues, Path, UseFormReturn } from 'react-hook-form';
 import { z } from 'zod';
 
 import { cn } from '../lib/utils';
 
-interface MultiStepFormProps<T extends z.ZodType> {
+interface MultiStepFormProps<T extends z.ZodType<FieldValues>> {
   schema: T;
   form: UseFormReturn<z.infer<T>>;
   onSubmit: (data: z.infer<T>) => void;
@@ -47,7 +47,7 @@ const MultiStepFormContext = createContext<ReturnType<
  * @param className
  * @constructor
  */
-export function MultiStepForm<T extends z.ZodType>({
+export function MultiStepForm<T extends z.ZodType<FieldValues>>({
   schema,
   form,
   onSubmit,
@@ -81,7 +81,11 @@ export function MultiStepForm<T extends z.ZodType>({
   const multiStepForm = useMultiStepForm(schema, form, stepNames, onSubmit);
 
   return (
-    <MultiStepFormContext.Provider value={multiStepForm}>
+    <MultiStepFormContext.Provider
+      // the context is shared by forms with different schemas, so the
+      // per-schema type cannot line up with the context's own type
+      value={multiStepForm as unknown as ReturnType<typeof useMultiStepForm>}
+    >
       <form
         onSubmit={form.handleSubmit(onSubmit)}
         className={cn(className, 'flex size-full flex-col overflow-hidden')}
@@ -145,8 +149,10 @@ export const MultiStepFormStep: React.FC<
   );
 };
 
-export function useMultiStepFormContext<Schema extends z.ZodType>() {
-  const context = useContext(MultiStepFormContext) as ReturnType<
+export function useMultiStepFormContext<
+  Schema extends z.ZodType<FieldValues>,
+>() {
+  const context = useContext(MultiStepFormContext) as unknown as ReturnType<
     typeof useMultiStepForm<Schema>
   >;
 
@@ -167,7 +173,7 @@ export function useMultiStepFormContext<Schema extends z.ZodType>() {
  * @param stepNames
  * @param onSubmit
  */
-export function useMultiStepForm<Schema extends z.ZodType>(
+export function useMultiStepForm<Schema extends z.ZodType<FieldValues>>(
   schema: Schema,
   form: UseFormReturn<z.infer<Schema>>,
   stepNames: string[],

@@ -1,10 +1,10 @@
 import { z } from 'zod';
 
 export const zodParseFactory =
-  <T extends z.ZodTypeAny>(schema: T) =>
+  <T extends z.ZodType>(schema: T) =>
   (data: unknown): z.infer<T> => {
     try {
-      return schema.parse(data) as unknown;
+      return schema.parse(data);
     } catch (err) {
       console.error(err);
 

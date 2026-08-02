@@ -5,23 +5,11 @@ import { z } from 'zod';
 const providers: z.ZodType<Provider> = getProviders();
 
 const AuthConfigSchema = z.object({
-  captchaTokenSiteKey: z
-    .string({
-      description: 'The reCAPTCHA site key.',
-    })
-    .optional(),
-  displayTermsCheckbox: z
-    .boolean({
-      description: 'Whether to display the terms checkbox during sign-up.',
-    })
-    .optional(),
+  captchaTokenSiteKey: z.string().optional(),
+  displayTermsCheckbox: z.boolean().optional(),
   providers: z.object({
-    password: z.boolean({
-      description: 'Enable password authentication.',
-    }),
-    magicLink: z.boolean({
-      description: 'Enable magic link authentication.',
-    }),
+    password: z.boolean(),
+    magicLink: z.boolean(),
     oAuth: providers.array(),
   }),
 });

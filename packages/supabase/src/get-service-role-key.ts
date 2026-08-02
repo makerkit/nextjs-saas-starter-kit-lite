@@ -13,7 +13,7 @@ const message =
 export function getServiceRoleKey() {
   return z
     .string({
-      required_error: message,
+      error: message,
     })
     .min(1, {
       message: message,

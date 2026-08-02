@@ -26,14 +26,13 @@ export const PasswordSchema = z
  * Refined password schema with additional requirements
  * This is required to validate the password requirements on sign up and password change
  */
-export const RefinedPasswordSchema = PasswordSchema.superRefine((val, ctx) =>
-  validatePassword(val, ctx),
-);
+export const RefinedPasswordSchema = PasswordSchema.superRefine((val, ctx) => {
+  validatePassword(val, ctx);
+});
 
-export function refineRepeatPassword(
-  data: { password: string; repeatPassword: string },
-  ctx: z.RefinementCtx,
-) {
+export function refineRepeatPassword<
+  T extends { password: string; repeatPassword: string },
+>(data: T, ctx: z.RefinementCtx<T>) {
   if (data.password !== data.repeatPassword) {
     ctx.addIssue({
       message: 'auth.errors.passwordsDoNotMatch',
@@ -41,11 +40,9 @@ export function refineRepeatPassword(
       code: 'custom',
     });
   }
-
-  return true;
 }
 
-function validatePassword(password: string, ctx: z.RefinementCtx) {
+function validatePassword(password: string, ctx: z.RefinementCtx<string>) {
   if (requirements.specialChars) {
     const specialCharsCount =
       password.match(/[!@#$%^&*(),.?":{}|<>]/g)?.length ?? 0;
@@ -77,6 +74,4 @@ function validatePassword(password: string, ctx: z.RefinementCtx) {
       });
     }
   }
-
-  return true;
 }

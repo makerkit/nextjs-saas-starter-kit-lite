@@ -23,8 +23,7 @@ export function enhanceAction<
     auth?: boolean;
     captcha?: boolean;
     schema?: z.ZodType<
-      Config['captcha'] extends true ? Args & { captchaToken: string } : Args,
-      z.ZodTypeDef
+      Config['captcha'] extends true ? Args & { captchaToken: string } : Args
     >;
   },
 >(
@@ -38,6 +37,9 @@ export function enhanceAction<
     params: Config['schema'] extends ZodType ? z.infer<Config['schema']> : Args,
   ) => {
     type UserParam = Config['auth'] extends false ? undefined : JwtPayload;
+    type FnParams = Config['schema'] extends ZodType
+      ? z.infer<Config['schema']>
+      : Args;
 
     const requireAuth = config.auth ?? true;
     let user: UserParam = undefined as UserParam;
@@ -71,6 +73,8 @@ export function enhanceAction<
       user = auth.data as UserParam;
     }
 
-    return fn(data, user);
+    // `data` is either the parsed output or the raw params, and TypeScript
+    // cannot prove the conditional type through the runtime ternary above
+    return fn(data as FnParams, user);
   };
 }
