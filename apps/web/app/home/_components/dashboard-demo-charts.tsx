@@ -878,11 +878,16 @@ export function PageViewsChart() {
                   className="w-[150px]"
                   nameKey="views"
                   labelFormatter={(value) => {
-                    return new Date(value).toLocaleDateString('en-US', {
-                      month: 'short',
-                      day: 'numeric',
-                      year: 'numeric',
-                    });
+                    // recharts 3 types this as ReactNode; the data is keyed on
+                    // date strings
+                    return new Date(value as string).toLocaleDateString(
+                      'en-US',
+                      {
+                        month: 'short',
+                        day: 'numeric',
+                        year: 'numeric',
+                      },
+                    );
                   }}
                 />
               }
