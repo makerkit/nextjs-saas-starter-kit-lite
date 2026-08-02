@@ -45,3 +45,5 @@ yarn-error.log*
 
 # contentlayer
 .contentlayer/
+# prds
+.prds/
