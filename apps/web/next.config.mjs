@@ -19,6 +19,11 @@ const config = {
   transpilePackages: INTERNAL_PACKAGES,
   images: {
     remotePatterns: getRemotePatterns(),
+    /**
+     * Supabase Storage runs on 127.0.0.1 locally, and Next.js 16 blocks
+     * optimizing local IPs by default. Only relax this outside production.
+     */
+    dangerouslyAllowLocalIP: !IS_PRODUCTION,
   },
   logging: {
     fetches: {
@@ -30,12 +35,12 @@ const config = {
   outputFileTracingIncludes: {
     '/*': ['./content/**/*'],
   },
+  reactCompiler: ENABLE_REACT_COMPILER,
+  turbopack: {
+    resolveExtensions: ['.ts', '.tsx', '.js', '.jsx'],
+  },
   experimental: {
     mdxRs: true,
-    reactCompiler: ENABLE_REACT_COMPILER,
-    turbo: {
-      resolveExtensions: ['.ts', '.tsx', '.js', '.jsx'],
-    },
     optimizePackageImports: [
       'recharts',
       'lucide-react',
@@ -51,8 +56,8 @@ const config = {
       transform: 'lodash/{{member}}',
     },
   },
-  /** We already do linting and typechecking as separate tasks in CI */
-  eslint: { ignoreDuringBuilds: true },
+  /** We already do typechecking as a separate task in CI. Next.js 16 removed
+   * the `eslint` option along with `next lint`; linting runs via the ESLint CLI. */
   typescript: { ignoreBuildErrors: true },
 };
 

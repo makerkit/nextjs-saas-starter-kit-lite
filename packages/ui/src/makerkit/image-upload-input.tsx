@@ -1,6 +1,6 @@
 'use client';
 
-import type { FormEvent, MouseEventHandler } from 'react';
+import type { InputEvent, MouseEventHandler } from 'react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 import Image from 'next/image';
@@ -39,7 +39,7 @@ export const ImageUploadInput = function ImageUploadInputComponent({
   });
 
   const onInputChange = useCallback(
-    (e: FormEvent<HTMLInputElement>) => {
+    (e: InputEvent<HTMLInputElement>) => {
       e.preventDefault();
 
       const files = e.currentTarget.files;
