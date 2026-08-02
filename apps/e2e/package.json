@@ -2,15 +2,15 @@
   "name": "web-e2e",
   "version": "1.0.0",
   "description": "",
+  "keywords": [],
+  "license": "ISC",
+  "author": "",
   "main": "index.js",
   "scripts": {
     "report": "playwright show-report",
     "test": "playwright test --max-failures=1",
     "test:ui": "playwright test --ui"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "devDependencies": {
     "@playwright/test": "catalog:",
     "@types/node": "catalog:",

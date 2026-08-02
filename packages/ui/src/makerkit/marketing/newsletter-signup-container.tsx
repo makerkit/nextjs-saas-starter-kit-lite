@@ -8,8 +8,7 @@ import { Heading } from '../../shadcn/heading';
 import { Spinner } from '../spinner';
 import { NewsletterSignup } from './newsletter-signup';
 
-interface NewsletterSignupContainerProps
-  extends React.HTMLAttributes<HTMLDivElement> {
+interface NewsletterSignupContainerProps extends React.HTMLAttributes<HTMLDivElement> {
   onSignup: (email: string) => Promise<void>;
   heading?: string;
   description?: string;

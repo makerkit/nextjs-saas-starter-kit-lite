@@ -6,109 +6,110 @@
  */
 
 .markdoc {
-    @apply text-foreground;
+  @apply text-foreground;
 }
 
 .markdoc h1 {
-    @apply mt-14 text-4xl font-semibold font-heading tracking-tight dark:text-white text-foreground;
+  @apply mt-14 text-4xl font-semibold font-heading tracking-tight dark:text-white text-foreground;
 }
 
 .markdoc h2 {
-    @apply mb-6 mt-12 font-semibold text-2xl font-heading tracking-tight dark:text-white text-foreground;
+  @apply mb-6 mt-12 font-semibold text-2xl font-heading tracking-tight dark:text-white text-foreground;
 }
 
 .markdoc h3 {
-    @apply mt-12 text-xl font-semibold font-heading tracking-tight dark:text-white text-foreground;
+  @apply mt-12 text-xl font-semibold font-heading tracking-tight dark:text-white text-foreground;
 }
 
 .markdoc h4 {
-    @apply mt-8 text-lg font-medium tracking-tight dark:text-white text-foreground;
+  @apply mt-8 text-lg font-medium tracking-tight dark:text-white text-foreground;
 }
 
 .markdoc h5 {
-    @apply mt-6 text-base font-medium tracking-tight dark:text-white text-foreground;
+  @apply mt-6 text-base font-medium tracking-tight dark:text-white text-foreground;
 }
 
 .markdoc h6 {
-    @apply mt-2 text-sm font-normal tracking-tight dark:text-white text-foreground;
+  @apply mt-2 text-sm font-normal tracking-tight dark:text-white text-foreground;
 }
 
 .markdoc p {
-    @apply mb-6 mt-4 text-base leading-7 text-muted-foreground;
+  @apply mb-6 mt-4 text-base leading-7 text-muted-foreground;
 }
 
 .markdoc li {
-    @apply relative my-1.5 text-base leading-7 text-muted-foreground;
+  @apply relative my-1.5 text-base leading-7 text-muted-foreground;
 }
 
 .markdoc ul > li:before {
-    content: '-';
+  content: '-';
 
-    @apply mr-2;
+  @apply mr-2;
 }
 
 .markdoc ol > li:before {
-    @apply inline-flex font-medium text-muted-foreground;
+  @apply inline-flex font-medium text-muted-foreground;
 
-    content: counters(counts, '.') '. ';
-    font-feature-settings: 'tnum';
+  content: counters(counts, '.') '. ';
+  font-feature-settings: 'tnum';
 }
 
 .markdoc b,
 .markdoc strong {
-    @apply font-semibold text-secondary-foreground dark:text-white;
+  @apply font-semibold text-secondary-foreground dark:text-white;
 }
 
 .markdoc img,
 .markdoc video {
-    @apply rounded-md;
+  @apply rounded-md;
 }
 
 .markdoc ul,
 .markdoc ol {
-    @apply pl-1;
+  @apply pl-1;
 }
 
 .markdoc ol > li {
-    counter-increment: counts;
+  counter-increment: counts;
 }
 
 .markdoc ol > li:before {
-    @apply mr-2 inline-flex font-semibold;
+  @apply mr-2 inline-flex font-semibold;
 
-    content: counters(counts, '.') '. ';
-    font-feature-settings: 'tnum';
+  content: counters(counts, '.') '. ';
+  font-feature-settings: 'tnum';
 }
 
-.markdoc p > code, .markdoc li > code {
-    @apply p-0.5 text-sm font-semibold bg-muted/50 border font-mono text-secondary-foreground;
+.markdoc p > code,
+.markdoc li > code {
+  @apply p-0.5 text-sm font-semibold bg-muted/50 border font-mono text-secondary-foreground;
 }
 
 .markdoc pre {
-    @apply overflow-x-auto bg-muted/50 rounded-md border border-border p-4 text-sm font-mono text-foreground;
+  @apply overflow-x-auto bg-muted/50 rounded-md border border-border p-4 text-sm font-mono text-foreground;
 }
 
 .markdoc blockquote {
-    @apply my-4 border-l-8 border border-primary px-6 py-4 text-lg font-medium text-muted-foreground;
+  @apply my-4 border-l-8 border border-primary px-6 py-4 text-lg font-medium text-muted-foreground;
 }
 
 .markdoc a {
-    @apply border-b-black border-b hover:border-b-2 pb-0.5 text-secondary-foreground font-semibold dark:border-yellow-300;
+  @apply border-b-black border-b hover:border-b-2 pb-0.5 text-secondary-foreground font-semibold dark:border-yellow-300;
 }
 
 .markdoc hr {
-    @apply mt-8 mb-6 border-border;
+  @apply mt-8 mb-6 border-border;
 }
 
 .markdoc [role='alert'] {
-    @apply py-4 m-0 my-8;
+  @apply py-4 m-0 my-8;
 }
 
 .markdoc [role='alert'] * {
-    color: inherit;
-    @apply m-0 p-0 text-sm;
+  color: inherit;
+  @apply m-0 p-0 text-sm;
 }
 
 .markdoc [role='alert'] h5 {
-    color: inherit;
+  color: inherit;
 }

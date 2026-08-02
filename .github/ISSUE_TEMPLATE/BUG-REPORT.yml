@@ -1,14 +1,12 @@
-name: "🐛 Bug Report"
+name: '🐛 Bug Report'
 description: Create a new ticket for a bug.
-title: "🐛 [BUG] - <title>"
-labels: [
-  "bug"
-]
+title: '🐛 [BUG] - <title>'
+labels: ['bug']
 body:
   - type: textarea
     id: description
     attributes:
-      label: "Description"
+      label: 'Description'
       description: Please enter an explicit description of your issue
       placeholder: Short and explicit description of your incident...
     validations:
@@ -16,7 +14,7 @@ body:
   - type: textarea
     id: reprod
     attributes:
-      label: "Reproduction steps"
+      label: 'Reproduction steps'
       description: Please enter an explicit description of your issue
       value: |
         1. Go to '...'
@@ -29,13 +27,13 @@ body:
   - type: textarea
     id: logs
     attributes:
-      label: "Logs"
+      label: 'Logs'
       description: Please copy and paste any relevant log output. Please verify both the server logs and the browser logs (if applicable). This will be automatically formatted into code, so no need for backticks. If you cannot provide logs, simply write N/A.
       render: bash
   - type: textarea
     id: screenshot
     attributes:
-      label: "Screenshots"
+      label: 'Screenshots'
       description: If applicable, add screenshots to help explain your problem.
       value: |
         ![DESCRIPTION](LINK.png)
@@ -45,7 +43,7 @@ body:
   - type: dropdown
     id: browsers
     attributes:
-      label: "Browsers"
+      label: 'Browsers'
       description: What browsers are you seeing the problem on ?
       multiple: true
       options:
@@ -59,7 +57,7 @@ body:
   - type: dropdown
     id: os
     attributes:
-      label: "OS"
+      label: 'OS'
       description: What is the impacted environment ?
       multiple: true
       options:

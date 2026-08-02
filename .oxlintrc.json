@@ -1,10 +1,6 @@
 {
   "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": [
-    "react",
-    "nextjs",
-    "import"
-  ],
+  "plugins": ["react", "nextjs", "import"],
   "rules": {
     "no-undef": "off",
     "typescript/triple-slash-reference": "off",

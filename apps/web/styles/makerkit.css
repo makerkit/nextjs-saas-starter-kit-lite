@@ -9,34 +9,42 @@
 Optimize dropdowns for mobile
  */
 [data-radix-popper-content-wrapper] {
-    @apply w-full md:w-auto;
+  @apply w-full md:w-auto;
 }
 
 [data-radix-menu-content] {
-    @apply rounded-none md:rounded-lg w-full md:w-auto;
+  @apply rounded-none md:rounded-lg w-full md:w-auto;
 }
 
-[data-radix-menu-content] [role="menuitem"] {
-    @apply md:min-h-0 min-h-12;
+[data-radix-menu-content] [role='menuitem'] {
+  @apply md:min-h-0 min-h-12;
 }
 
 .site-header > .container:before,
 .site-footer > .container:before {
-    background: radial-gradient(62.87% 100% at 50% 100%, var(--color-gray-200) 0%, rgba(255, 255, 255, 0) 100%);
+  background: radial-gradient(
+    62.87% 100% at 50% 100%,
+    var(--color-gray-200) 0%,
+    rgba(255, 255, 255, 0) 100%
+  );
 
-    bottom: 0;
-    content: "";
-    height: 1px;
-    left: 0;
-    position: absolute;
-    width: 100%;
+  bottom: 0;
+  content: '';
+  height: 1px;
+  left: 0;
+  position: absolute;
+  width: 100%;
 }
 
 .dark .site-header > .container:before,
 .dark .site-footer > .container:before {
-    background: radial-gradient(62.87% 100% at 50% 100%, rgba(255, 255, 255, .10) 0%, rgba(255, 255, 255, 0) 100%);
+  background: radial-gradient(
+    62.87% 100% at 50% 100%,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0) 100%
+  );
 }
 
 .site-footer > .container:before {
-    top: 0;
+  top: 0;
 }

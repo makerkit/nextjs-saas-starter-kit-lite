@@ -2,14 +2,13 @@ import { readFileSync, readdirSync } from 'fs';
 import * as path from 'path';
 
 const whitelist = {
-  SUPABASE_SERVICE_ROLE_KEY: ['eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImV4cCI6MTk4MzgxMjk5Nn0.EGIM96RAZx35lJzdJsyH-qQwv8Hdp7fsn3W0YpN81IU'],
+  SUPABASE_SERVICE_ROLE_KEY: [
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImV4cCI6MTk4MzgxMjk5Nn0.EGIM96RAZx35lJzdJsyH-qQwv8Hdp7fsn3W0YpN81IU',
+  ],
 };
 
 // List of sensitive environment variables that should not be in .env files
-const sensitiveEnvVars = [
-  'SUPABASE_SERVICE_ROLE_KEY',
-  'CAPTCHA_SECRET_TOKEN',
-];
+const sensitiveEnvVars = ['SUPABASE_SERVICE_ROLE_KEY', 'CAPTCHA_SECRET_TOKEN'];
 
 // Files to check
 const envFiles = ['.env', '.env.development', '.env.production'];
@@ -38,7 +37,9 @@ function checkEnvFiles(rootPath) {
               return;
             }
 
-            console.error(`⚠️ Secret key "${secret}" found in ${file} on line ${index + 1}`);
+            console.error(
+              `⚠️ Secret key "${secret}" found in ${file} on line ${index + 1}`,
+            );
 
             hasSecrets = true;
           }
@@ -65,13 +66,15 @@ function checkEnvFiles(rootPath) {
   } else {
     const appName = rootPath.split('/').pop();
 
-    console.log(`✅ No secret keys found in staged environment files for the app ${appName}`);
+    console.log(
+      `✅ No secret keys found in staged environment files for the app ${appName}`,
+    );
   }
 }
 
 const apps = readdirSync('../../apps');
 
-apps.forEach(app => {
+apps.forEach((app) => {
   checkEnvFiles(`../../apps/${app}`);
 });
 
@@ -87,7 +90,7 @@ function isValueWhitelisted(key, value) {
   }
 
   if (Array.isArray(whiteListedValue)) {
-    return whiteListedValue.some(allowed => {
+    return whiteListedValue.some((allowed) => {
       if (allowed instanceof RegExp) {
         return allowed.test(value);
       }

@@ -1,10 +1,13 @@
 {
   "name": "@kit/accounts",
-  "private": true,
   "version": "0.1.0",
-  "scripts": {
-    "clean": "git clean -xdf .turbo node_modules",
-    "typecheck": "tsc --noEmit"
+  "private": true,
+  "typesVersions": {
+    "*": {
+      "*": [
+        "src/*"
+      ]
+    }
   },
   "exports": {
     "./personal-account-dropdown": "./src/components/personal-account-dropdown.tsx",
@@ -12,6 +15,10 @@
     "./components": "./src/components/index.ts",
     "./hooks/*": "./src/hooks/*.ts",
     "./api": "./src/server/api.ts"
+  },
+  "scripts": {
+    "clean": "git clean -xdf .turbo node_modules",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@kit/i18n": "workspace:*",
@@ -39,12 +46,5 @@
     "react-hook-form": "catalog:",
     "sonner": "catalog:",
     "zod": "catalog:"
-  },
-  "typesVersions": {
-    "*": {
-      "*": [
-        "src/*"
-      ]
-    }
   }
 }

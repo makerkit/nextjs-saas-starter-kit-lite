@@ -1,15 +1,25 @@
 {
   "name": "@kit/i18n",
-  "private": true,
   "version": "0.1.0",
-  "scripts": {
-    "clean": "git clean -xdf .turbo node_modules",
-    "typecheck": "tsc --noEmit"
+  "private": true,
+  "typesVersions": {
+    "*": {
+      "*": [
+        "src/*"
+      ]
+    }
   },
   "exports": {
     ".": "./src/index.ts",
     "./routing": "./src/routing.ts",
     "./provider": "./src/client-provider.tsx"
+  },
+  "scripts": {
+    "clean": "git clean -xdf .turbo node_modules",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "next-intl": "catalog:"
   },
   "devDependencies": {
     "@kit/shared": "workspace:*",
@@ -20,15 +30,5 @@
     "next": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:"
-  },
-  "dependencies": {
-    "next-intl": "catalog:"
-  },
-  "typesVersions": {
-    "*": {
-      "*": [
-        "src/*"
-      ]
-    }
   }
 }

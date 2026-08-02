@@ -1,10 +1,13 @@
 {
   "name": "@kit/supabase",
-  "private": true,
   "version": "0.1.0",
-  "scripts": {
-    "clean": "git clean -xdf .turbo node_modules",
-    "typecheck": "tsc --noEmit"
+  "private": true,
+  "typesVersions": {
+    "*": {
+      "*": [
+        "src/*"
+      ]
+    }
   },
   "exports": {
     "./server-client": "./src/clients/server-client.ts",
@@ -17,6 +20,10 @@
     "./database": "./src/database.types.ts",
     "./auth": "./src/auth.ts"
   },
+  "scripts": {
+    "clean": "git clean -xdf .turbo node_modules",
+    "typecheck": "tsc --noEmit"
+  },
   "devDependencies": {
     "@kit/tsconfig": "workspace:*",
     "@supabase/ssr": "catalog:",
@@ -28,12 +35,5 @@
     "react": "catalog:",
     "server-only": "catalog:",
     "zod": "catalog:"
-  },
-  "typesVersions": {
-    "*": {
-      "*": [
-        "src/*"
-      ]
-    }
   }
 }

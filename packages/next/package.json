@@ -1,14 +1,21 @@
 {
   "name": "@kit/next",
-  "private": true,
   "version": "0.1.0",
-  "scripts": {
-    "clean": "git clean -xdf .turbo node_modules",
-    "typecheck": "tsc --noEmit"
+  "private": true,
+  "typesVersions": {
+    "*": {
+      "*": [
+        "src/*"
+      ]
+    }
   },
   "exports": {
     "./actions": "./src/actions/index.ts",
     "./routes": "./src/routes/index.ts"
+  },
+  "scripts": {
+    "clean": "git clean -xdf .turbo node_modules",
+    "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
     "@kit/auth": "workspace:*",
@@ -18,12 +25,5 @@
     "@types/node": "catalog:",
     "next": "catalog:",
     "zod": "catalog:"
-  },
-  "typesVersions": {
-    "*": {
-      "*": [
-        "src/*"
-      ]
-    }
   }
 }

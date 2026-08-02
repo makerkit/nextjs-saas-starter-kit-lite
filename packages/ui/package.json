@@ -1,61 +1,13 @@
 {
   "name": "@kit/ui",
-  "private": true,
   "version": "0.1.0",
-  "scripts": {
-    "clean": "git clean -xdf .turbo node_modules",
-    "typecheck": "tsc --noEmit"
-  },
-  "dependencies": {
-    "@hookform/resolvers": "catalog:",
-    "@radix-ui/react-accordion": "catalog:",
-    "@radix-ui/react-alert-dialog": "catalog:",
-    "@radix-ui/react-avatar": "catalog:",
-    "@radix-ui/react-checkbox": "catalog:",
-    "@radix-ui/react-collapsible": "catalog:",
-    "@radix-ui/react-dialog": "catalog:",
-    "@radix-ui/react-dropdown-menu": "catalog:",
-    "@radix-ui/react-label": "catalog:",
-    "@radix-ui/react-navigation-menu": "catalog:",
-    "@radix-ui/react-popover": "catalog:",
-    "@radix-ui/react-progress": "catalog:",
-    "@radix-ui/react-radio-group": "catalog:",
-    "@radix-ui/react-scroll-area": "catalog:",
-    "@radix-ui/react-select": "catalog:",
-    "@radix-ui/react-separator": "catalog:",
-    "@radix-ui/react-slot": "catalog:",
-    "@radix-ui/react-switch": "catalog:",
-    "@radix-ui/react-tabs": "catalog:",
-    "@radix-ui/react-toast": "catalog:",
-    "@radix-ui/react-tooltip": "catalog:",
-    "clsx": "catalog:",
-    "cmdk": "catalog:",
-    "input-otp": "catalog:",
-    "lucide-react": "catalog:",
-    "next-intl": "catalog:",
-    "react-top-loading-bar": "catalog:",
-    "recharts": "catalog:",
-    "tailwind-merge": "catalog:"
-  },
-  "devDependencies": {
-    "@kit/tsconfig": "workspace:*",
-    "@radix-ui/react-icons": "catalog:",
-    "@tanstack/react-query": "catalog:",
-    "@tanstack/react-table": "catalog:",
-    "@types/node": "catalog:",
-    "@types/react": "catalog:",
-    "@types/react-dom": "catalog:",
-    "class-variance-authority": "catalog:",
-    "date-fns": "catalog:",
-    "next": "catalog:",
-    "next-themes": "catalog:",
-    "react-day-picker": "catalog:",
-    "react-hook-form": "catalog:",
-    "sonner": "catalog:",
-    "tailwindcss": "catalog:",
-    "tailwindcss-animate": "catalog:",
-    "typescript": "catalog:",
-    "zod": "catalog:"
+  "private": true,
+  "typesVersions": {
+    "*": {
+      "*": [
+        "src/*"
+      ]
+    }
   },
   "exports": {
     "./accordion": "./src/shadcn/accordion.tsx",
@@ -120,11 +72,59 @@
     "./empty-state": "./src/makerkit/empty-state.tsx",
     "./marketing": "./src/makerkit/marketing/index.tsx"
   },
-  "typesVersions": {
-    "*": {
-      "*": [
-        "src/*"
-      ]
-    }
+  "scripts": {
+    "clean": "git clean -xdf .turbo node_modules",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@hookform/resolvers": "catalog:",
+    "@radix-ui/react-accordion": "catalog:",
+    "@radix-ui/react-alert-dialog": "catalog:",
+    "@radix-ui/react-avatar": "catalog:",
+    "@radix-ui/react-checkbox": "catalog:",
+    "@radix-ui/react-collapsible": "catalog:",
+    "@radix-ui/react-dialog": "catalog:",
+    "@radix-ui/react-dropdown-menu": "catalog:",
+    "@radix-ui/react-label": "catalog:",
+    "@radix-ui/react-navigation-menu": "catalog:",
+    "@radix-ui/react-popover": "catalog:",
+    "@radix-ui/react-progress": "catalog:",
+    "@radix-ui/react-radio-group": "catalog:",
+    "@radix-ui/react-scroll-area": "catalog:",
+    "@radix-ui/react-select": "catalog:",
+    "@radix-ui/react-separator": "catalog:",
+    "@radix-ui/react-slot": "catalog:",
+    "@radix-ui/react-switch": "catalog:",
+    "@radix-ui/react-tabs": "catalog:",
+    "@radix-ui/react-toast": "catalog:",
+    "@radix-ui/react-tooltip": "catalog:",
+    "clsx": "catalog:",
+    "cmdk": "catalog:",
+    "input-otp": "catalog:",
+    "lucide-react": "catalog:",
+    "next-intl": "catalog:",
+    "react-top-loading-bar": "catalog:",
+    "recharts": "catalog:",
+    "tailwind-merge": "catalog:"
+  },
+  "devDependencies": {
+    "@kit/tsconfig": "workspace:*",
+    "@radix-ui/react-icons": "catalog:",
+    "@tanstack/react-query": "catalog:",
+    "@tanstack/react-table": "catalog:",
+    "@types/node": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "class-variance-authority": "catalog:",
+    "date-fns": "catalog:",
+    "next": "catalog:",
+    "next-themes": "catalog:",
+    "react-day-picker": "catalog:",
+    "react-hook-form": "catalog:",
+    "sonner": "catalog:",
+    "tailwindcss": "catalog:",
+    "tailwindcss-animate": "catalog:",
+    "typescript": "catalog:",
+    "zod": "catalog:"
   }
 }

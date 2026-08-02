@@ -1,10 +1,13 @@
 {
   "name": "@kit/shared",
-  "private": true,
   "version": "0.1.0",
-  "scripts": {
-    "clean": "git clean -xdf .turbo node_modules",
-    "typecheck": "tsc --noEmit"
+  "private": true,
+  "typesVersions": {
+    "*": {
+      "*": [
+        "src/*"
+      ]
+    }
   },
   "exports": {
     "./logger": "./src/logger/index.ts",
@@ -12,19 +15,16 @@
     "./hooks": "./src/hooks/index.ts",
     "./events": "./src/events/index.tsx"
   },
-  "devDependencies": {
-    "@kit/tsconfig": "workspace:*",
-    "@types/node": "catalog:",
-    "@types/react": "catalog:"
+  "scripts": {
+    "clean": "git clean -xdf .turbo node_modules",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "pino": "catalog:"
   },
-  "typesVersions": {
-    "*": {
-      "*": [
-        "src/*"
-      ]
-    }
+  "devDependencies": {
+    "@kit/tsconfig": "workspace:*",
+    "@types/node": "catalog:",
+    "@types/react": "catalog:"
   }
 }

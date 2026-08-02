@@ -1,10 +1,13 @@
 {
   "name": "@kit/auth",
-  "private": true,
   "version": "0.1.0",
-  "scripts": {
-    "clean": "git clean -xdf .turbo node_modules",
-    "typecheck": "tsc --noEmit"
+  "private": true,
+  "typesVersions": {
+    "*": {
+      "*": [
+        "src/*"
+      ]
+    }
   },
   "exports": {
     "./sign-in": "./src/sign-in.ts",
@@ -15,6 +18,13 @@
     "./captcha/client": "./src/captcha/client/index.ts",
     "./captcha/server": "./src/captcha/server/index.ts",
     "./resend-email-link": "./src/components/resend-auth-link-form.tsx"
+  },
+  "scripts": {
+    "clean": "git clean -xdf .turbo node_modules",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "next-intl": "catalog:"
   },
   "devDependencies": {
     "@hookform/resolvers": "catalog:",
@@ -33,15 +43,5 @@
     "react-hook-form": "catalog:",
     "sonner": "catalog:",
     "zod": "catalog:"
-  },
-  "typesVersions": {
-    "*": {
-      "*": [
-        "src/*"
-      ]
-    }
-  },
-  "dependencies": {
-    "next-intl": "catalog:"
   }
 }

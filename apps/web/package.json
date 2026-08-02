@@ -2,8 +2,8 @@
   "name": "web",
   "version": "0.1.0",
   "private": true,
-  "sideEffects": false,
   "type": "module",
+  "sideEffects": false,
   "scripts": {
     "analyze": "ANALYZE=true pnpm run build",
     "build": "pnpm with-env next build",

@@ -7,98 +7,100 @@
  */
 
 @layer base {
-    :root {
-        --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-        --font-heading: var(--font-sans);
+  :root {
+    --font-sans:
+      -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial,
+      sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+    --font-heading: var(--font-sans);
 
-        --background: var(--color-white);
-        --foreground: var(--color-neutral-950);
+    --background: var(--color-white);
+    --foreground: var(--color-neutral-950);
 
-        --card: var(--color-white);
-        --card-foreground: var(--color-neutral-950);
+    --card: var(--color-white);
+    --card-foreground: var(--color-neutral-950);
 
-        --popover: var(--color-white);
-        --popover-foreground: var(--color-neutral-950);
+    --popover: var(--color-white);
+    --popover-foreground: var(--color-neutral-950);
 
-        --primary: var(--color-neutral-950);
-        --primary-foreground: var(--color-white);
+    --primary: var(--color-neutral-950);
+    --primary-foreground: var(--color-white);
 
-        --secondary: oklch(96.76% 0.0013 286.38);
-        --secondary-foreground: oklch(21.03% 0.0318 264.65);
+    --secondary: oklch(96.76% 0.0013 286.38);
+    --secondary-foreground: oklch(21.03% 0.0318 264.65);
 
-        --muted: oklch(96.71% 0.0029 264.54);
-        --muted-foreground: oklch(55.13% 0.0233 264.36);
+    --muted: oklch(96.71% 0.0029 264.54);
+    --muted-foreground: oklch(55.13% 0.0233 264.36);
 
-        --accent: oklch(96.76% 0.0013 286.38);
-        --accent-foreground: oklch(21.03% 0.0318 264.65);
+    --accent: oklch(96.76% 0.0013 286.38);
+    --accent-foreground: oklch(21.03% 0.0318 264.65);
 
-        --destructive: var(--color-red-500);
-        --destructive-foreground: var(--color-white);
+    --destructive: var(--color-red-500);
+    --destructive-foreground: var(--color-white);
 
-        --border: var(--color-gray-100);
-        --input: var(--color-gray-200);
-        --ring: var(--color-neutral-800);
+    --border: var(--color-gray-100);
+    --input: var(--color-gray-200);
+    --ring: var(--color-neutral-800);
 
-        --radius: 0.5rem;
+    --radius: 0.5rem;
 
-        --chart-1: var(--color-orange-400);
-        --chart-2: var(--color-teal-600);
-        --chart-3: var(--color-green-800);
-        --chart-4: var(--color-yellow-200);
-        --chart-5: var(--color-orange-200);
+    --chart-1: var(--color-orange-400);
+    --chart-2: var(--color-teal-600);
+    --chart-3: var(--color-green-800);
+    --chart-4: var(--color-yellow-200);
+    --chart-5: var(--color-orange-200);
 
-        --sidebar-background: var(--color-neutral-50);
-        --sidebar-foreground: oklch(37.05% 0.012 285.8);
-        --sidebar-primary: var(--color-neutral-950);
-        --sidebar-primary-foreground: var(--color-white);
-        --sidebar-accent: var(--color-neutral-100);
-        --sidebar-accent-foreground: var(--color-neutral-950);
-        --sidebar-border: var(--border);
-        --sidebar-ring: var(--color-blue-500);
-    }
+    --sidebar-background: var(--color-neutral-50);
+    --sidebar-foreground: oklch(37.05% 0.012 285.8);
+    --sidebar-primary: var(--color-neutral-950);
+    --sidebar-primary-foreground: var(--color-white);
+    --sidebar-accent: var(--color-neutral-100);
+    --sidebar-accent-foreground: var(--color-neutral-950);
+    --sidebar-border: var(--border);
+    --sidebar-ring: var(--color-blue-500);
+  }
 
-    .dark {
-        --background: var(--color-neutral-900);
-        --foreground: var(--color-white);
+  .dark {
+    --background: var(--color-neutral-900);
+    --foreground: var(--color-white);
 
-        --card: var(--color-neutral-900);
-        --card-foreground: var(--color-white);
+    --card: var(--color-neutral-900);
+    --card-foreground: var(--color-white);
 
-        --popover: var(--color-neutral-900);
-        --popover-foreground: var(--color-white);
+    --popover: var(--color-neutral-900);
+    --popover-foreground: var(--color-white);
 
-        --primary: var(--color-white);
-        --primary-foreground: var(--color-neutral-900);
+    --primary: var(--color-white);
+    --primary-foreground: var(--color-neutral-900);
 
-        --secondary: var(--color-neutral-800);
-        --secondary-foreground: oklch(98.43% 0.0017 247.84);
+    --secondary: var(--color-neutral-800);
+    --secondary-foreground: oklch(98.43% 0.0017 247.84);
 
-        --muted: var(--color-neutral-800);
-        --muted-foreground: oklch(71.19% 0.0129 286.07);
+    --muted: var(--color-neutral-800);
+    --muted-foreground: oklch(71.19% 0.0129 286.07);
 
-        --accent: var(--color-neutral-800);
-        --accent-foreground: oklch(98.48% 0 0);
+    --accent: var(--color-neutral-800);
+    --accent-foreground: oklch(98.48% 0 0);
 
-        --destructive: var(--color-red-700);
-        --destructive-foreground: var(--color-white);
+    --destructive: var(--color-red-700);
+    --destructive-foreground: var(--color-white);
 
-        --border: var(--color-neutral-800);
-        --input: var(--color-neutral-700);
-        --ring: oklch(87.09% 0.0055 286.29);
+    --border: var(--color-neutral-800);
+    --input: var(--color-neutral-700);
+    --ring: oklch(87.09% 0.0055 286.29);
 
-        --chart-1: var(--color-blue-600);
-        --chart-2: var(--color-emerald-400);
-        --chart-3: var(--color-orange-400);
-        --chart-4: var(--color-purple-500);
-        --chart-5: var(--color-pink-500);
+    --chart-1: var(--color-blue-600);
+    --chart-2: var(--color-emerald-400);
+    --chart-3: var(--color-orange-400);
+    --chart-4: var(--color-purple-500);
+    --chart-5: var(--color-pink-500);
 
-        --sidebar-background: var(--color-neutral-900);
-        --sidebar-foreground: var(--color-white);
-        --sidebar-primary: var(--color-blue-500);
-        --sidebar-primary-foreground: var(--color-white);
-        --sidebar-accent: var(--color-neutral-800);
-        --sidebar-accent-foreground: var(--color-white);
-        --sidebar-border: var(--border);
-        --sidebar-ring: var(--color-blue-500);
-    }
+    --sidebar-background: var(--color-neutral-900);
+    --sidebar-foreground: var(--color-white);
+    --sidebar-primary: var(--color-blue-500);
+    --sidebar-primary-foreground: var(--color-white);
+    --sidebar-accent: var(--color-neutral-800);
+    --sidebar-accent-foreground: var(--color-white);
+    --sidebar-border: var(--border);
+    --sidebar-ring: var(--color-blue-500);
+  }
 }
