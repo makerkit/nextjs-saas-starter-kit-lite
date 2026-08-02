@@ -8,6 +8,6 @@
     "requirements": "node ./src/requirements.mjs"
   },
   "devDependencies": {
-    "@types/node": "^24.7.1"
+    "@types/node": "catalog:"
   }
 }

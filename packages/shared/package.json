@@ -5,7 +5,6 @@
   "scripts": {
     "clean": "git clean -xdf .turbo node_modules",
     "format": "prettier --check \"**/*.{ts,tsx}\"",
-    "lint": "eslint .",
     "typecheck": "tsc --noEmit"
   },
   "prettier": "@kit/prettier-config",
@@ -16,14 +15,13 @@
     "./events": "./src/events/index.tsx"
   },
   "devDependencies": {
-    "@kit/eslint-config": "workspace:*",
     "@kit/prettier-config": "workspace:*",
     "@kit/tsconfig": "workspace:*",
-    "@types/node": "^24.7.1",
-    "@types/react": "19.2.18"
+    "@types/node": "catalog:",
+    "@types/react": "catalog:"
   },
   "dependencies": {
-    "pino": "^10.0.0"
+    "pino": "catalog:"
   },
   "typesVersions": {
     "*": {

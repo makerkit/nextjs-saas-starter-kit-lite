@@ -9,14 +9,14 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@trivago/prettier-plugin-sort-imports": "5.2.2",
-    "prettier": "^3.6.2",
-    "prettier-plugin-tailwindcss": "^0.6.14"
+    "@trivago/prettier-plugin-sort-imports": "catalog:",
+    "prettier": "catalog:",
+    "prettier-plugin-tailwindcss": "catalog:"
   },
   "devDependencies": {
     "@kit/tsconfig": "workspace:*",
-    "@types/node": "^24.7.1",
-    "typescript": "7.0.2"
+    "@types/node": "catalog:",
+    "typescript": "catalog:"
   },
   "prettier": "./index.mjs"
 }
