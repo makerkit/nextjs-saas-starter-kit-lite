@@ -4,17 +4,14 @@
   "version": "0.1.0",
   "scripts": {
     "clean": "git clean -xdf .turbo node_modules",
-    "format": "prettier --check \"**/*.{ts,tsx}\"",
     "typecheck": "tsc --noEmit"
   },
-  "prettier": "@kit/prettier-config",
   "exports": {
     ".": "./src/index.ts",
     "./routing": "./src/routing.ts",
     "./provider": "./src/client-provider.tsx"
   },
   "devDependencies": {
-    "@kit/prettier-config": "workspace:*",
     "@kit/shared": "workspace:*",
     "@kit/tsconfig": "workspace:*",
     "@tanstack/react-query": "catalog:",

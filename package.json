@@ -17,8 +17,6 @@
     "clean": "git clean -xdf node_modules dist .next",
     "clean:workspaces": "turbo clean",
     "dev": "cross-env FORCE_COLOR=1 turbo dev --parallel",
-    "format": "turbo format --cache-dir=.turbo --continue -- --cache --cache-location='node_modules/.cache/.prettiercache' --ignore-path='../../.gitignore'",
-    "format:fix": "turbo format --cache-dir=.turbo --continue -- --write --cache --cache-location='node_modules/.cache/.prettiercache' --ignore-path='../../.gitignore'",
     "lint:fix": "oxlint --fix",
     "typecheck": "turbo typecheck --cache-dir=.turbo",
     "test": "turbo test --cache-dir=.turbo",
@@ -29,16 +27,18 @@
     "supabase:web:stop": "pnpm --filter web supabase:stop",
     "supabase:web:typegen": "pnpm --filter web supabase:typegen",
     "supabase:web:reset": "pnpm --filter web supabase:reset",
-    "lint": "oxlint"
+    "lint": "oxlint",
+    "format": "oxfmt --check",
+    "format:fix": "oxfmt",
+    "healthcheck": "oxlint --fix && oxfmt && pnpm run typecheck && manypkg fix"
   },
-  "prettier": "@kit/prettier-config",
   "packageManager": "pnpm@11.18.0",
   "devDependencies": {
     "@manypkg/cli": "catalog:",
     "@turbo/gen": "catalog:",
     "cross-env": "catalog:",
+    "oxfmt": "^0.61.0",
     "oxlint": "catalog:",
-    "prettier": "catalog:",
     "turbo": "catalog:",
     "typescript": "catalog:"
   }

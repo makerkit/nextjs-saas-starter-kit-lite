@@ -10,7 +10,6 @@
     "build:test": "NODE_ENV=test pnpm with-env:test next build",
     "clean": "git clean -xdf .next .turbo node_modules",
     "dev": "pnpm with-env next dev | pino-pretty -c",
-    "format": "prettier --check \"**/*.{js,cjs,mjs,ts,tsx,md,json}\"",
     "start": "pnpm with-env next start",
     "start:test": "NODE_ENV=test pnpm with-env:test next start",
     "typecheck": "tsc --noEmit",
@@ -59,7 +58,6 @@
     "zod": "catalog:"
   },
   "devDependencies": {
-    "@kit/prettier-config": "workspace:*",
     "@kit/tsconfig": "workspace:*",
     "@next/bundle-analyzer": "catalog:",
     "@tailwindcss/postcss": "catalog:",
@@ -71,13 +69,11 @@
     "babel-plugin-react-compiler": "catalog:",
     "dotenv-cli": "catalog:",
     "pino-pretty": "catalog:",
-    "prettier": "catalog:",
     "supabase": "catalog:",
     "tailwindcss": "catalog:",
     "tailwindcss-animate": "catalog:",
     "typescript": "catalog:"
   },
-  "prettier": "@kit/prettier-config",
   "browserslist": [
     "last 1 versions",
     "> 0.7%",

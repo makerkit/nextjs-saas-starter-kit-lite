@@ -4,10 +4,8 @@
   "version": "0.1.0",
   "scripts": {
     "clean": "git clean -xdf .turbo node_modules",
-    "format": "prettier --check \"**/*.{ts,tsx}\"",
     "typecheck": "tsc --noEmit"
   },
-  "prettier": "@kit/prettier-config",
   "exports": {
     "./server-client": "./src/clients/server-client.ts",
     "./server-admin-client": "./src/clients/server-admin-client.ts",
@@ -20,7 +18,6 @@
     "./auth": "./src/auth.ts"
   },
   "devDependencies": {
-    "@kit/prettier-config": "workspace:*",
     "@kit/tsconfig": "workspace:*",
     "@supabase/ssr": "catalog:",
     "@supabase/supabase-js": "catalog:",

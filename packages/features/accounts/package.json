@@ -4,7 +4,6 @@
   "version": "0.1.0",
   "scripts": {
     "clean": "git clean -xdf .turbo node_modules",
-    "format": "prettier --check \"**/*.{ts,tsx}\"",
     "typecheck": "tsc --noEmit"
   },
   "exports": {
@@ -22,7 +21,6 @@
   "devDependencies": {
     "@hookform/resolvers": "catalog:",
     "@kit/next": "workspace:*",
-    "@kit/prettier-config": "workspace:*",
     "@kit/shared": "workspace:*",
     "@kit/supabase": "workspace:*",
     "@kit/tsconfig": "workspace:*",
@@ -42,7 +40,6 @@
     "sonner": "catalog:",
     "zod": "catalog:"
   },
-  "prettier": "@kit/prettier-config",
   "typesVersions": {
     "*": {
       "*": [

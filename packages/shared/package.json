@@ -4,10 +4,8 @@
   "version": "0.1.0",
   "scripts": {
     "clean": "git clean -xdf .turbo node_modules",
-    "format": "prettier --check \"**/*.{ts,tsx}\"",
     "typecheck": "tsc --noEmit"
   },
-  "prettier": "@kit/prettier-config",
   "exports": {
     "./logger": "./src/logger/index.ts",
     "./utils": "./src/utils.ts",
@@ -15,7 +13,6 @@
     "./events": "./src/events/index.tsx"
   },
   "devDependencies": {
-    "@kit/prettier-config": "workspace:*",
     "@kit/tsconfig": "workspace:*",
     "@types/node": "catalog:",
     "@types/react": "catalog:"

@@ -1,0 +1,19 @@
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "singleQuote": true,
+  "printWidth": 80,
+  "semi": true,
+  "tabWidth": 2,
+  "useTabs": false,
+  "arrowParens": "always",
+  "ignorePatterns": [
+    "node_modules",
+    "playwright-report",
+    "*.hbs",
+    "*.md",
+    "dist",
+    "build",
+    ".next",
+    "next-env.d.ts",
+  ],
+}
