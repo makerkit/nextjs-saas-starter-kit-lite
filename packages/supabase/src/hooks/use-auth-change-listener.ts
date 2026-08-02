@@ -2,11 +2,9 @@
 
 import { useEffect } from 'react';
 
-import { usePathname } from 'next/navigation';
-
 import type { AuthChangeEvent, Session } from '@supabase/supabase-js';
 
-import { useSupabase } from './use-supabase';
+import { getSupabaseBrowserClient } from '../clients/browser-client';
 
 /**
  * @name PRIVATE_PATH_PREFIXES
@@ -35,12 +33,22 @@ export function useAuthChangeListener({
   privatePathPrefixes?: string[];
   onEvent?: (event: AuthChangeEvent, user: Session | null) => void;
 }) {
-  const client = useSupabase();
-  const pathName = usePathname();
-
   useEffect(() => {
+    // The browser client is created here rather than during render. It seeds a
+    // storage key with Math.random(), which Cache Components rejects as an
+    // unstable value during a prerender, and this hook sits in a provider that
+    // wraps every route. It is only ever used inside this effect anyway.
+    const client = getSupabaseBrowserClient();
+
     // keep this running for the whole session unless the component was unmounted
     const listener = client.auth.onAuthStateChange((event, user) => {
+      // Read the path when the event fires rather than capturing usePathname()
+      // during render. usePathname() is URL data, so reading it here would
+      // require a Suspense boundary above this provider, which would mean
+      // suspending the whole app. It is also more correct: what matters is
+      // where the user is when they sign out, not where they were on mount.
+      const pathName = window.location.pathname;
+
       if (onEvent) {
         onEvent(event, user);
       }
@@ -71,7 +79,7 @@ export function useAuthChangeListener({
 
     // destroy listener on un-mounts
     return () => listener.data.subscription.unsubscribe();
-  }, [client.auth, pathName, appHomePath, privatePathPrefixes, onEvent]);
+  }, [appHomePath, privatePathPrefixes, onEvent]);
 }
 
 /**
