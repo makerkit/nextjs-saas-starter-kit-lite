@@ -21,6 +21,16 @@ export async function initializeI18nClient(
   const loadedLanguages: string[] = [];
   const loadedNamespaces: string[] = [];
 
+  /**
+   * The server renders the default language so that the shell can prerender,
+   * which means `<html lang>` is always the default and is useless as a signal
+   * here. When the app supports more than one language, drop the explicit `lng`
+   * so LanguageDetector can resolve the user's language from the `lang` cookie.
+   * With a single supported language there is nothing to detect, so keep `lng`
+   * and avoid the extra work.
+   */
+  const isMultiLanguage = (settings.supportedLngs || []).length > 1;
+
   await i18next
     .use(
       resourcesToBackend(async (language, namespace, callback) => {
@@ -42,8 +52,9 @@ export async function initializeI18nClient(
     .init(
       {
         ...settings,
+        ...(isMultiLanguage ? { lng: undefined } : {}),
         detection: {
-          order: ['htmlTag', 'cookie', 'navigator'],
+          order: ['cookie', 'navigator', 'htmlTag'],
           caches: ['cookie'],
           lookupCookie: 'lang',
         },
