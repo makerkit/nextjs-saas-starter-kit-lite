@@ -2,9 +2,6 @@ packages:
   - apps/*
   - packages/**
   - tooling/*
-onlyBuiltDependencies:
-  - "@tailwindcss/oxide"
-  - supabase
 catalog:
   "@hookform/resolvers": ^5.2.2
   "@makerkit/data-loader-supabase-core": ^0.0.10
@@ -81,3 +78,10 @@ catalog:
   turbo: 2.5.8
   typescript: 7.0.2
   zod: ^3.25.32
+allowBuilds:
+  '@tailwindcss/oxide': true
+  'supabase': true
+  '@parcel/watcher': true
+  '@swc/core': true
+  'esbuild': true
+  'sharp': true

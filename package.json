@@ -32,7 +32,7 @@
     "lint": "oxlint"
   },
   "prettier": "@kit/prettier-config",
-  "packageManager": "pnpm@10.18.2",
+  "packageManager": "pnpm@11.18.0",
   "devDependencies": {
     "@manypkg/cli": "catalog:",
     "@turbo/gen": "catalog:",
