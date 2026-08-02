@@ -1,7 +1,6 @@
 {
   "extends": "@kit/tsconfig/base.json",
   "compilerOptions": {
-    "baseUrl": ".",
     "paths": {
       "~/*": ["./app/*"],
       "~/config/*": ["./config/*"],

@@ -22,8 +22,9 @@
   "devDependencies": {
     "@kit/prettier-config": "workspace:*",
     "@kit/tsconfig": "workspace:*",
+    "@types/node": "^24.7.1",
     "eslint": "^9.37.0",
-    "typescript": "^5.9.3"
+    "typescript": "7.0.2"
   },
   "prettier": "@kit/prettier-config"
 }

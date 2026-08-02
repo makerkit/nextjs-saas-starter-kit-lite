@@ -44,6 +44,6 @@
     "cross-env": "^10.1.0",
     "prettier": "^3.6.2",
     "turbo": "2.5.8",
-    "typescript": "^5.9.3"
+    "typescript": "7.0.2"
   }
 }

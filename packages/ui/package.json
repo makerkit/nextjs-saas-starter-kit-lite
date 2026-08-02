@@ -60,7 +60,7 @@
     "sonner": "^2.0.7",
     "tailwindcss": "4.1.14",
     "tailwindcss-animate": "^1.0.7",
-    "typescript": "^5.9.3",
+    "typescript": "7.0.2",
     "zod": "^3.25.32"
   },
   "prettier": "@kit/prettier-config",

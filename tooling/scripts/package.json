@@ -6,5 +6,8 @@
     "dev": "node ./src/dev.mjs",
     "checks": "node ./src/checks.mjs",
     "requirements": "node ./src/requirements.mjs"
+  },
+  "devDependencies": {
+    "@types/node": "^24.7.1"
   }
 }

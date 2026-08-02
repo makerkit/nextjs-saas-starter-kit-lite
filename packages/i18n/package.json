@@ -20,6 +20,7 @@
     "@kit/shared": "workspace:*",
     "@kit/tsconfig": "workspace:*",
     "@tanstack/react-query": "5.90.2",
+    "@types/node": "^24.7.1",
     "@types/react": "19.2.18",
     "next": "16.3.0-preview.10",
     "react": "19.2.8",

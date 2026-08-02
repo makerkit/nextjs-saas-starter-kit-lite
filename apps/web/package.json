@@ -78,7 +78,7 @@
     "supabase": "^2.48.3",
     "tailwindcss": "4.1.14",
     "tailwindcss-animate": "^1.0.7",
-    "typescript": "^5.9.3"
+    "typescript": "7.0.2"
   },
   "prettier": "@kit/prettier-config",
   "browserslist": [
