@@ -1,7 +1,4 @@
-/**
- * We force it to static because we want to cache for as long as the build is live.
- */
-export const dynamic = 'force-static';
+import { cacheLife } from 'next/cache';
 
 // please provide your own implementation
 // if you're not using Vercel or Cloudflare Pages
@@ -11,8 +8,24 @@ const KNOWN_GIT_ENV_VARS = [
   'GIT_HASH',
 ];
 
+/**
+ * Cached for as long as the build is live. `export const dynamic =
+ * 'force-static'` is rejected under Cache Components; `use cache` with the `max`
+ * profile is the equivalent, and the git hash cannot change without a new build.
+ *
+ * The cache wraps the hash rather than the handler: a `Response` is a class
+ * instance, and values crossing a `use cache` boundary have to be serializable.
+ */
+async function getCachedGitHash() {
+  'use cache';
+
+  cacheLife('max');
+
+  return getGitHash();
+}
+
 export const GET = async () => {
-  const currentGitHash = await getGitHash();
+  const currentGitHash = await getCachedGitHash();
 
   return new Response(currentGitHash, {
     headers: {

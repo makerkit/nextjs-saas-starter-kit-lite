@@ -1,3 +1,5 @@
+import { cacheLife } from 'next/cache';
+
 import { getServerSideSitemap } from 'next-sitemap';
 
 import appConfig from '~/config/app.config';
@@ -12,7 +14,7 @@ const MAX_AGE = 60;
 const S_MAX_AGE = 3600;
 
 export async function GET() {
-  const paths = getPaths();
+  const paths = await getPaths();
 
   const headers = {
     'Cache-Control': `public, max-age=${MAX_AGE}, s-maxage=${S_MAX_AGE}`,
@@ -21,7 +23,17 @@ export async function GET() {
   return getServerSideSitemap([...paths], headers);
 }
 
-function getPaths() {
+/**
+ * Cached because `lastmod` reads the clock, and an unstable value drops the
+ * whole route to per-request rendering. The cache wraps the paths rather than
+ * the handler: `getServerSideSitemap` returns a Response, which is a class
+ * instance and cannot cross a `use cache` boundary.
+ */
+async function getPaths() {
+  'use cache';
+
+  cacheLife('days');
+
   const paths = [
     '/',
     '/faq',
