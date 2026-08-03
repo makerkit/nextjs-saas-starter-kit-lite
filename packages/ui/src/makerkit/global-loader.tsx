@@ -23,7 +23,7 @@ export function GlobalLoader({
       <If condition={displaySpinner}>
         <div
           className={
-            'zoom-in-80 animate-in fade-in slide-in-from-bottom-12 flex flex-1 flex-col items-center justify-center duration-500'
+            'zoom-in-80 animate-in fade-in slide-in-from-bottom-12 flex flex-1 flex-col items-center justify-center duration-500 ease-out'
           }
         >
           <LoadingOverlay displayLogo={displayLogo} fullPage={fullPage} />

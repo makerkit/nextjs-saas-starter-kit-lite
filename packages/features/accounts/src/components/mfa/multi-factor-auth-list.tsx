@@ -4,9 +4,8 @@ import { useCallback, useState } from 'react';
 
 import type { Factor } from '@supabase/supabase-js';
 
-import { ExclamationTriangleIcon } from '@radix-ui/react-icons';
+import { ShieldCheck, TriangleAlert, X } from 'lucide-react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { ShieldCheck, X } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { toast } from 'sonner';
 
@@ -25,6 +24,7 @@ import {
   AlertDialogTitle,
 } from '@kit/ui/alert-dialog';
 import { Badge } from '@kit/ui/badge';
+import { badgeExtras } from '@kit/ui/badge-extras';
 import { Button } from '@kit/ui/button';
 import { If } from '@kit/ui/if';
 import { Spinner } from '@kit/ui/spinner';
@@ -43,6 +43,7 @@ import {
   TooltipTrigger,
 } from '@kit/ui/tooltip';
 import { Trans } from '@kit/ui/trans';
+import { cn } from '@kit/ui/utils';
 
 import { MultiFactorAuthSetupDialog } from './multi-factor-auth-setup-dialog';
 
@@ -81,7 +82,7 @@ function FactorsTableContainer(props: { userId: string }) {
     return (
       <div>
         <Alert variant={'destructive'}>
-          <ExclamationTriangleIcon className={'h-4'} />
+          <TriangleAlert className={'h-4'} />
 
           <AlertTitle>
             <Trans i18nKey={'account.factorsListError'} />
@@ -223,15 +224,20 @@ function FactorsTable({
               </TableCell>
 
               <TableCell>
-                <Badge variant={'info'} className={'inline-flex uppercase'}>
+                <Badge className={cn('inline-flex uppercase', badgeExtras.info)}>
                   {factor.factor_type}
                 </Badge>
               </TableCell>
 
               <td>
                 <Badge
-                  className={'inline-flex capitalize'}
-                  variant={factor.status === 'verified' ? 'success' : 'outline'}
+                  variant={
+                    factor.status === 'verified' ? 'default' : 'outline'
+                  }
+                  className={cn(
+                    'inline-flex capitalize',
+                    factor.status === 'verified' && badgeExtras.success,
+                  )}
                 >
                   {factor.status}
                 </Badge>
@@ -240,15 +246,17 @@ function FactorsTable({
               <td className={'flex justify-end'}>
                 <TooltipProvider>
                   <Tooltip>
-                    <TooltipTrigger asChild>
-                      <Button
-                        variant={'ghost'}
-                        size={'icon'}
-                        onClick={() => setUnenrolling(factor.id)}
-                      >
-                        <X className={'h-4'} />
-                      </Button>
-                    </TooltipTrigger>
+                    <TooltipTrigger
+                      render={
+                        <Button
+                          variant={'ghost'}
+                          size={'icon'}
+                          onClick={() => setUnenrolling(factor.id)}
+                        >
+                          <X className={'h-4'} />
+                        </Button>
+                      }
+                    />
 
                     <TooltipContent>
                       <Trans i18nKey={'account.unenrollTooltip'} />

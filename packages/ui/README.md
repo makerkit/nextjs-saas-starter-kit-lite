@@ -4,19 +4,9 @@ This package is responsible for managing the UI components and styles across the
 
 This package define two sets of components:
 
-- `shadn-ui`: A set of UI components that can be used across the app using shadn UI
-- `makerkit`: Components specific to MakerKit
+- `Shadcn UI`: A set of UI components that can be used across the app using shadcn UI
+- `Makerkit-specific`: Components specific to MakerKit
 
 ## Installing a Shadcn UI component
 
-To install a Shadcn UI component, you can use the following command in the root of the repository:
-
-```bash
-npx shadcn@latest add <component> -c packages/ui
-```
-
-For example, to install the `Button` component, you can use the following command:
-
-```bash
-npx shadcn-ui@latest add button -c packages/ui
-```
+ Please refer to the [documentation](https://makerkit.dev/docs/next-supabase-turbo/components/shadcn).

@@ -19,7 +19,14 @@ export function OauthProviderLogoImage({
     return (
       <Image
         decoding={'async'}
-        loading={'lazy'}
+        /**
+         * These sit inside the provider buttons on the auth pages, which are
+         * above the fold and have little else to paint — Next.js reports the
+         * first one as the LCP element, and lazy-loading the LCP element delays
+         * it for no benefit. They are 18px webp assets, so eager is effectively
+         * free.
+         */
+        loading={'eager'}
         src={image}
         alt={`${providerId} logo`}
         width={width ?? DEFAULT_IMAGE_SIZE}

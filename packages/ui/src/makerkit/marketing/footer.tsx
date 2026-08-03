@@ -26,7 +26,7 @@ export const Footer: React.FC<FooterProps> = ({
   return (
     <footer
       className={cn(
-        'site-footer relative mt-auto w-full py-8 2xl:py-20',
+        'site-footer bg-muted/20 relative mt-auto w-full py-8 xl:py-16 2xl:py-20',
         className,
       )}
       {...props}
@@ -39,9 +39,7 @@ export const Footer: React.FC<FooterProps> = ({
 
               <div className="flex flex-col gap-y-4">
                 <div>
-                  <p className="text-muted-foreground text-sm tracking-tight">
-                    {description}
-                  </p>
+                  <p className="text-muted-foreground text-sm">{description}</p>
                 </div>
 
                 <div className="text-muted-foreground flex text-xs">
@@ -51,10 +49,10 @@ export const Footer: React.FC<FooterProps> = ({
             </div>
           </div>
 
-          <div className="flex w-full flex-col gap-y-4 lg:flex-row lg:justify-end lg:gap-x-6 lg:gap-y-0 xl:gap-x-12">
+          <div className="flex w-full flex-1 flex-col gap-y-4 lg:flex-row lg:justify-end lg:gap-x-6 lg:gap-y-0 xl:gap-x-12">
             {sections.map((section, index) => (
               <div key={index}>
-                <div className="flex flex-col gap-y-2.5">
+                <div className="flex flex-col gap-y-1">
                   <FooterSectionHeading>{section.heading}</FooterSectionHeading>
 
                   <FooterSectionList>
@@ -76,14 +74,14 @@ export const Footer: React.FC<FooterProps> = ({
 
 function FooterSectionHeading(props: React.PropsWithChildren) {
   return (
-    <span className="font-heading text-sm font-semibold tracking-tight">
+    <span className="font-heading text-secondary-foreground/90 text-sm font-medium">
       {props.children}
     </span>
   );
 }
 
 function FooterSectionList(props: React.PropsWithChildren) {
-  return <ul className="flex flex-col gap-y-2">{props.children}</ul>;
+  return <ul className="flex flex-col gap-y-1">{props.children}</ul>;
 }
 
 function FooterLink({
@@ -91,7 +89,7 @@ function FooterLink({
   children,
 }: React.PropsWithChildren<{ href: string }>) {
   return (
-    <li className="text-muted-foreground text-sm tracking-tight hover:underline [&>a]:transition-colors">
+    <li className="text-muted-foreground text-sm font-medium hover:underline [&>a]:transition-colors">
       <a href={href}>{children}</a>
     </li>
   );

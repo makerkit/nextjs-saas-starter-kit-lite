@@ -20,12 +20,13 @@ export const FeatureShowcase: React.FC<FeatureShowcaseProps> =
         className={cn('flex flex-col justify-between space-y-8', className)}
         {...props}
       >
-        <div className="flex w-full max-w-5xl flex-col gap-y-4">
+        <div className="flex w-full flex-col gap-y-4">
           {icon && <div className="flex">{icon}</div>}
           <h3 className="text-3xl font-normal tracking-tight xl:text-5xl">
             {heading}
           </h3>
         </div>
+
         {children}
       </div>
     );
@@ -40,7 +41,7 @@ export function FeatureShowcaseIconContainer(
     <div className={'flex'}>
       <div
         className={cn(
-          'flex items-center justify-center space-x-4 rounded-lg p-3 font-medium',
+          'flex items-center justify-center space-x-2.5 font-medium',
           props.className,
         )}
       >

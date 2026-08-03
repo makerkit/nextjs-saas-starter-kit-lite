@@ -8,8 +8,16 @@ import { useTheme } from 'next-themes';
 import { cn } from '../lib/utils';
 import { Button } from '../shadcn/button';
 import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '../shadcn/card';
+import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSub,
@@ -51,12 +59,14 @@ export function ModeToggle(props: { className?: string }) {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="icon" className={props.className}>
-          <Sun className="h-[0.9rem] w-[0.9rem] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
-          <Moon className="absolute h-[0.9rem] w-[0.9rem] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
-          <span className="sr-only">Toggle theme</span>
-        </Button>
+      <DropdownMenuTrigger
+        render={
+          <Button variant="ghost" size="icon" className={props.className} />
+        }
+      >
+        <Sun className="h-[0.9rem] w-[0.9rem] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
+        <Moon className="absolute h-[0.9rem] w-[0.9rem] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
+        <span className="sr-only">Toggle theme</span>
       </DropdownMenuTrigger>
 
       <DropdownMenuContent align="end">{Items}</DropdownMenuContent>
@@ -74,7 +84,7 @@ export function SubMenuModeToggle() {
 
         return (
           <DropdownMenuItem
-            className={cn('flex cursor-pointer items-center space-x-2', {
+            className={cn('flex cursor-pointer items-center gap-x-2', {
               'bg-muted': isSelected,
             })}
             key={mode}
@@ -85,9 +95,7 @@ export function SubMenuModeToggle() {
           >
             <Icon theme={mode} />
 
-            <span>
-              <Trans i18nKey={`common.${mode}Theme`} />
-            </span>
+            <Trans i18nKey={`common.${mode}Theme`} />
           </DropdownMenuItem>
         );
       }),
@@ -95,20 +103,16 @@ export function SubMenuModeToggle() {
   );
 
   return (
-    <>
+    <DropdownMenuGroup>
       <DropdownMenuSub>
         <DropdownMenuSubTrigger
           className={
-            'hidden w-full items-center justify-between gap-x-3 lg:flex'
+            'hidden w-full items-center justify-between gap-x-2 lg:flex'
           }
         >
-          <span className={'flex space-x-2'}>
-            <Icon theme={resolvedTheme} />
+          <Icon theme={resolvedTheme} />
 
-            <span>
-              <Trans i18nKey={'common.theme'} />
-            </span>
-          </span>
+          <Trans i18nKey={'common.theme'} />
         </DropdownMenuSubTrigger>
 
         <DropdownMenuSubContent>{MenuItems}</DropdownMenuSubContent>
@@ -121,7 +125,7 @@ export function SubMenuModeToggle() {
 
         {MenuItems}
       </div>
-    </>
+    </DropdownMenuGroup>
   );
 }
 
@@ -138,4 +142,54 @@ function Icon({ theme }: { theme: string | undefined }) {
     case 'system':
       return <Computer className="h-4" />;
   }
+}
+
+export function ThemePreferenceCard({
+  currentTheme,
+}: {
+  currentTheme: string;
+}) {
+  const { setTheme, theme = currentTheme } = useTheme();
+
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>
+          <Trans i18nKey="common.theme" />
+        </CardTitle>
+
+        <CardDescription>
+          <Trans i18nKey="common.themeDescription" />
+        </CardDescription>
+      </CardHeader>
+
+      <CardContent>
+        <div className="grid grid-cols-3 gap-3">
+          {MODES.map((mode) => {
+            const isSelected = theme === mode;
+
+            return (
+              <Button
+                key={mode}
+                variant={isSelected ? 'default' : 'outline'}
+                className={'flex items-center justify-center gap-2'}
+                onClick={() => {
+                  setTheme(mode);
+                  setCookeTheme(mode);
+                }}
+              >
+                {mode === 'light' && <Sun className="size-4" />}
+                {mode === 'dark' && <Moon className="size-4" />}
+                {mode === 'system' && <Computer className="size-4" />}
+
+                <span className="text-sm">
+                  <Trans i18nKey={`common.${mode}Theme`} />
+                </span>
+              </Button>
+            );
+          })}
+        </div>
+      </CardContent>
+    </Card>
+  );
 }

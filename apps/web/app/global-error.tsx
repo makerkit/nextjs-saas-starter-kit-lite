@@ -65,12 +65,15 @@ const GlobalErrorPage = ({
                     <Trans i18nKey={'common.goBack'} />
                   </Button>
 
-                  <Button className={'w-full'} variant={'outline'} asChild>
-                    <Link href={'/contact'}>
-                      <MessageCircle className={'mr-2 h-4'} />
+                  <Button
+                    nativeButton={false}
+                    render={<Link href={'/contact'} />}
+                    className={'w-full'}
+                    variant={'outline'}
+                  >
+                    <MessageCircle className={'mr-2 h-4'} />
 
-                      <Trans i18nKey={'common.contactUs'} />
-                    </Link>
+                    <Trans i18nKey={'common.contactUs'} />
                   </Button>
                 </div>
               </div>

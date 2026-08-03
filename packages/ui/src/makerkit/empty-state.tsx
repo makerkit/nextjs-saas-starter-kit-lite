@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { VariantProps, cva } from 'class-variance-authority';
+
 import { cn } from '../lib/utils';
 import { Button } from '../shadcn/button';
 
@@ -8,7 +10,7 @@ const EmptyStateHeading: React.FC<React.HTMLAttributes<HTMLHeadingElement>> = ({
   ...props
 }) => (
   <h3
-    className={cn('text-2xl font-bold tracking-tight', className)}
+    className={cn('text-lg font-medium tracking-tight', className)}
     {...props}
   />
 );
@@ -49,7 +51,16 @@ const EmptyState: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
     (child) => React.isValidElement(child) && child.type === EmptyStateButton,
   );
 
-  const cmps = [EmptyStateHeading, EmptyStateText, EmptyStateButton];
+  const media = childrenArray.find(
+    (child) => React.isValidElement(child) && child.type === EmptyMedia,
+  );
+
+  const cmps = [
+    EmptyStateHeading,
+    EmptyStateText,
+    EmptyStateButton,
+    EmptyMedia,
+  ];
 
   const otherChildren = childrenArray.filter(
     (child) =>
@@ -66,6 +77,7 @@ const EmptyState: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
       {...props}
     >
       <div className="flex flex-col items-center gap-1 text-center">
+        {media}
         {heading}
         {text}
         {button}
@@ -76,4 +88,40 @@ const EmptyState: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
 };
 EmptyState.displayName = 'EmptyState';
 
-export { EmptyState, EmptyStateHeading, EmptyStateText, EmptyStateButton };
+const emptyMediaVariants = cva(
+  'mb-2 flex shrink-0 items-center justify-center [&_svg]:pointer-events-none [&_svg]:shrink-0',
+  {
+    variants: {
+      variant: {
+        default: 'bg-transparent',
+        icon: "bg-muted text-foreground flex size-10 shrink-0 items-center justify-center rounded-lg [&_svg:not([class*='size-'])]:size-6",
+      },
+    },
+    defaultVariants: {
+      variant: 'default',
+    },
+  },
+);
+
+function EmptyMedia({
+  className,
+  variant = 'default',
+  ...props
+}: React.ComponentProps<'div'> & VariantProps<typeof emptyMediaVariants>) {
+  return (
+    <div
+      data-slot="empty-icon"
+      data-variant={variant}
+      className={cn(emptyMediaVariants({ variant, className }))}
+      {...props}
+    />
+  );
+}
+
+export {
+  EmptyState,
+  EmptyStateHeading,
+  EmptyStateText,
+  EmptyStateButton,
+  EmptyMedia,
+};

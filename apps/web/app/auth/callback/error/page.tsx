@@ -6,6 +6,7 @@ import type { AuthError } from '@supabase/supabase-js';
 
 import { ResendAuthLinkForm } from '@kit/auth/resend-email-link';
 import { Alert, AlertDescription, AlertTitle } from '@kit/ui/alert';
+import { alertExtras } from '@kit/ui/alert-extras';
 import { Button } from '@kit/ui/button';
 import { Trans } from '@kit/ui/trans';
 
@@ -45,7 +46,7 @@ async function AuthCallbackError(props: AuthCallbackErrorPageProps) {
 
   return (
     <>
-      <Alert variant={'warning'}>
+      <Alert className={alertExtras.warning}>
         <AlertTitle>
           <Trans i18nKey={'auth.authenticationErrorAlertHeading'} />
         </AlertTitle>
@@ -79,10 +80,12 @@ function AuthCallbackForm(props: {
 
 function SignInButton(props: { signInPath: string }) {
   return (
-    <Button className={'w-full'} asChild>
-      <Link href={props.signInPath}>
-        <Trans i18nKey={'auth.signIn'} />
-      </Link>
+    <Button
+      nativeButton={false}
+      render={<Link href={props.signInPath} />}
+      className={'w-full'}
+    >
+      <Trans i18nKey={'auth.signIn'} />
     </Button>
   );
 }

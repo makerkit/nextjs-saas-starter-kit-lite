@@ -13,3 +13,4 @@ export * from './feature-card';
 export * from './newsletter-signup';
 export * from './newsletter-signup-container';
 export * from './coming-soon';
+export * from './ecosystem-showcase';

@@ -60,9 +60,7 @@ const config = {
     optimizePackageImports: [
       'recharts',
       'lucide-react',
-      '@radix-ui/react-icons',
-      '@radix-ui/react-avatar',
-      '@radix-ui/react-select',
+      '@base-ui/react',
       'date-fns',
       ...INTERNAL_PACKAGES,
     ],

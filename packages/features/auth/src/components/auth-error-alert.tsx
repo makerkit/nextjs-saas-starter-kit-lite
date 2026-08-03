@@ -1,4 +1,4 @@
-import { ExclamationTriangleIcon } from '@radix-ui/react-icons';
+import { TriangleAlert } from 'lucide-react';
 
 import { Alert, AlertDescription, AlertTitle } from '@kit/ui/alert';
 import { Trans } from '@kit/ui/trans';
@@ -25,7 +25,7 @@ export function AuthErrorAlert({
 
   return (
     <Alert variant={'destructive'}>
-      <ExclamationTriangleIcon className={'w-4'} />
+      <TriangleAlert className={'w-4'} />
 
       <AlertTitle>
         <Trans i18nKey={`auth.errorAlertHeading`} />

@@ -1,7 +1,7 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { CheckIcon, ExclamationTriangleIcon } from '@radix-ui/react-icons';
+import { Check, TriangleAlert } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
@@ -9,6 +9,7 @@ import { z } from 'zod';
 
 import { useSignInWithOtp } from '@kit/supabase/hooks/use-sign-in-with-otp';
 import { Alert, AlertDescription, AlertTitle } from '@kit/ui/alert';
+import { alertExtras } from '@kit/ui/alert-extras';
 import { Button } from '@kit/ui/button';
 import {
   Form,
@@ -133,8 +134,8 @@ export function MagicLinkAuthContainer({
 
 function SuccessAlert() {
   return (
-    <Alert variant={'success'}>
-      <CheckIcon className={'h-4'} />
+    <Alert className={alertExtras.success}>
+      <Check className={'h-4'} />
 
       <AlertTitle>
         <Trans i18nKey={'auth.sendLinkSuccess'} />
@@ -150,7 +151,7 @@ function SuccessAlert() {
 function ErrorAlert() {
   return (
     <Alert variant={'destructive'}>
-      <ExclamationTriangleIcon className={'h-4'} />
+      <TriangleAlert className={'h-4'} />
 
       <AlertTitle>
         <Trans i18nKey={'auth.errors.generic'} />

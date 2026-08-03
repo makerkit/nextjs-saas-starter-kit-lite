@@ -23,19 +23,30 @@ const redirectPath = `${callback}?next=${passwordUpdate}`;
 function PasswordResetPage() {
   return (
     <>
-      <Heading level={5} className={'tracking-tight'}>
-        <Trans i18nKey={'auth.passwordResetLabel'} />
-      </Heading>
+      <div className={'flex flex-col items-center gap-1'}>
+        <Heading level={2} className={'tracking-tight'}>
+          <Trans i18nKey={'auth.passwordResetLabel'} />
+        </Heading>
+
+        <p className={'text-muted-foreground text-center text-sm'}>
+          <Trans i18nKey={'auth.passwordResetSubheading'} />
+        </p>
+      </div>
 
       <div className={'flex flex-col space-y-4'}>
         <PasswordResetRequestContainer redirectPath={redirectPath} />
 
         <div className={'flex justify-center text-xs'}>
-          <Button asChild variant={'link'} size={'sm'}>
-            <Link href={signIn}>
-              <Trans i18nKey={'auth.passwordRecoveredQuestion'} />
-            </Link>
-          </Button>
+          <Button
+            nativeButton={false}
+            variant={'link'}
+            size={'sm'}
+            render={
+              <Link href={signIn}>
+                <Trans i18nKey={'auth.passwordRecoveredQuestion'} />
+              </Link>
+            }
+          />
         </div>
       </div>
     </>

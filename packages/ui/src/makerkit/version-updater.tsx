@@ -1,12 +1,13 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { useQuery } from '@tanstack/react-query';
 import { RocketIcon } from 'lucide-react';
 
 import {
   AlertDialog,
+  AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
   AlertDialogFooter,
@@ -23,31 +24,21 @@ let version: string | null = null;
 
 /**
  * Default interval time in seconds to check for new version
- * By default, it is set to 120 seconds
+ * By default, it is set to 60 seconds
  */
-const DEFAULT_REFETCH_INTERVAL = 120;
-
-/**
- * Default interval time in seconds to check for new version
- */
-const VERSION_UPDATER_REFETCH_INTERVAL_SECONDS =
-  process.env.NEXT_PUBLIC_VERSION_UPDATER_REFETCH_INTERVAL_SECONDS;
+const DEFAULT_REFETCH_INTERVAL = 60;
 
 export function VersionUpdater(props: { intervalTimeInSecond?: number }) {
   const { data } = useVersionUpdater(props);
   const [dismissed, setDismissed] = useState(false);
-  const [showDialog, setShowDialog] = useState<boolean>(false);
+  const [open, setOpen] = useState(false);
 
-  useEffect(() => {
-    setShowDialog(data?.didChange ?? false);
-  }, [data?.didChange]);
-
-  if (!data?.didChange || dismissed) {
-    return null;
+  if (data?.didChange && !dismissed && !open) {
+    setOpen(true);
   }
 
   return (
-    <AlertDialog open={showDialog} onOpenChange={setShowDialog}>
+    <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle className={'flex items-center gap-x-2'}>
@@ -63,15 +54,13 @@ export function VersionUpdater(props: { intervalTimeInSecond?: number }) {
         </AlertDialogHeader>
 
         <AlertDialogFooter>
-          <Button
-            variant={'outline'}
+          <AlertDialogCancel
             onClick={() => {
-              setShowDialog(false);
               setDismissed(true);
             }}
           >
             <Trans i18nKey="common.back" />
-          </Button>
+          </AlertDialogCancel>
 
           <Button onClick={() => window.location.reload()}>
             <Trans i18nKey="common.newVersionSubmitButton" />
@@ -83,9 +72,10 @@ export function VersionUpdater(props: { intervalTimeInSecond?: number }) {
 }
 
 function useVersionUpdater(props: { intervalTimeInSecond?: number } = {}) {
-  const interval = VERSION_UPDATER_REFETCH_INTERVAL_SECONDS
-    ? Number(VERSION_UPDATER_REFETCH_INTERVAL_SECONDS)
-    : DEFAULT_REFETCH_INTERVAL;
+  const intervalEnv =
+    process.env.NEXT_PUBLIC_VERSION_UPDATER_REFETCH_INTERVAL_SECONDS;
+
+  const interval = intervalEnv ? Number(intervalEnv) : DEFAULT_REFETCH_INTERVAL;
 
   const refetchInterval = (props.intervalTimeInSecond ?? interval) * 1000;
 
@@ -100,7 +90,7 @@ function useVersionUpdater(props: { intervalTimeInSecond?: number } = {}) {
     refetchInterval,
     initialData: null,
     queryFn: async () => {
-      const response = await fetch('/version');
+      const response = await fetch('/api/version');
       const currentVersion = await response.text();
       const oldVersion = version;
 

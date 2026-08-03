@@ -1,23 +1,27 @@
-import { Slot, Slottable } from '@radix-ui/react-slot';
+import { useRender } from '@base-ui/react/use-render';
 
 import { cn } from '../../lib/utils';
 
 export const GradientSecondaryText: React.FC<
   React.HTMLAttributes<HTMLSpanElement> & {
-    asChild?: boolean;
+    render?: React.ReactElement;
   }
-> = function GradientSecondaryTextComponent({ className, ...props }) {
-  const Comp = props.asChild ? Slot : 'span';
-
-  return (
-    <Comp
-      className={cn(
+> = function GradientSecondaryTextComponent({
+  className,
+  render,
+  children,
+  ...props
+}) {
+  return useRender({
+    render,
+    defaultTagName: 'span',
+    props: {
+      ...props,
+      className: cn(
         'dark:from-foreground/60 dark:to-foreground text-secondary-foreground dark:bg-linear-to-r dark:bg-clip-text dark:text-transparent',
         className,
-      )}
-      {...props}
-    >
-      <Slottable>{props.children}</Slottable>
-    </Comp>
-  );
+      ),
+      children,
+    },
+  });
 };

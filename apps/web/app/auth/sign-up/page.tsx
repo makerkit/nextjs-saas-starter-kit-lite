@@ -26,9 +26,11 @@ const paths = {
 function SignUpPage() {
   return (
     <>
-      <Heading level={5} className={'tracking-tight'}>
-        <Trans i18nKey={'auth.signUpHeading'} />
-      </Heading>
+      <div className={'flex flex-col items-center'}>
+        <Heading level={2} className={'tracking-tighter'}>
+          <Trans i18nKey={'auth.signUpHeading'} />
+        </Heading>
+      </div>
 
       <SignUpMethodsContainer
         providers={authConfig.providers}
@@ -37,11 +39,16 @@ function SignUpPage() {
       />
 
       <div className={'flex justify-center'}>
-        <Button asChild variant={'link'} size={'sm'}>
-          <Link href={pathsConfig.auth.signIn}>
-            <Trans i18nKey={'auth.alreadyHaveAnAccount'} />
-          </Link>
-        </Button>
+        <Button
+          nativeButton={false}
+          variant={'link'}
+          size={'sm'}
+          render={
+            <Link href={pathsConfig.auth.signIn}>
+              <Trans i18nKey={'auth.alreadyHaveAnAccount'} />
+            </Link>
+          }
+        />
       </div>
     </>
   );

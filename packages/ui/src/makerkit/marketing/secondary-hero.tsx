@@ -19,7 +19,7 @@ export const SecondaryHero: React.FC<SecondaryHeroProps> =
     return (
       <div
         className={cn(
-          'flex flex-col items-center space-y-6 text-center',
+          'flex flex-col items-center space-y-4 text-center',
           className,
         )}
         {...props}
@@ -31,7 +31,7 @@ export const SecondaryHero: React.FC<SecondaryHeroProps> =
             {heading}
           </Heading>
 
-          <h3 className="text-muted-foreground font-sans text-xl font-normal tracking-tight">
+          <h3 className="text-secondary-foreground/70 text-center font-sans text-xl font-medium tracking-tight">
             {subheading}
           </h3>
         </div>

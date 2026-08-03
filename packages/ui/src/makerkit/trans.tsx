@@ -9,7 +9,7 @@ interface TransProps {
    * The i18n key to translate. Supports dot notation for nested keys.
    * Example: 'auth.login.title' or 'common.buttons.submit'
    */
-  i18nKey: string;
+  i18nKey: string | undefined;
   /**
    * Default text to use if the translation key is not found.
    */
@@ -51,7 +51,7 @@ export function Trans({
   return (
     <ErrorBoundary fallback={<>{defaults ?? i18nKey}</>}>
       <Translate
-        i18nKey={i18nKey}
+        i18nKey={i18nKey!}
         defaults={defaults}
         values={values}
         ns={ns}
@@ -61,9 +61,28 @@ export function Trans({
   );
 }
 
+function normalizeI18nKey(key: string | undefined): string {
+  if (!key) return '';
+
+  // Intercept i18next-style "namespace:key" format and convert to "namespace.key"
+  if (key.includes(':')) {
+    const normalized = key.replace(':', '.');
+
+    console.warn(
+      `[Trans] Detected i18next-style key "${key}". next-intl only supports dot notation (e.g. "${normalized}"). Please update to the new format.`,
+    );
+
+    return normalized;
+  }
+
+  return key;
+}
+
 function Translate({ i18nKey, defaults, values, ns, components }: TransProps) {
+  const normalizedKey = normalizeI18nKey(i18nKey);
+
   // Extract namespace and key from i18nKey if it contains a dot
-  const [namespace, ...keyParts] = i18nKey.split('.');
+  const [namespace, ...keyParts] = normalizedKey.split('.');
   const key = keyParts.length > 0 ? keyParts.join('.') : namespace;
   const translationNamespace = ns ?? (keyParts.length > 0 ? namespace : '');
 
@@ -113,6 +132,11 @@ function Translate({ i18nKey, defaults, values, ns, components }: TransProps) {
     let translation: React.ReactNode;
 
     try {
+      // Fall back to defaults if the translation key doesn't exist
+      if (!t.has(key as never) && defaults) {
+        return defaults;
+      }
+
       // Merge values and normalized components for t.rich()
       // Components take precedence over values with the same name
       const richParams = {

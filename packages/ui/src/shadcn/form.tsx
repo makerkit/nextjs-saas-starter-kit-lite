@@ -2,14 +2,12 @@
 
 import * as React from 'react';
 
-import type * as LabelPrimitive from '@radix-ui/react-label';
-import { Slot } from '@radix-ui/react-slot';
+import { useRender } from '@base-ui/react/use-render';
 import type { ControllerProps, FieldPath, FieldValues } from 'react-hook-form';
 import { Controller, FormProvider, useFormContext } from 'react-hook-form';
 
-import { cn } from '../lib/utils';
-import { Trans } from '../makerkit/trans';
-import { Label } from './label';
+import { Label } from '#components/label';
+import { cn } from '#utils';
 
 const Form = FormProvider;
 
@@ -41,7 +39,6 @@ const useFormField = () => {
   const fieldContext = React.useContext(FormFieldContext);
   const itemContext = React.useContext(FormItemContext);
   const { getFieldState, formState } = useFormContext();
-
   const fieldState = getFieldState(fieldContext.name, formState);
 
   if (!fieldContext) {
@@ -82,9 +79,10 @@ const FormItem: React.FC<React.ComponentPropsWithRef<'div'>> = ({
 };
 FormItem.displayName = 'FormItem';
 
-const FormLabel: React.FC<
-  React.ComponentPropsWithRef<typeof LabelPrimitive.Root>
-> = ({ className, ...props }) => {
+const FormLabel: React.FC<React.ComponentPropsWithRef<typeof Label>> = ({
+  className,
+  ...props
+}) => {
   const { error, formItemId } = useFormField();
 
   return (
@@ -97,24 +95,30 @@ const FormLabel: React.FC<
 };
 FormLabel.displayName = 'FormLabel';
 
-const FormControl: React.FC<React.ComponentPropsWithoutRef<typeof Slot>> = ({
-  ...props
-}) => {
+const FormControl: React.FC<
+  React.PropsWithChildren & {
+    className?: string;
+    render?: React.ReactElement;
+  }
+> = ({ ...props }) => {
   const { error, formItemId, formDescriptionId, formMessageId } =
     useFormField();
 
-  return (
-    <Slot
-      id={formItemId}
-      aria-describedby={
-        !error
-          ? `${formDescriptionId}`
-          : `${formDescriptionId} ${formMessageId}`
-      }
-      aria-invalid={!!error}
-      {...props}
-    />
-  );
+  return useRender({
+    defaultTagName: 'div',
+    render: props.render,
+    props: {
+      ...props,
+      id: formItemId,
+      'aria-labelledby': formItemId,
+      'aria-describedby': !error
+        ? `${formDescriptionId}`
+        : `${formDescriptionId} ${formMessageId}`,
+      'aria-invalid': !!error,
+      className: cn(props.className),
+      children: props.children,
+    },
+  });
 };
 FormControl.displayName = 'FormControl';
 
@@ -140,7 +144,7 @@ const FormMessage: React.FC<React.ComponentPropsWithRef<'p'>> = ({
   ...props
 }) => {
   const { error, formMessageId } = useFormField();
-  const body = error ? String(error?.message) : children;
+  const body = error ? String(error?.message ?? '') : children;
 
   if (!body) {
     return null;
@@ -152,11 +156,7 @@ const FormMessage: React.FC<React.ComponentPropsWithRef<'p'>> = ({
       className={cn('text-destructive text-[0.8rem] font-medium', className)}
       {...props}
     >
-      {typeof body === 'string' ? (
-        <Trans i18nKey={body} defaults={body} />
-      ) : (
-        body
-      )}
+      {body}
     </p>
   );
 };

@@ -68,17 +68,20 @@ function DropdownLink(
   }>,
 ) {
   return (
-    <DropdownMenuItem asChild key={props.path}>
-      <Link
-        href={props.path}
-        className={'flex h-12 w-full items-center space-x-4'}
-      >
-        {props.Icon}
+    <DropdownMenuItem
+      key={props.path}
+      render={
+        <Link
+          href={props.path}
+          className={'flex h-12 w-full items-center space-x-4'}
+        />
+      }
+    >
+      {props.Icon}
 
-        <span>
-          <Trans i18nKey={props.label} defaults={props.label} />
-        </span>
-      </Link>
+      <span>
+        <Trans i18nKey={props.label} defaults={props.label} />
+      </span>
     </DropdownMenuItem>
   );
 }

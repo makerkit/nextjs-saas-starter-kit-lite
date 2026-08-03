@@ -26,18 +26,28 @@ const paths = {
 function SignInPage() {
   return (
     <>
-      <Heading level={5} className={'tracking-tight'}>
-        <Trans i18nKey={'auth.signInHeading'} />
-      </Heading>
+      <div className={'flex flex-col items-center'}>
+        <Heading level={2} className={'tracking-tighter'}>
+          <Trans
+            i18nKey={'auth.signInHeading'}
+            values={{ productName: process.env.NEXT_PUBLIC_PRODUCT_NAME }}
+          />
+        </Heading>
+      </div>
 
       <SignInMethodsContainer paths={paths} providers={authConfig.providers} />
 
       <div className={'flex justify-center'}>
-        <Button asChild variant={'link'} size={'sm'}>
-          <Link href={pathsConfig.auth.signUp}>
-            <Trans i18nKey={'auth.doNotHaveAccountYet'} />
-          </Link>
-        </Button>
+        <Button
+          nativeButton={false}
+          variant={'link'}
+          size={'sm'}
+          render={
+            <Link href={pathsConfig.auth.signUp}>
+              <Trans i18nKey={'auth.doNotHaveAccountYet'} />
+            </Link>
+          }
+        />
       </div>
     </>
   );

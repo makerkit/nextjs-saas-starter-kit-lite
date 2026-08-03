@@ -12,6 +12,7 @@
   "exports": {
     ".": "./src/index.ts",
     "./routing": "./src/routing.ts",
+    "./navigation": "./src/navigation.ts",
     "./provider": "./src/client-provider.tsx"
   },
   "scripts": {

@@ -3,14 +3,14 @@
 import { useState } from 'react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { ExclamationTriangleIcon } from '@radix-ui/react-icons';
-import { Check } from 'lucide-react';
+import { Check, TriangleAlert } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 
 import { useUpdateUser } from '@kit/supabase/hooks/use-update-user-mutation';
 import { Alert, AlertDescription, AlertTitle } from '@kit/ui/alert';
+import { alertExtras } from '@kit/ui/alert-extras';
 import { Button } from '@kit/ui/button';
 import {
   Form,
@@ -170,7 +170,7 @@ export const UpdatePasswordForm = ({
 
 function SuccessAlert() {
   return (
-    <Alert variant={'success'}>
+    <Alert className={alertExtras.success}>
       <Check className={'h-4'} />
 
       <AlertTitle>
@@ -186,8 +186,8 @@ function SuccessAlert() {
 
 function NeedsReauthenticationAlert() {
   return (
-    <Alert variant={'warning'}>
-      <ExclamationTriangleIcon className={'h-4'} />
+    <Alert className={alertExtras.warning}>
+      <TriangleAlert className={'h-4'} />
 
       <AlertTitle>
         <Trans i18nKey={'account.needsReauthentication'} />

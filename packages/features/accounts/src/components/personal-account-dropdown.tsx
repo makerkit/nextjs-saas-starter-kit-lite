@@ -133,17 +133,19 @@ export function PersonalAccountDropdown({
 
         <DropdownMenuSeparator />
 
-        <DropdownMenuItem asChild>
-          <Link
-            className={'s-full flex cursor-pointer items-center space-x-2'}
-            href={paths.home}
-          >
-            <Home className={'h-5'} />
+        <DropdownMenuItem
+          render={
+            <Link
+              className={'s-full flex cursor-pointer items-center space-x-2'}
+              href={paths.home}
+            />
+          }
+        >
+          <Home className={'h-5'} />
 
-            <span>
-              <Trans i18nKey={'common.routes.home'} />
-            </span>
-          </Link>
+          <span>
+            <Trans i18nKey={'common.routes.home'} />
+          </span>
         </DropdownMenuItem>
 
         <DropdownMenuSeparator />

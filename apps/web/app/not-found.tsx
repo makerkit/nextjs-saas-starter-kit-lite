@@ -48,12 +48,14 @@ const NotFoundPage = () => {
               </p>
             </div>
 
-            <Button asChild variant={'outline'}>
-              <Link href={'/'}>
-                <ArrowLeft className={'mr-2 h-4'} />
+            <Button
+              nativeButton={false}
+              render={<Link href={'/'} />}
+              variant={'outline'}
+            >
+              <ArrowLeft className={'mr-2 h-4'} />
 
-                <Trans i18nKey={'common.backToHomePage'} />
-              </Link>
+              <Trans i18nKey={'common.backToHomePage'} />
             </Button>
           </div>
         </div>

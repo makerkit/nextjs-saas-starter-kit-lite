@@ -2,7 +2,7 @@
 
 # NEW! Next.js Supabase SaaS Starter Kit (Lite)
 
-Start building your SaaS faster with our Next.js 15 + Supabase starter kit.
+Start building your SaaS faster with our Next.js 16.3 + Supabase starter kit.
 
 👉 **Looking for a full-featured SaaS Starter Kit?** [Check out the complete version](https://makerkit.dev)
 
@@ -18,11 +18,11 @@ PS: the documentation for this kit is still being updated, so please check back 
 ## What's Included
 
 ### Core Architecture
-- 🏗️ Next.js 15 + Turborepo monorepo setup
-- 🎨 Shadcn UI components with TailwindCSS v4
+- 🏗️ Next.js 16.3 + Turborepo monorepo setup
+- 🎨 Shadcn UI (Base UI) components with TailwindCSS v4
 - 🔐 Supabase authentication & basic DB
 - 🌐 i18n translations (client + server)
-- ✨ Full TypeScript + ESLint v9 + Prettier configuration
+- ✨ Full TypeScript 7 + Oxlint + Oxfmt configuration
 
 ### Key Features
 - 👤 User authentication flow
@@ -36,16 +36,13 @@ PS: the documentation for this kit is still being updated, so please check back 
 This starter kit provides core foundations:
 
 🛠️ **Technology Stack**:
-- [Next.js 15](https://nextjs.org/): A React-based framework for server-side rendering and static site generation.
+- [Next.js 16.3](https://nextjs.org/): A React-based framework for server-side rendering and static site generation.
 - [Tailwind CSS](https://tailwindcss.com/): A utility-first CSS framework for rapidly building custom designs.
 - [Supabase](https://supabase.com/): A realtime database for web and mobile applications.
-- [i18next](https://www.i18next.com/): A popular internationalization framework for JavaScript.
 - [Turborepo](https://turborepo.org/): A monorepo tool for managing multiple packages and applications.
 - [Shadcn UI](https://shadcn.com/): A collection of components built using Tailwind CSS.
 - [Zod](https://github.com/colinhacks/zod): A TypeScript-first schema validation library.
 - [React Query](https://tanstack.com/query/v4): A powerful data fetching and caching library for React.
-- [Prettier](https://prettier.io/): An opinionated code formatter for JavaScript, TypeScript, and CSS.
-- [Eslint](https://eslint.org/): A powerful linting tool for JavaScript and TypeScript.
 - [Playwright](https://playwright.dev/): A framework for end-to-end testing of web applications.
 
 This kit is a trimmed down version of the [full version of this SaaS Starter Kit](https://makerkit.dev). It is a good way to evaluate small part of the full kit, or to simply use it as a base for your own project.
@@ -317,16 +314,6 @@ Where `<url>` is the URL of your application.
 #### 4. Deploy to Vercel or any other hosting provider
 
 You can deploy your application to any hosting provider that supports Next.js.
-
-#### 5. Deploy to Cloudflare
-
-The configuration should work as is, but you need to set the runtime to `edge` in the root layout file (`apps/web/app/layout.tsx`).
-
-```tsx
-export const runtime = 'edge';
-```
-
-Remember to enable Node.js compatibility in the Cloudflare dashboard.
 
 ## Contributing
 

@@ -23,7 +23,7 @@ export function Hero({
   animate = true,
 }: HeroProps) {
   return (
-    <div className={cn('mx-auto flex flex-col space-y-20', className)}>
+    <div className={cn('mx-auto flex flex-col space-y-14', className)}>
       <div
         style={{
           MozAnimationDuration: '100ms',
@@ -35,7 +35,7 @@ export function Hero({
           },
         )}
       >
-        <div className="flex w-full flex-1 flex-col items-center gap-y-6 xl:gap-y-8 2xl:gap-y-12">
+        <div className="flex w-full flex-1 flex-col items-center gap-y-6 xl:gap-y-8">
           {pill && (
             <div
               className={cn({
@@ -51,10 +51,10 @@ export function Hero({
             <HeroTitle>{title}</HeroTitle>
 
             {subtitle && (
-              <div className="flex max-w-lg">
-                <h3 className="text-muted-foreground p-0 text-center font-sans text-2xl font-normal tracking-tight">
+              <div className="flex max-w-3xl">
+                <h2 className="text-secondary-foreground/70 p-0 text-center font-sans text-xl font-normal tracking-tighter">
                   {subtitle}
-                </h3>
+                </h2>
               </div>
             )}
           </div>

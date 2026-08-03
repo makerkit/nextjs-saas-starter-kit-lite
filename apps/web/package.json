@@ -39,7 +39,6 @@
     "@makerkit/data-loader-supabase-core": "catalog:",
     "@makerkit/data-loader-supabase-nextjs": "catalog:",
     "@marsidev/react-turnstile": "catalog:",
-    "@radix-ui/react-icons": "catalog:",
     "@supabase/supabase-js": "catalog:",
     "@tanstack/react-query": "catalog:",
     "@tanstack/react-table": "catalog:",

@@ -33,7 +33,6 @@
     "@kit/tsconfig": "workspace:*",
     "@kit/ui": "workspace:*",
     "@marsidev/react-turnstile": "catalog:",
-    "@radix-ui/react-icons": "catalog:",
     "@supabase/supabase-js": "catalog:",
     "@tanstack/react-query": "catalog:",
     "@types/node": "catalog:",

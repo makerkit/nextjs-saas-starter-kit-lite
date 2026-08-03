@@ -2,9 +2,8 @@
 
 import { useCallback, useMemo, useState } from 'react';
 
-import * as DialogPrimitive from '@radix-ui/react-dialog';
-
 import { Button } from '../shadcn/button';
+import { Dialog, DialogContent } from '../shadcn/dialog';
 import { Heading } from '../shadcn/heading';
 import { Trans } from './trans';
 
@@ -29,9 +28,8 @@ export function CookieBanner() {
   }
 
   return (
-    <DialogPrimitive.Root open modal={false}>
-      <DialogPrimitive.Content
-        onOpenAutoFocus={(e) => e.preventDefault()}
+    <Dialog open modal={false}>
+      <DialogContent
         className={`dark:shadow-primary-500/40 bg-background animate-in fade-in zoom-in-95 slide-in-from-bottom-16 fill-mode-both fixed bottom-0 w-full max-w-lg border p-6 shadow-2xl delay-1000 duration-1000 lg:bottom-[2rem] lg:left-[2rem] lg:h-48 lg:rounded-lg`}
       >
         <div className={'flex flex-col space-y-4'}>
@@ -55,8 +53,8 @@ export function CookieBanner() {
             </Button>
           </div>
         </div>
-      </DialogPrimitive.Content>
-    </DialogPrimitive.Root>
+      </DialogContent>
+    </Dialog>
   );
 }
 

@@ -86,14 +86,16 @@ async function FAQPage() {
           </div>
 
           <div>
-            <Button asChild variant={'outline'}>
-              <Link href={'/contact'}>
-                <span>
-                  <Trans i18nKey={'marketing.contactFaq'} />
-                </span>
+            <Button
+              nativeButton={false}
+              render={<Link href={'/contact'} />}
+              variant={'outline'}
+            >
+              <span>
+                <Trans i18nKey={'marketing.contactFaq'} />
+              </span>
 
-                <ArrowRight className={'ml-2 w-4'} />
-              </Link>
+              <ArrowRight className={'ml-2 w-4'} />
             </Button>
           </div>
         </div>

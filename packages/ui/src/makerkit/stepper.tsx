@@ -1,6 +1,6 @@
 'use client';
 
-import { Fragment, useCallback } from 'react';
+import { Fragment } from 'react';
 
 import { cva } from 'class-variance-authority';
 
@@ -11,6 +11,54 @@ import { Trans } from './trans';
 type Variant = 'numbers' | 'default' | 'dots';
 
 const classNameBuilder = getClassNameBuilder();
+
+function Steps({
+  steps,
+  currentStep,
+  variant,
+}: {
+  steps: string[];
+  currentStep: number;
+  variant?: Variant;
+}) {
+  return steps.map((labelOrKey, index) => {
+    const selected = currentStep === index;
+    const complete = currentStep > index;
+
+    const className = classNameBuilder({
+      selected,
+      variant,
+      complete,
+    });
+
+    const isNumberVariant = variant === 'numbers';
+    const isDotsVariant = variant === 'dots';
+
+    const labelClassName = cn({
+      ['px-1.5 py-2 text-xs']: !isNumberVariant,
+      ['hidden']: isDotsVariant,
+    });
+
+    const { label, number } = getStepLabel(labelOrKey, index);
+
+    return (
+      <Fragment key={index}>
+        <div aria-selected={selected} className={className}>
+          <span className={labelClassName}>
+            {number}
+            <If condition={!isNumberVariant}>. {label}</If>
+          </span>
+        </div>
+
+        <If condition={isNumberVariant}>
+          <StepDivider selected={selected} complete={complete}>
+            {label}
+          </StepDivider>
+        </If>
+      </Fragment>
+    );
+  });
+}
 
 /**
  * Renders a stepper component with multiple steps.
@@ -27,46 +75,6 @@ export function Stepper(props: {
 }) {
   const variant = props.variant ?? 'default';
 
-  const Steps = useCallback(() => {
-    return props.steps.map((labelOrKey, index) => {
-      const selected = props.currentStep === index;
-      const complete = props.currentStep > index;
-
-      const className = classNameBuilder({
-        selected,
-        variant,
-        complete,
-      });
-
-      const isNumberVariant = variant === 'numbers';
-      const isDotsVariant = variant === 'dots';
-
-      const labelClassName = cn({
-        ['px-1.5 py-2 text-xs']: !isNumberVariant,
-        ['hidden']: isDotsVariant,
-      });
-
-      const { label, number } = getStepLabel(labelOrKey, index);
-
-      return (
-        <Fragment key={index}>
-          <div aria-selected={selected} className={className}>
-            <span className={labelClassName}>
-              {number}
-              <If condition={!isNumberVariant}>. {label}</If>
-            </span>
-          </div>
-
-          <If condition={isNumberVariant}>
-            <StepDivider selected={selected} complete={complete}>
-              {label}
-            </StepDivider>
-          </If>
-        </Fragment>
-      );
-    });
-  }, [props.steps, props.currentStep, variant]);
-
   // If there are no steps, don't render anything.
   if (props.steps.length < 2) {
     return null;
@@ -75,12 +83,16 @@ export function Stepper(props: {
   const containerClassName = cn('w-full', {
     ['flex justify-between']: variant === 'numbers',
     ['flex space-x-0.5']: variant === 'default',
-    ['flex gap-x-4 self-center']: variant === 'dots',
+    ['flex space-x-2.5 self-center']: variant === 'dots',
   });
 
   return (
     <div className={containerClassName}>
-      <Steps />
+      <Steps
+        steps={props.steps}
+        currentStep={props.currentStep}
+        variant={variant}
+      />
     </div>
   );
 }

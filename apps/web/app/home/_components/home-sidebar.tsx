@@ -5,8 +5,8 @@ import {
   SidebarContent,
   SidebarFooter,
   SidebarHeader,
-  SidebarNavigation,
-} from '@kit/ui/shadcn-sidebar';
+} from '@kit/ui/sidebar';
+import { SidebarNavigation } from '@kit/ui/sidebar-navigation';
 import { Skeleton } from '@kit/ui/skeleton';
 
 import { AppLogo } from '~/components/app-logo';

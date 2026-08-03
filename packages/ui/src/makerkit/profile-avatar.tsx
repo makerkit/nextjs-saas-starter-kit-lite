@@ -1,5 +1,5 @@
 import { cn } from '../lib/utils';
-import { Avatar, AvatarFallback, AvatarImage } from '../shadcn/avatar';
+import { Avatar, AvatarFallback, AvatarImage } from './avatar';
 
 type SessionProps = {
   displayName: string | null;
@@ -18,18 +18,13 @@ type ProfileAvatarProps = (SessionProps | TextProps) & {
 export function ProfileAvatar(props: ProfileAvatarProps) {
   const avatarClassName = cn(
     props.className,
-    'mx-auto h-9 w-9 group-focus:ring-2',
+    'mx-auto size-8 group-focus:ring-2',
   );
 
   if ('text' in props) {
     return (
       <Avatar className={avatarClassName}>
-        <AvatarFallback
-          className={cn(
-            props.fallbackClassName,
-            'animate-in fade-in uppercase',
-          )}
-        >
+        <AvatarFallback className={cn(props.fallbackClassName, 'uppercase')}>
           {props.text.slice(0, 1)}
         </AvatarFallback>
       </Avatar>
@@ -40,11 +35,9 @@ export function ProfileAvatar(props: ProfileAvatarProps) {
 
   return (
     <Avatar className={avatarClassName}>
-      <AvatarImage src={props.pictureUrl ?? undefined} />
+      <AvatarImage src={props.pictureUrl || undefined} />
 
-      <AvatarFallback
-        className={cn(props.fallbackClassName, 'animate-in fade-in')}
-      >
+      <AvatarFallback className={cn(props.fallbackClassName, 'uppercase')}>
         <span suppressHydrationWarning className={'uppercase'}>
           {initials}
         </span>

@@ -2,6 +2,7 @@
 
 import { useUser } from '@kit/supabase/hooks/use-user';
 import { Alert } from '@kit/ui/alert';
+import { alertExtras } from '@kit/ui/alert-extras';
 import { LoadingOverlay } from '@kit/ui/loading-overlay';
 import { Trans } from '@kit/ui/trans';
 
@@ -42,7 +43,7 @@ export function UpdatePasswordFormContainer(
 
 function WarnCannotUpdatePasswordAlert() {
   return (
-    <Alert variant={'warning'}>
+    <Alert className={alertExtras.warning}>
       <Trans i18nKey={'account.cannotUpdatePassword'} />
     </Alert>
   );

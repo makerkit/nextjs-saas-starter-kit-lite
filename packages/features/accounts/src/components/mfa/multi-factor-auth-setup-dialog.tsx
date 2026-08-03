@@ -3,9 +3,8 @@
 import { useCallback, useState } from 'react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { ExclamationTriangleIcon } from '@radix-ui/react-icons';
+import { ArrowLeftIcon, TriangleAlert } from 'lucide-react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { ArrowLeftIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useForm, useWatch } from 'react-hook-form';
 import { toast } from 'sonner';
@@ -55,17 +54,35 @@ export function MultiFactorAuthSetupDialog(props: { userId: string }) {
   }, [t]);
 
   return (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogTrigger asChild>
-        <Button>
-          <Trans i18nKey={'account.setupMfaButtonLabel'} />
-        </Button>
-      </DialogTrigger>
+    <Dialog
+      open={isOpen}
+      /**
+       * Enrollment is multi-step and the factor is only usable once verified, so
+       * a stray click outside or an Escape press must not discard it. Base UI
+       * replaces Radix's `onInteractOutside`/`onEscapeKeyDown` with a `reason` on
+       * `onOpenChange`: ignoring the close leaves the controlled `open` as is.
+       */
+      onOpenChange={(open, eventDetails) => {
+        const isAccidental =
+          eventDetails.reason === 'outside-press' ||
+          eventDetails.reason === 'escape-key';
 
-      <DialogContent
-        onInteractOutside={(e) => e.preventDefault()}
-        onEscapeKeyDown={(e) => e.preventDefault()}
-      >
+        if (!open && isAccidental) {
+          return;
+        }
+
+        setIsOpen(open);
+      }}
+    >
+      <DialogTrigger
+        render={
+          <Button>
+            <Trans i18nKey={'account.setupMfaButtonLabel'} />
+          </Button>
+        }
+      />
+
+      <DialogContent>
         <DialogHeader>
           <DialogTitle>
             <Trans i18nKey={'account.setupMfaButtonLabel'} />
@@ -279,7 +296,7 @@ function FactorQrCode({
     return (
       <div className={'flex w-full flex-col space-y-2'}>
         <Alert variant={'destructive'}>
-          <ExclamationTriangleIcon className={'h-4'} />
+          <TriangleAlert className={'h-4'} />
 
           <AlertTitle>
             <Trans i18nKey={'account.qrCodeErrorHeading'} />
@@ -495,7 +512,7 @@ function useVerifyCodeMutation(userId: string) {
 function ErrorAlert() {
   return (
     <Alert variant={'destructive'}>
-      <ExclamationTriangleIcon className={'h-4'} />
+      <TriangleAlert className={'h-4'} />
 
       <AlertTitle>
         <Trans i18nKey={'account.multiFactorSetupErrorHeading'} />

@@ -3,13 +3,13 @@
 import Link from 'next/link';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { CheckIcon, ExclamationTriangleIcon } from '@radix-ui/react-icons';
-import { ArrowRightIcon } from 'lucide-react';
+import { ArrowRightIcon, Check, TriangleAlert } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import type { z } from 'zod';
 
 import { useUpdateUser } from '@kit/supabase/hooks/use-update-user-mutation';
 import { Alert, AlertDescription, AlertTitle } from '@kit/ui/alert';
+import { alertExtras } from '@kit/ui/alert-extras';
 import { Button } from '@kit/ui/button';
 import {
   Form,
@@ -114,8 +114,8 @@ export function UpdatePasswordForm(params: { redirectTo: string }) {
 function SuccessState(props: { redirectTo: string }) {
   return (
     <div className={'flex flex-col space-y-4'}>
-      <Alert variant={'success'}>
-        <CheckIcon className={'s-6'} />
+      <Alert className={alertExtras.success}>
+        <Check className={'s-6'} />
 
         <AlertTitle>
           <Trans i18nKey={'account.updatePasswordSuccess'} />
@@ -143,7 +143,7 @@ function ErrorState(props: { onRetry: () => void }) {
   return (
     <div className={'flex flex-col space-y-4'}>
       <Alert variant={'destructive'}>
-        <ExclamationTriangleIcon className={'s-6'} />
+        <TriangleAlert className={'s-6'} />
 
         <AlertTitle>
           <Trans i18nKey={'common.genericError'} />

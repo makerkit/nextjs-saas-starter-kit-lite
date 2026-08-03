@@ -1,8 +1,10 @@
 'use client';
 
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState, useTransition } from 'react';
 
 import { useLocale } from 'next-intl';
+
+import { usePathname, useRouter } from '@kit/i18n/navigation';
 
 import {
   Select,
@@ -12,33 +14,19 @@ import {
   SelectValue,
 } from '../shadcn/select';
 
-const LOCALE_COOKIE_NAME = 'lang';
-const ONE_YEAR_IN_SECONDS = 60 * 60 * 24 * 365;
+interface LanguageSelectorProps {
+  locales?: string[];
+  onChange?: (locale: string) => unknown;
+}
 
-/**
- * @name LanguageSelector
- * @description Lets the user pick a locale from the supported ones.
- *
- * This kit has no `[locale]` route segment, so there is no route param to
- * switch. The selection is stored in the `lang` cookie and the page is
- * reloaded.
- *
- * Out of the box that reload changes nothing: `apps/web/i18n/request.ts`
- * resolves the locale statically so that routes can prerender, and the kit ships
- * a single locale, so this component is never rendered — the settings page gates
- * it on there being more than one. If you add locales, decide there how you want
- * the locale resolved, and this selector follows. Reading the cookie in
- * `request.ts` is the smallest change, at the cost of making every route that
- * renders a translation request-bound.
- */
+const DEFAULT_STRATEGY = 'path';
+
 export function LanguageSelector({
   locales = [],
   onChange,
-}: {
-  locales?: string[];
-  onChange?: (locale: string) => unknown;
-}) {
+}: LanguageSelectorProps) {
   const currentLocale = useLocale();
+  const handleChangeLocale = useChangeLocale();
   const [value, setValue] = useState(currentLocale);
 
   const languageNames = useMemo(() => {
@@ -48,19 +36,18 @@ export function LanguageSelector({
   }, [currentLocale]);
 
   const languageChanged = useCallback(
-    (locale: string) => {
+    (locale: string | null) => {
+      if (!locale) return;
+
       setValue(locale);
 
       if (onChange) {
         onChange(locale);
       }
 
-      document.cookie = `${LOCALE_COOKIE_NAME}=${locale}; path=/; max-age=${ONE_YEAR_IN_SECONDS}; SameSite=Lax`;
-
-      // the messages are rendered by the server, so a reload is what applies them
-      window.location.reload();
+      handleChangeLocale(locale);
     },
-    [onChange],
+    [onChange, handleChangeLocale],
   );
 
   if (locales.length <= 1) {
@@ -70,21 +57,18 @@ export function LanguageSelector({
   return (
     <Select value={value} onValueChange={languageChanged}>
       <SelectTrigger>
-        <SelectValue />
+        <SelectValue className="capitalize">
+          {(value) => (value ? languageNames.of(value) : value)}
+        </SelectValue>
       </SelectTrigger>
 
       <SelectContent>
         {locales.map((locale) => {
-          const label = capitalize(languageNames.of(locale) ?? locale);
-
-          const option = {
-            value: locale,
-            label,
-          };
+          const label = languageNames.of(locale) ?? locale;
 
           return (
-            <SelectItem value={option.value} key={option.value}>
-              {option.label}
+            <SelectItem value={locale} key={locale} className="capitalize">
+              {label}
             </SelectItem>
           );
         })}
@@ -93,6 +77,46 @@ export function LanguageSelector({
   );
 }
 
-function capitalize(lang: string) {
-  return lang.slice(0, 1).toUpperCase() + lang.slice(1);
+function useChangeLocale(strategy: `cookie` | `path` = DEFAULT_STRATEGY) {
+  const changeLocaleViaPath = useChangeLocaleViaPath();
+  const changeLocaleViaCookie = useChangeLocaleViaCookie();
+
+  return useCallback(
+    (locale: string) => {
+      switch (strategy) {
+        case 'cookie':
+          return changeLocaleViaCookie(locale);
+        case 'path':
+          return changeLocaleViaPath(locale);
+      }
+    },
+    [strategy, changeLocaleViaCookie, changeLocaleViaPath],
+  );
+}
+
+function useChangeLocaleViaCookie() {
+  const router = useRouter();
+
+  return useCallback(
+    (locale: string) => {
+      document.cookie = `lang=${locale}; Path=/; SameSite=Lax`;
+      router.refresh();
+    },
+    [router],
+  );
+}
+
+function useChangeLocaleViaPath() {
+  const pathname = usePathname();
+  const router = useRouter();
+  const [, startTransition] = useTransition();
+
+  return useCallback(
+    (locale: string) => {
+      startTransition(() => {
+        router.replace(pathname, { locale });
+      });
+    },
+    [router, pathname],
+  );
 }

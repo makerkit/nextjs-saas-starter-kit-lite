@@ -67,17 +67,22 @@ function AuthButtons() {
           <ModeToggle />
         </If>
 
-        <Button asChild variant={'ghost'}>
-          <Link href={pathsConfig.auth.signIn}>
-            <Trans i18nKey={'auth.signIn'} />
-          </Link>
+        <Button
+          nativeButton={false}
+          render={<Link href={pathsConfig.auth.signIn} />}
+          variant={'ghost'}
+        >
+          <Trans i18nKey={'auth.signIn'} />
         </Button>
       </div>
 
-      <Button asChild className="group" variant={'default'}>
-        <Link href={pathsConfig.auth.signUp}>
-          <Trans i18nKey={'auth.signUp'} />
-        </Link>
+      <Button
+        nativeButton={false}
+        render={<Link href={pathsConfig.auth.signUp} />}
+        className="group"
+        variant={'default'}
+      >
+        <Trans i18nKey={'auth.signUp'} />
       </Button>
     </div>
   );

@@ -45,13 +45,15 @@ export function AccountDangerZone() {
 function DeleteAccountModal() {
   return (
     <AlertDialog>
-      <AlertDialogTrigger asChild>
-        <Button data-test={'delete-account-button'} variant={'destructive'}>
-          <Trans i18nKey={'account.deleteAccount'} />
-        </Button>
-      </AlertDialogTrigger>
+      <AlertDialogTrigger
+        render={
+          <Button data-test={'delete-account-button'} variant={'destructive'}>
+            <Trans i18nKey={'account.deleteAccount'} />
+          </Button>
+        }
+      />
 
-      <AlertDialogContent onEscapeKeyDown={(e) => e.preventDefault()}>
+      <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>
             <Trans i18nKey={'account.deleteAccount'} />

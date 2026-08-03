@@ -15,7 +15,8 @@ const routes = [
         label: 'common.routes.home',
         path: pathsConfig.app.home,
         Icon: <Home className={iconClasses} />,
-        end: true,
+        // exact match: do not stay highlighted on nested routes like /home/settings
+        highlightMatch: `^${pathsConfig.app.home}$`,
       },
     ],
   },

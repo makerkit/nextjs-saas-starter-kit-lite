@@ -9,7 +9,7 @@ export function If<Value = unknown>({
 }: React.PropsWithoutRef<{
   condition: Condition<Value>;
   children: React.ReactNode | ((value: Value) => React.ReactNode);
-  fallback?: React.ReactNode;
+  fallback?: React.ReactNode | (() => React.ReactNode);
 }>) {
   return useMemo(() => {
     if (condition) {
@@ -21,6 +21,10 @@ export function If<Value = unknown>({
     }
 
     if (fallback) {
+      if (typeof fallback === 'function') {
+        return <>{fallback()}</>;
+      }
+
       return <>{fallback}</>;
     }
 

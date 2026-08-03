@@ -1,5 +1,5 @@
 import { Page, PageMobileNavigation, PageNavigation } from '@kit/ui/page';
-import { SidebarProvider } from '@kit/ui/shadcn-sidebar';
+import { SidebarProvider } from '@kit/ui/sidebar';
 
 import { AppLogo } from '~/components/app-logo';
 import { navigationConfig } from '~/config/navigation.config';

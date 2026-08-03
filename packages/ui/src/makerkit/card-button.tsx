@@ -1,117 +1,123 @@
 import * as React from 'react';
 
-import { Slot, Slottable } from '@radix-ui/react-slot';
+import { useRender } from '@base-ui/react/use-render';
 import { ChevronRight } from 'lucide-react';
 
-import { cn } from '../lib/utils';
+import { cn } from '#utils';
 
 export const CardButton: React.FC<
   {
-    asChild?: boolean;
+    render?: React.ReactElement;
     className?: string;
-    children: React.ReactNode;
+    children?: React.ReactNode;
   } & React.ButtonHTMLAttributes<HTMLButtonElement>
-> = function CardButton({ className, asChild, ...props }) {
-  const Comp = asChild ? Slot : 'button';
-
-  return (
-    <Comp
-      className={cn(
+> = function CardButton({ className, render, children, ...props }) {
+  return useRender({
+    render,
+    defaultTagName: 'button',
+    props: {
+      ...props,
+      className: cn(
         'group hover:bg-secondary/20 active:bg-secondary active:bg-secondary/50 dark:shadow-primary/20 relative flex h-36 flex-col rounded-lg border transition-all hover:shadow-xs active:shadow-lg',
         className,
-      )}
-      {...props}
-    >
-      <Slottable>{props.children}</Slottable>
-    </Comp>
-  );
+      ),
+      children,
+    },
+  });
 };
 
 export const CardButtonTitle: React.FC<
   {
-    asChild?: boolean;
+    render?: React.ReactElement;
     children: React.ReactNode;
   } & React.HTMLAttributes<HTMLDivElement>
-> = function CardButtonTitle({ className, asChild, ...props }) {
-  const Comp = asChild ? Slot : 'div';
-
-  return (
-    <Comp
-      className={cn(
+> = function CardButtonTitle({ className, render, children, ...props }) {
+  return useRender({
+    render,
+    defaultTagName: 'div',
+    props: {
+      ...props,
+      className: cn(
         className,
-        'text-muted-foreground group-hover:text-secondary-foreground align-super text-sm font-medium transition-colors',
-      )}
-      {...props}
-    >
-      <Slottable>{props.children}</Slottable>
-    </Comp>
-  );
+        'text-muted-foreground group-hover:text-secondary-foreground text-left align-super text-sm font-medium transition-colors',
+      ),
+      children,
+    },
+  });
 };
 
 export const CardButtonHeader: React.FC<
   {
     children: React.ReactNode;
-    asChild?: boolean;
+    render?: React.ReactElement;
     displayArrow?: boolean;
   } & React.HTMLAttributes<HTMLDivElement>
 > = function CardButtonHeader({
   className,
-  asChild,
+  render,
   displayArrow = true,
+  children,
   ...props
 }) {
-  const Comp = asChild ? Slot : 'div';
+  const content = (
+    <>
+      {children}
 
-  return (
-    <Comp className={cn(className, 'p-4')} {...props}>
-      <Slottable>
-        {props.children}
-
-        <ChevronRight
-          className={cn(
-            'text-muted-foreground group-hover:text-secondary-foreground absolute top-4 right-2 h-4 transition-colors',
-            {
-              hidden: !displayArrow,
-            },
-          )}
-        />
-      </Slottable>
-    </Comp>
+      <ChevronRight
+        className={cn(
+          'text-muted-foreground group-hover:text-secondary-foreground absolute top-4 right-2 h-4 transition-colors',
+          {
+            hidden: !displayArrow,
+          },
+        )}
+      />
+    </>
   );
+
+  return useRender({
+    render,
+    defaultTagName: 'div',
+    props: {
+      ...props,
+      className: cn(className, 'p-4'),
+      children: content,
+    },
+  });
 };
 
 export const CardButtonContent: React.FC<
   {
-    asChild?: boolean;
+    render?: React.ReactElement;
     children: React.ReactNode;
   } & React.HTMLAttributes<HTMLDivElement>
-> = function CardButtonContent({ className, asChild, ...props }) {
-  const Comp = asChild ? Slot : 'div';
-
-  return (
-    <Comp className={cn(className, 'flex flex-1 flex-col px-4')} {...props}>
-      <Slottable>{props.children}</Slottable>
-    </Comp>
-  );
+> = function CardButtonContent({ className, render, children, ...props }) {
+  return useRender({
+    render,
+    defaultTagName: 'div',
+    props: {
+      ...props,
+      className: cn(className, 'flex flex-1 flex-col px-4'),
+      children,
+    },
+  });
 };
 
 export const CardButtonFooter: React.FC<
   {
-    asChild?: boolean;
+    render?: React.ReactElement;
     children: React.ReactNode;
   } & React.HTMLAttributes<HTMLDivElement>
-> = function CardButtonFooter({ className, asChild, ...props }) {
-  const Comp = asChild ? Slot : 'div';
-
-  return (
-    <Comp
-      className={cn(
+> = function CardButtonFooter({ className, render, children, ...props }) {
+  return useRender({
+    render,
+    defaultTagName: 'div',
+    props: {
+      ...props,
+      className: cn(
         className,
         'mt-auto flex h-0 w-full flex-col justify-center border-t px-4',
-      )}
-      {...props}
-    >
-      <Slottable>{props.children}</Slottable>
-    </Comp>
-  );
+      ),
+      children,
+    },
+  });
 };
