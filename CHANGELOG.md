@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.0.1
+
+- Updated dependencies: Next.js 16.4, etc.
+
 ## 1.0.0
 
 - Updated tooling: Next.js 16.3, TS7, Oxlint, Oxfmt
